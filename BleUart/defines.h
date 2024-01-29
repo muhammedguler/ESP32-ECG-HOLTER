@@ -31,6 +31,4 @@
 #define RtcSCL 47
 #define RtcSDA 48
 
-
-
 #endif

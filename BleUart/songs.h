@@ -2,7 +2,10 @@
 #define NOTES_H
 
 
+#include "defines.h"
 #include "Arduino.h"
+#include "HardwareSerial.h"
+#include "esp32-hal-gpio.h"
 
 // Les notes de musique 
 #define NOTE_B0  31

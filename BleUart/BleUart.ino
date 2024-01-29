@@ -1,6 +1,9 @@
 #include "BleUart.h"
 #include "CardControl.h"
 #include "SdCard.h"
+#include "RTC.h"
+#include "ECG.h"
+
 uint32_t chipId = 0;
 
 void setup() {
@@ -8,9 +11,11 @@ void setup() {
     chipId |= ((ESP.getEfuseMac() >> (40 - i)) & 0xff) << i;
   }
   Serial.begin(115200);
-  CardControlTaskBegin();
   BleUartTasksBegin();
-  SdCardInit();
+  CardControlTaskBegin();
+  SdCardTasksBegin();
+  RTCTaskBegin();
+  ADS1293TasksBegin();
 }
 void loop() {
   sprintf(txArray, "deneme %d deneme ", random(300));

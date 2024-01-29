@@ -1,5 +1,3 @@
-#include "HardwareSerial.h"
-#include "esp32-hal-gpio.h"
 #include "CardControl.h"
 
 // notes in the melody:
@@ -18,7 +16,7 @@ adc_continuos_data_t* ADC_Result = NULL;
 
 float BatteryVoltage = 0.0, CardTemperature = 0.0;
 
-bool Button1Pressed = false, Button2Pressed = false, AdsAlarmOccured = false;
+bool Button1Pressed = false, Button2Pressed = false;
 
 
 
@@ -27,13 +25,9 @@ void CardControlTaskBegin(void) {
   pinMode(ChgStat, INPUT_PULLUP);
   pinMode(ChgInok, INPUT_PULLUP);
   pinMode(Buton1, INPUT_PULLUP);
-  pinMode(Buton2, INPUT_PULLUP);
-  pinMode(AdsALARM, INPUT_PULLUP);
-
   attachInterrupt(Buton1, isrButon1, FALLING);
-
+  pinMode(Buton2, INPUT_PULLUP);
   attachInterrupt(Buton2, isrButon2, FALLING);
-  attachInterrupt(AdsALARM, isrAdsALARM, FALLING);
   // Initialize pins as LEDC channels
   // resolution 1-16 bits, freq limits depend on resolution
   ledcAttach(RedLED, 12000, 8);  // 12 kHz PWM, 8-bit resolution
@@ -62,7 +56,7 @@ void CardControlTaskBegin(void) {
 void CardControlTask(void* Parameters) {
 
   delay(100);
-  Serial.println("playing StarWars2");
+  Serial.println("playing Bond");
   /*Starwars();
   delay(100);
   GameOfThrones();
@@ -91,9 +85,9 @@ void CardControlTask(void* Parameters) {
   delay(100);
   BarbieGirl();
   delay(100);
-  Greensleaves();
+  Greensleaves();*/
   delay(100);
-  Bond();*/
+  Bond();
   Serial.println("playing over");
 
 
@@ -102,12 +96,11 @@ void CardControlTask(void* Parameters) {
     delay(1);
     if (Button1Pressed) {
       Button1Pressed = false;
+      Serial.println("Button 1 Pressed");
     }
     if (Button2Pressed) {
       Button2Pressed = false;
-    }
-    if (AdsAlarmOccured) {
-      AdsAlarmOccured = false;
+      Serial.println("Button 2 Pressed");
     }
 
     if (ADC_ConversionDone) {
@@ -128,9 +121,6 @@ void CardControlTask(void* Parameters) {
   }
 }
 
-void ARDUINO_ISR_ATTR isrAdsALARM() {
-  AdsAlarmOccured = true;
-}
 void ARDUINO_ISR_ATTR isrButon1() {
   Button1Pressed = true;
 }

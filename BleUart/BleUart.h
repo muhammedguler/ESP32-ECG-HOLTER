@@ -6,6 +6,8 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
+#include "HardwareSerial.h"
+#include "esp32-hal-gpio.h"
 
 extern bool DataReady;
 extern bool oldDeviceConnected;

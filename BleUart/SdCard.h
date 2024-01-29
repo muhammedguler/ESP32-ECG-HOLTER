@@ -5,7 +5,9 @@
 #include "FS.h"
 #include "SD.h"
 #include "SPI.h"
+#include "HardwareSerial.h"
+#include "esp32-hal-gpio.h"
 
-void SdCardInit(void);
-
+void SdCardTasksBegin(void);
+void SdCardTasks(void* parameters);
 #endif
