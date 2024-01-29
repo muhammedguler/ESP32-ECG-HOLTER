@@ -20,12 +20,12 @@
 #define DnUSB 19
 #define DpUSB 20
 #define AdsALARM 21
-#define SdDat2 35
-#define SdDat3 36
 #define SdCmd 37
 #define SdCLK 38
 #define SdDat0 39
 #define SdDat1 40
+#define SdDat2 35
+#define SdDat3 36
 #define SdDet 45
 #define Buton2 46
 #define RtcSCL 47

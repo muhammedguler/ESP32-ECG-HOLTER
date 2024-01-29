@@ -95,23 +95,12 @@ void BleUartTasks(void* parameters) {
     delay(1);
   }
 }
-/*void SetDataReady(bool status) {
-  DataReady = status;
-}*/
-/*void SetDeviceConnected(bool status) {
-  deviceConnected = status;
-}*/
-/*void SetSendData(void* txData) {
-  txArray = (char*)txData;
-}*/
 
 void ServerCallbacks::onConnect(BLEServer* pServer) {
-  SetDeviceConnected(true);
   deviceConnected = true;
 }
 
 void ServerCallbacks::onDisconnect(BLEServer* pServer) {
-  SetDeviceConnected(false);
   deviceConnected = false;
 }
 
