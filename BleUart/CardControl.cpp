@@ -22,10 +22,15 @@ bool Button1Pressed = false, Button2Pressed = false;
 
 void CardControlTaskBegin(void) {
   //init Digital IO's
+  pinMode(SwShdn, OUTPUT);
+  digitalWrite(SwShdn, LOW);
+
   pinMode(ChgStat, INPUT_PULLUP);
   pinMode(ChgInok, INPUT_PULLUP);
+
   pinMode(Buton1, INPUT_PULLUP);
   attachInterrupt(Buton1, isrButon1, FALLING);
+  
   pinMode(Buton2, INPUT_PULLUP);
   attachInterrupt(Buton2, isrButon2, FALLING);
   // Initialize pins as LEDC channels
@@ -34,8 +39,6 @@ void CardControlTaskBegin(void) {
   ledcAttach(GreenLED, 12000, 8);
   ledcAttach(BlueLED, 12000, 8);
 
-  pinMode(SwShdn, OUTPUT);
-  digitalWrite(SwShdn, LOW);
   BuzzerInit(Buzzer);
 
   //ESP32: Set the resolution to 9-12 bits (default is 12 bits)
@@ -50,13 +53,12 @@ void CardControlTaskBegin(void) {
   xTaskCreatePinnedToCore(
     CardControlTask, "CardControlTask",
     1024 * 4,
-    NULL, 3,
+    NULL, 2,
     NULL, ARDUINO_RUNNING_CORE);
 }
 void CardControlTask(void* Parameters) {
 
-  delay(100);
-  Serial.println("playing Bond");
+  delay(4000);
   /*Starwars();
   delay(100);
   GameOfThrones();
@@ -87,8 +89,7 @@ void CardControlTask(void* Parameters) {
   delay(100);
   Greensleaves();*/
   delay(100);
-  Bond();
-  Serial.println("playing over");
+  //Bond();
 
 
   float NtcRes = 0.0, temperature = 0.0;

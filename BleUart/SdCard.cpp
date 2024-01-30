@@ -196,6 +196,7 @@ void SdCardTasksBegin(void) {
 
 
 void SdCardTasks(void *parameters) {
+/*
 #ifdef REASSIGN_PINS
   SPI.begin(sck, miso, mosi, cs);
 #endif
@@ -238,7 +239,7 @@ void SdCardTasks(void *parameters) {
   readFile(SD, "/foo.txt");
   testFileIO(SD, "/test.txt");
   Serial.printf("Total space: %lluMB\n", SD.totalBytes() / (1024 * 1024));
-  Serial.printf("Used space: %lluMB\n", SD.usedBytes() / (1024 * 1024));
+  Serial.printf("Used space: %lluMB\n", SD.usedBytes() / (1024 * 1024));*/
 
   while (true) delay(100);
 }

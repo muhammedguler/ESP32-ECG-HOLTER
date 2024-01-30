@@ -8,13 +8,14 @@ void RTCTaskBegin(void) {
 
   xTaskCreatePinnedToCore(
     RTCTask, "RTCTask",
-    1024 * 4,
-    NULL, 3,
+    2048 * 4,
+    NULL, 1,
     NULL, ARDUINO_RUNNING_CORE);
 }
 
 
 void RTCTask(void* Parameters) {
+  delay(3000);
   while (!MCP7940.begin(RtcSDA, RtcSCL)) {                                // Initialize RTC communications
     Serial.println(F("Unable to find MCP7940N. Checking again in 3s."));  // Show error text
     delay(3000);                                                          // wait three seconds
@@ -38,8 +39,8 @@ void RTCTask(void* Parameters) {
   while (true) {
     delay(499);
     DateTime now = MCP7940.now();  // get the current time
-    memset(TxBuffer, 0, 64);
-    sprintf(TxBuffer, "%04d-%02d-%02d %02d:%02d:%02d", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
-    Serial.println(TxBuffer);
+    //memset(TxBuffer, 0, 64);
+    //sprintf(TxBuffer, "%04d-%02d-%02d %02d:%02d:%02d", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
+    //Serial.println(TxBuffer);
   }
 }

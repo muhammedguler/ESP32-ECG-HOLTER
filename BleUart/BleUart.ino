@@ -18,7 +18,7 @@ void setup() {
   ADS1293TasksBegin();
 }
 void loop() {
-  sprintf(txArray, "deneme %d deneme ", random(300));
-  DataReady = true;
+  //sprintf(txArray, "deneme %d deneme ", random(300));
+  //DataReady = true;
   delay(10);
 }
