@@ -66,7 +66,7 @@
 #define NOTE_F5  698
 #define NOTE_FS5 740
 #define NOTE_G5  784
-#define NOTE_GSH  830
+#define NOTE_GSH 830
 #define NOTE_GS5 831
 #define NOTE_A5  880
 #define NOTE_AS5 932
@@ -100,14 +100,13 @@
 #define NOTE_D8  4699
 #define NOTE_DS8 4978
 
-#define BUZZER_PIN 4
-#define BUZZER_CHANNEL 0
-
 void Starwars();
 void GameOfThrones();
 void HappyBirthday();
+void HarryStart();
 void HarryPotter();
 void Pirate();
+void marioStart();
 void mario();
 void McGyver();
 void StarWars2();
@@ -118,8 +117,9 @@ void looney();
 void Entertainement();
 void BarbieGirl();
 void Greensleaves();
+void MarioGameOver();
 void Bond();
 void BuzzerInit(int pin);
-
+void beep(int note, int duration);
 
 #endif

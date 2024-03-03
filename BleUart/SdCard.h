@@ -10,4 +10,5 @@
 
 void SdCardTasksBegin(void);
 void SdCardTasks(void* parameters);
+void SdCardSetDataReady(void);
 #endif

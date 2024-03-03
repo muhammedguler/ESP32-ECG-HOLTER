@@ -117,70 +117,69 @@
 #define ZERO_TST_SIG 0x03
 #define ERROR -1
 enum SampleFreq {
-  Hz_25 = 127,
-  Hz_33 = 119,
-  Hz_40 = 111,
-  Hz_50 = 126,
-  Hz_66 = 118,
-  Hz_80 = 110,
-  Hz_100 = 125,
-  Hz_133 = 117,
-  Hz_160 = 109,
-  Hz_200 = 124,
-  Hz_266 = 123,
-  Hz_320 = 108,
-  Hz_355 = 115,
-  Hz_400 = 122,
-  Hz_426 = 107,
-  Hz_533 = 121,
-  Hz_640 = 106,
-  Hz_711 = 113,
-  Hz_800 = 120,
-  Hz_853 = 105,
-  Hz_1066 = 112,
-  Hz_1280 = 104,
-  //Hz_1422 = 81,
-  Hz_1600 = 96  //,
-  //Hz_1706 = 73,
-  //Hz_2133 = 80,
-  //Hz_2560 = 72,
-  //Hz_2844 = 17,
-  //Hz_3200 = 64,
-  //Hz_3413 = 9,
-  //Hz_4266 = 16,
-  //Hz_5120 = 8,
-  //Hz_6400 = 0
+    Hz_25 = 127,
+    Hz_33 = 119,
+    Hz_40 = 111,
+    Hz_50 = 126,
+    Hz_66 = 118,
+    Hz_80 = 110,
+    Hz_100 = 125,
+    Hz_133 = 117,
+    Hz_160 = 109,
+    Hz_200 = 124,
+    Hz_266 = 123,
+    Hz_320 = 108,
+    Hz_355 = 115,
+    Hz_400 = 122,
+    Hz_426 = 107,
+    Hz_533 = 121,
+    Hz_640 = 106,
+    Hz_711 = 113,
+    Hz_800 = 120,
+    Hz_853 = 105,
+    Hz_1066 = 112,
+    Hz_1280 = 104,
+    Hz_1422 = 81,
+    Hz_1600 = 96 ,
+    Hz_1706 = 73,
+    Hz_2133 = 80,
+    Hz_2560 = 72,
+    Hz_2844 = 17,
+    Hz_3200 = 64,
+    Hz_3413 = 9,
+    Hz_4266 = 16,
+    Hz_5120 = 8,
+    Hz_6400 = 0
 };
 class ads1293 {
-public:
-  uint8_t drdyPin;
-  uint8_t csPin;
-  
-  void ads1293Begin3LeadECG();
-  void ads1293Begin5LeadECG(enum SampleFreq Freq);
-  int32_t getECGdata(uint8_t channel);
-  bool readSensorID();
-  void setAds1293Pins();
-  void disableCh1();
-  uint8_t ads1293ReadRegister(uint8_t rdAddress);
-  uint8_t readErrorStatus(uint8_t rdAddress);
-  uint8_t readLeadErrorStatus();
-  bool attachTestSignal(uint8_t channel, uint8_t pol);
-  void setSamplingRate(enum SampleFreq);
-  void disableFilterAllChannels();
-  bool disableFilter(uint8_t channel);
-  uint8_t readErrorStatus();
+  public:
+    uint8_t drdyPin;
+    uint8_t csPin;
 
-  ads1293(uint8_t drdy, uint8_t chipSelect) {
-    csPin = chipSelect;
-    drdyPin = drdy;
-  }
+    void ads1293Begin3LeadECG();
+    void ads1293Begin5LeadECG(enum SampleFreq Freq);
+    int32_t getECGdata(uint8_t channel);
+    bool readSensorID();
+    void setAds1293Pins();
+    void disableCh1();
+    uint8_t ads1293ReadRegister(uint8_t rdAddress);
+    uint8_t readErrorStatus(uint8_t rdAddress);
+    uint8_t readLeadErrorStatus();
+    bool attachTestSignal(uint8_t channel, uint8_t pol);
+    void setSamplingRate(enum SampleFreq);
+    void disableFilterAllChannels();
+    void disableFilter(uint8_t channel);
+    uint8_t readErrorStatus();
 
-private:
-  void ads1293WriteRegister(uint8_t wrAddress, uint8_t data);
+    void ads1293WriteRegister(uint8_t wrAddress, uint8_t data);
+    ads1293(uint8_t drdy, uint8_t chipSelect) {
+        csPin = chipSelect;
+        drdyPin = drdy;
+    }
 
-  void configDCleadoffDetect(uint8_t level, bool active);
-  void configACleadoffDetect(uint8_t level, bool active);
+  private:
+    void configDCleadoffDetect(uint8_t level, bool active);
+    void configACleadoffDetect(uint8_t level, bool active);
 };
 
 #endif

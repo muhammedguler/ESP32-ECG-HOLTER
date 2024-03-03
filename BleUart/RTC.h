@@ -9,5 +9,11 @@
 
 void RTCTask(void* Parameters);
 void RTCTaskBegin(void);
+void readCommand();
+void handleRtcCommand(void);
+extern DateTime now;
+extern char inputBuffer[64];  // Buffer for sprintf()/sscanf()
+extern bool bleDataReaded;
+
 
 #endif
