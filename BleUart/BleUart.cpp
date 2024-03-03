@@ -83,8 +83,8 @@ void BleUartTasks(void* parameters) {
                         txArray0[7] = CardTemperature;
                         txArray0[8] = Button2Pressed;
                         txArray0[9] = ChgStatRead << 1 | ChgInokRead;
-                        txArray0[10] = 0x03;
-                        txArray0[11] = 0x20;
+                        txArray0[10] = 0x01;
+                        txArray0[11] = 0x90;
                         txArray0[12] = now.year() - 2000;
                         txArray0[13] = now.month();
                         txArray0[14] = now.day();
@@ -106,8 +106,8 @@ void BleUartTasks(void* parameters) {
                         txArray1[7] = CardTemperature;
                         txArray1[8] = Button2Pressed;
                         txArray1[9] = ChgStatRead << 1 | ChgInokRead;
-                        txArray1[10] = 0x01;
-                        txArray1[11] = 0x90;
+                        txArray1[10] = 0x02;
+                        txArray1[11] = 0x15;
                         txArray1[12] = now.year() - 2000;
                         txArray1[13] = now.month();
                         txArray1[14] = now.day();

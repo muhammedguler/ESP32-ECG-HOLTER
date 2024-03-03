@@ -57,7 +57,7 @@ void ADS1293Tasks(void* Parameters) {
     //pinMode(AdsDrdy, INPUT_PULLUP);
     attachInterrupt(AdsDrdy, isrADS1293Complete, FALLING);
     //ADS1293.ads1293Begin3LeadECG();
-    ADS1293.ads1293Begin5LeadECG(Hz_533);
+    ADS1293.ads1293Begin5LeadECG(Hz_400);
     delay(1);
 
     Serial.printf("Free Heap: %d \n", xPortGetFreeHeapSize());
@@ -76,9 +76,9 @@ void ADS1293Tasks(void* Parameters) {
         ecgCh2 = ADS1293.getECGdata(2);
         ecgCh3 = ADS1293.getECGdata(3);
 
-        ecgFilteredCh1 = FIR_Filter(ecgCh1, 1) + 4181804;
+        ecgFilteredCh1 = FIR_Filter(ecgCh1, 1) + 4179304;
         ecgFilteredCh2 = FIR_Filter(ecgCh2, 2) + 4194304;
-        ecgFilteredCh3 = FIR_Filter(ecgCh3, 3) + 4209304;
+        ecgFilteredCh3 = FIR_Filter(ecgCh3, 3) + 4214304;
 
         /*Serial.print("ECG , ");
         Serial.print(ecgFilteredCh1);
