@@ -9,7 +9,6 @@
 #include "BleUart.h"
 #include "CardControl.h"
 #include "RTC.h"
-#include "arduino_base64.hpp"
 #include "SdCard.h"
 #include "Arduino.h"
 

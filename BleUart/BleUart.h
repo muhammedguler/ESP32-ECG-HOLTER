@@ -35,5 +35,4 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic* pCharacteristic);
 };
 
-
 #endif

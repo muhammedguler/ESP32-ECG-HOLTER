@@ -1,35 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////////
-//
-//  Demo code for the ads1293 board
-//
-//  Copyright (c) 2020 ProtoCentral
-//
-//  Arduino uno connections:
-//
-//  |pin label         | Pin Function         |Arduino Connection|
-//  |----------------- |:--------------------:|-----------------:|
-//  | MISO             | Slave Out            |  12              |
-//  | MOSI             | Slave In             |  11              |
-//  | SCLK             | Serial Clock         |  13              |
-//  | CS               | Chip Select          |  10              |
-//  | VCC              | Digital VDD          |  +5V             |
-//  | GND              | Digital Gnd          |  Gnd             |
-//  | DRDY             | Data ready           |  02              |
-//
-//  This software is licensed under the MIT License(http://opensource.org/licenses/MIT).
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
-//  NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-//  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-//  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-//  For information on how to use, visit https://github.com/Protocentral/protocentral-ads1293-arduino
-//
-/////////////////////////////////////////////////////////////////////////////////////////
-
-#ifndef protocentral_ads1293_h_
-#define protocentral_ads1293_h_
+#ifndef ADS1293_h_
+#define ADS1293_h_
 
 #define WREG 0x7f
 #define RREG 0x80
@@ -140,7 +110,7 @@ enum SampleFreq {
     Hz_1066 = 112,
     Hz_1280 = 104,
     Hz_1422 = 81,
-    Hz_1600 = 96 ,
+    Hz_1600 = 96,
     Hz_1706 = 73,
     Hz_2133 = 80,
     Hz_2560 = 72,

@@ -58,11 +58,11 @@ void ADS1293Tasks(void* Parameters) {
     attachInterrupt(AdsDrdy, isrADS1293Complete, FALLING);
     //ADS1293.ads1293Begin3LeadECG();
     ADS1293.ads1293Begin5LeadECG(Hz_400);
-    delay(1);
+    //delay(1);
 
-    Serial.printf("Free Heap: %d \n", xPortGetFreeHeapSize());
-    delay(10000);
-    Serial.printf("%04d%02d%02d%02d%02d%02d\n\r", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
+    //Serial.printf("Free Heap: %d \n", xPortGetFreeHeapSize());
+    delay(5000);
+    //Serial.printf("%04d%02d%02d%02d%02d%02d\n\r", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
     point = 0;
     //esp_timer_init();
 
@@ -92,8 +92,47 @@ void ADS1293Tasks(void* Parameters) {
                 point = 2;
                 sendBuffer = 1 - sendBuffer;
                 writeBuffer = 1 - writeBuffer;
-                bleSetDataReady();
-                SdCardSetDataReady();
+                if (sendBuffer == 0) {
+                    txArray0[0] = (chipId >> 24) & 0xFF;
+                    txArray0[1] = (chipId >> 16) & 0xFF;
+                    txArray0[2] = (chipId >> 8) & 0xFF;
+                    txArray0[3] = (chipId)&0xFF;
+                    txArray0[4] = (BatteryVoltage >> 8) & 0xFF;
+                    txArray0[5] = BatteryVoltage & 0xFF;
+                    txArray0[6] = BatteryPercentage;
+                    txArray0[7] = CardTemperature;
+                    txArray0[8] = Button2Pressed;
+                    txArray0[9] = ChgStatRead << 1 | ChgInokRead;
+                    txArray0[10] = 0x01;
+                    txArray0[11] = 0x90;
+                    txArray0[12] = now.year() - 2000;
+                    txArray0[13] = now.month();
+                    txArray0[14] = now.day();
+                    txArray0[15] = now.hour();
+                    txArray0[16] = now.minute();
+                    txArray0[17] = now.second();
+                } else {
+                    txArray1[0] = (chipId >> 24) & 0xFF;
+                    txArray1[1] = (chipId >> 16) & 0xFF;
+                    txArray1[2] = (chipId >> 8) & 0xFF;
+                    txArray1[3] = (chipId)&0xFF;
+                    txArray1[4] = (BatteryVoltage >> 8) & 0xFF;
+                    txArray1[5] = BatteryVoltage & 0xFF;
+                    txArray1[6] = BatteryPercentage;
+                    txArray1[7] = CardTemperature;
+                    txArray1[8] = Button2Pressed;
+                    txArray1[9] = ChgStatRead << 1 | ChgInokRead;
+                    txArray1[10] = 0x02;
+                    txArray1[11] = 0x15;
+                    txArray1[12] = now.year() - 2000;
+                    txArray1[13] = now.month();
+                    txArray1[14] = now.day();
+                    txArray1[15] = now.hour();
+                    txArray1[16] = now.minute();
+                    txArray1[17] = now.second();
+                    bleSetDataReady();
+                    SdCardSetDataReady();
+                }
             }
             if (writeBuffer == 0) {
                 txArray0[9 * point] = ecgFilteredCh1 >> 16;       //ADS1293.ads1293ReadRegister(DATA_CH1_ECG_H);

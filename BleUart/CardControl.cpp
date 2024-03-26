@@ -76,7 +76,7 @@ void CardControlTask(void* Parameters) {
     Rinf = R0 * exp(-beta / T0);
     HarryStart();
     while (true) {
-        delay(1);
+        delay(5);
         AdcOperation();
         ledOperation();
         ChgStatRead = 1 - digitalRead(ChgStat);  // flas şarj oluyor 1 dolu 0
