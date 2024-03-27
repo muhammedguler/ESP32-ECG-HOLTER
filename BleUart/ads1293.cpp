@@ -1,6 +1,7 @@
-#include "Arduino.h"
-#include <SPI.h>
 #include "ads1293.h"
+
+//uninitalised pointers to SPI objects
+SPIClass* vspi = NULL;
 
 int32_t ads1293::getECGdata(uint8_t channel) {
 
@@ -28,6 +29,9 @@ int32_t ads1293::getECGdata(uint8_t channel) {
 }
 
 void ads1293::setAds1293Pins() {
+    vspi = new SPIClass(FSPI);
+    vspi->begin(AdsSCLK, AdsSDO, AdsSDI);
+    vspi->setFrequency(10 * 1000 * 1000);
     pinMode(drdyPin, INPUT_PULLUP);
     pinMode(csPin, OUTPUT);
 }
@@ -100,10 +104,10 @@ void ads1293::ads1293Begin5LeadECG(enum SampleFreq Freq) {
     ads1293WriteRegister(DRDYB_SRC, 0x08);
     delay(1);
     ads1293WriteRegister(CH_CNFG, 0x70);
-    delay(1);
+    delay(1); /*
     configACleadoffDetect(0, false);
     delay(1);
-    configDCleadoffDetect(0, false);
+    configDCleadoffDetect(0, false);*/
     delay(1);
     ads1293WriteRegister(CONFIG, 0x01);
     delay(1);
@@ -111,8 +115,8 @@ void ads1293::ads1293Begin5LeadECG(enum SampleFreq Freq) {
 void ads1293::ads1293WriteRegister(uint8_t wrAddress, uint8_t data) {
     uint8_t dataToSend = (wrAddress & WREG);
     digitalWrite(csPin, LOW);
-    SPI.transfer(dataToSend);
-    SPI.transfer(data);
+    vspi->transfer(dataToSend);
+    vspi->transfer(data);
     digitalWrite(csPin, HIGH);
 }
 
@@ -121,8 +125,8 @@ uint8_t ads1293::ads1293ReadRegister(uint8_t rdAddress) {
     uint8_t rdData;
     uint8_t dataToSend = (rdAddress | RREG);
     digitalWrite(csPin, LOW);
-    SPI.transfer(dataToSend);
-    rdData = SPI.transfer(0);
+    vspi->transfer(dataToSend);
+    rdData = vspi->transfer(0);
     digitalWrite(csPin, HIGH);
 
     return (rdData);

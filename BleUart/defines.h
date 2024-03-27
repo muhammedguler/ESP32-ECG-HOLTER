@@ -32,3 +32,8 @@
 #define RtcSDA 48
 
 #endif
+/*
+#if CONFIG_IDF_TARGET_ESP32S2 || CONFIG_IDF_TARGET_ESP32S3
+#define VSPI FSPI
+#endif
+*/

@@ -1,6 +1,10 @@
 #ifndef ADS1293_h_
 #define ADS1293_h_
 
+#include "Arduino.h"
+#include "defines.h"
+#include <SPI.h>
+
 #define WREG 0x7f
 #define RREG 0x80
 

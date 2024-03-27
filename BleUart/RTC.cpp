@@ -82,7 +82,7 @@ void readCommand() {                                                            
             for (uint8_t i = 0; i < inputBytes; i++)       // Convert the whole input buffer
                 inputBuffer[i] = toupper(inputBuffer[i]);  // to uppercase characters
             //Serial.print(F("\nCommand \""));
-            Serial.write(inputBuffer);
+            //Serial.write(inputBuffer);
             //Serial.print(F("\" received.\n"));
             /**********************************************************************************************
       ** Parse the single-line command and perform the appropriate action. The current list of **
@@ -123,13 +123,14 @@ void handleRtcCommand(void) {
         case SetDate:  // Set the RTC date/time
             tokens = sscanf(inputBuffer, "%*s %hu-%hu-%hu %hu:%hu:%hu;", &year, &month, &day, &hour,
                             &minute, &second);
-            if (tokens != 6)  // Check to see if it was parsed
-                //Serial.print(F("Unable to parse date/time\n"));
-                else {
-                    MCP7940.adjust(
-                        DateTime(year, month, day, hour, minute, second));  // Adjust the RTC date/time
-                    //Serial.print(F("Date has been set."));
-                }   // of if-then-else the date could be parsed
+            if (tokens != 6) {
+            }  // Check to see if it was parsed
+            //Serial.print(F("Unable to parse date/time\n"));
+            else {
+                MCP7940.adjust(
+                    DateTime(year, month, day, hour, minute, second));  // Adjust the RTC date/time
+                //Serial.print(F("Date has been set."));
+            }       // of if-then-else the date could be parsed
             break;  //
         /*******************************************************************************************
         ** Calibrate the RTC and reset the time                                                   **
@@ -138,22 +139,24 @@ void handleRtcCommand(void) {
             tokens = sscanf(inputBuffer,
                             "%*s %hu-%hu-%hu %hu:%hu:%hu;",                 // Use sscanf() to parse the date/
                             &year, &month, &day, &hour, &minute, &second);  // time into variables
-            if (tokens != 6)                                                // Check to see if it was parsed
-                //Serial.print(F("Unable to parse date/time\n"));
-                else {
-                    int8_t trim =
-                        MCP7940.calibrate(DateTime(year, month, day,        // Calibrate the crystal and return
-                                                   hour, minute, second));  // the new trim offset value
-                    //Serial.print(F("Trim value set to "));
-                    //Serial.print(trim * 2);  // Each trim tick is 2 cycles
-                    //Serial.println(F(" clock cycles every minute"));
-                }  // of if-then-else the date could be parsed
+            if (tokens != 6) {
+            }  // Check to see if it was parsed
+            //Serial.print(F("Unable to parse date/time\n"));
+            else {
+                int8_t trim =
+                    MCP7940.calibrate(DateTime(year, month, day,        // Calibrate the crystal and return
+                                               hour, minute, second));  // the new trim offset value
+                //Serial.print(F("Trim value set to "));
+                //Serial.print(trim * 2);  // Each trim tick is 2 cycles
+                //Serial.println(F(" clock cycles every minute"));
+            }  // of if-then-else the date could be parsed
             break;
         /*******************************************************************************************
         ** Unknown command                                                                        **
         *******************************************************************************************/
         case Unknown_Command:  // Show options on bad command
         default:
+            break;
             //Serial.println(F("Unknown command. Valid commands are:"));
             //Serial.println(F("SETDATE yyyy-mm-dd hh:mm:ss"));
             //Serial.println(F("CALDATE yyyy-mm-dd hh:mm:ss"));

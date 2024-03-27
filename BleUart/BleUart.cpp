@@ -60,7 +60,7 @@ void BleUartTasksBegin(void) {
     xTaskCreatePinnedToCore(
         BleUartTasks, "BleUartTasks",
         4096 * 4,
-        NULL, 4,
+        NULL, 5,
         NULL, ARDUINO_RUNNING_CORE);
     //Serial.println("Waiting a client connection to notify...");
 }
@@ -73,15 +73,52 @@ void BleUartTasks(void* parameters) {
                 if (bleDataReady) {
                     bleDataReady = false;
                     if (sendBuffer == 0) {
+                        txArray0[0] = (chipId >> 24) & 0xFF;
+                        txArray0[1] = (chipId >> 16) & 0xFF;
+                        txArray0[2] = (chipId >> 8) & 0xFF;
+                        txArray0[3] = (chipId)&0xFF;
+                        txArray0[4] = (BatteryVoltage >> 8) & 0xFF;
+                        txArray0[5] = BatteryVoltage & 0xFF;
+                        txArray0[6] = BatteryPercentage;
+                        txArray0[7] = CardTemperature;
+                        txArray0[8] = Button2Pressed;
+                        txArray0[9] = ChgStatRead << 1 | ChgInokRead;
+                        txArray0[10] = 0x01;
+                        txArray0[11] = 0x90;
+                        txArray0[12] = now.year() - 2000;
+                        txArray0[13] = now.month();
+                        txArray0[14] = now.day();
+                        txArray0[15] = now.hour();
+                        txArray0[16] = now.minute();
+                        txArray0[17] = now.second();
                         pTxCharacteristic->setValue((uint8_t*)txArray0, sizeof(txArray0));
                         //else
                         //    pTxCharacteristic->setValue(txArray2);
                         pTxCharacteristic->notify();
                     } else {
+                        txArray1[0] = (chipId >> 24) & 0xFF;
+                        txArray1[1] = (chipId >> 16) & 0xFF;
+                        txArray1[2] = (chipId >> 8) & 0xFF;
+                        txArray1[3] = (chipId)&0xFF;
+                        txArray1[4] = (BatteryVoltage >> 8) & 0xFF;
+                        txArray1[5] = BatteryVoltage & 0xFF;
+                        txArray1[6] = BatteryPercentage;
+                        txArray1[7] = CardTemperature;
+                        txArray1[8] = Button2Pressed;
+                        txArray1[9] = ChgStatRead << 1 | ChgInokRead;
+                        txArray1[10] = 0x02;
+                        txArray1[11] = 0x15;
+                        txArray1[12] = now.year() - 2000;
+                        txArray1[13] = now.month();
+                        txArray1[14] = now.day();
+                        txArray1[15] = now.hour();
+                        txArray1[16] = now.minute();
+                        txArray1[17] = now.second();
                         pTxCharacteristic->setValue((uint8_t*)txArray1, sizeof(txArray1));
                         //else
                         //    pTxCharacteristic->setValue(txArray2);
                         pTxCharacteristic->notify();
+                        
                     }
                     if ((millis() - buttonPressTime[1]) > 2000)
                         Button2Pressed = false;
@@ -115,7 +152,6 @@ void BleUartTasks(void* parameters) {
         }
         // disconnecting
         if (!deviceConnected && oldDeviceConnected) {
-
             delay(500);                   // give the bluetooth stack the chance to get things ready
             pServer->startAdvertising();  // restart advertising
             //Serial.println("start advertising");
@@ -143,7 +179,6 @@ void ServerCallbacks::onDisconnect(BLEServer* pServer) {
 }
 
 void bleSetDataReady() {
-    if (deviceConnected) {}
     bleDataReady = true;
     xSemaphoreGive(SemBLE);
 }
