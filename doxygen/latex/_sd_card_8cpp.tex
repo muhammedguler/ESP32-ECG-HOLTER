@@ -1,0 +1,421 @@
+\doxysection{Sd\+Card.\+cpp File Reference}
+\hypertarget{_sd_card_8cpp}{}\label{_sd_card_8cpp}\index{SdCard.cpp@{SdCard.cpp}}
+{\ttfamily \#include "{}Sd\+Card.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_sd_card_8cpp_abe29afded73d329da6c5b83517ec3480}{Sd\+Card\+Set\+Data\+Ready}} (void)
+\item 
+void \mbox{\hyperlink{_sd_card_8cpp_a8841578fe91cace6206676f0e751cab5}{list\+Dir}} (fs\+::\+FS \&fs, const char \texorpdfstring{$\ast$}{*}dirname, uint8\+\_\+t levels)
+\item 
+void \mbox{\hyperlink{_sd_card_8cpp_ad77305a327c7e9593872e3a1cc5a3eae}{create\+Dir}} (fs\+::\+FS \&fs, const char \texorpdfstring{$\ast$}{*}path)
+\item 
+void \mbox{\hyperlink{_sd_card_8cpp_a4bb1688c9435a8de57b1742b9b51c4c0}{remove\+Dir}} (fs\+::\+FS \&fs, const char \texorpdfstring{$\ast$}{*}path)
+\item 
+void \mbox{\hyperlink{_sd_card_8cpp_a39694d8c816730fe5b678b70afa424ed}{read\+File}} (fs\+::\+FS \&fs, const char \texorpdfstring{$\ast$}{*}path)
+\item 
+void \mbox{\hyperlink{_sd_card_8cpp_adfdfe491c3b951586aeba25a0b8ccf80}{write\+File}} (fs\+::\+FS \&fs, const char \texorpdfstring{$\ast$}{*}path, const char \texorpdfstring{$\ast$}{*}message)
+\item 
+void \mbox{\hyperlink{_sd_card_8cpp_af0283e3397c8441bf996246212ecd10e}{append\+File}} (fs\+::\+FS \&fs, const char \texorpdfstring{$\ast$}{*}path, const char \texorpdfstring{$\ast$}{*}message1, const char \texorpdfstring{$\ast$}{*}message2)
+\item 
+void \mbox{\hyperlink{_sd_card_8cpp_a79399a113c185d123e34bbeadda754a9}{rename\+File}} (fs\+::\+FS \&fs, const char \texorpdfstring{$\ast$}{*}path1, const char \texorpdfstring{$\ast$}{*}path2)
+\item 
+void \mbox{\hyperlink{_sd_card_8cpp_a539a0ab36133d19baf630c5f09367c1d}{delete\+File}} (fs\+::\+FS \&fs, const char \texorpdfstring{$\ast$}{*}path)
+\item 
+void \mbox{\hyperlink{_sd_card_8cpp_a362d9e6ff949c4a635493cae7f76fa18}{Sd\+Card\+Tasks\+Begin}} (void)
+\item 
+void \mbox{\hyperlink{_sd_card_8cpp_ab0b3d355313d8b34cf300d42a32e4fec}{Sd\+Card\+Tasks}} (void \texorpdfstring{$\ast$}{*}parameters)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{_sd_card_8cpp_a78f7c3cc11ce30f992647a9dd42d96eb}{clk}} = \mbox{\hyperlink{defines_8h_a4e980e4b2da9218896fb7d77b0ee8109}{Sd\+CLK}}
+\item 
+int \mbox{\hyperlink{_sd_card_8cpp_a85092d82ab6ea85dad51ba78cbda36a0}{cmd}} = \mbox{\hyperlink{defines_8h_a2f8550b66db808c627b8258cdf9739f6}{Sd\+Cmd}}
+\item 
+int \mbox{\hyperlink{_sd_card_8cpp_acd5369c8df7dd59d364fbaf8b6d49e1d}{d0}} = \mbox{\hyperlink{defines_8h_a7092b0b0b9e7621c52b2660b51329af6}{Sd\+Dat0}}
+\item 
+int \mbox{\hyperlink{_sd_card_8cpp_ae333c3953d8b3b3dc30ff91dc3b573d2}{d1}} = \mbox{\hyperlink{defines_8h_a052e9d2377a83e7e2596b99837a06fb7}{Sd\+Dat1}}
+\item 
+int \mbox{\hyperlink{_sd_card_8cpp_a2b4a6cee6fdab3774b13a4de14abfba3}{d2}} = \mbox{\hyperlink{defines_8h_a2e47836460ba00b7413a1c69501f74cd}{Sd\+Dat2}}
+\item 
+int \mbox{\hyperlink{_sd_card_8cpp_a386c3ed013503ceea24ec5e48af048bd}{d3}} = \mbox{\hyperlink{defines_8h_aa3cd9b76368e7cd0914e903517bb0cc2}{Sd\+Dat3}}
+\item 
+char \mbox{\hyperlink{_sd_card_8cpp_a40812442b1325bacac380bbe6c6ed30c}{contex}} \mbox{[}200\mbox{]} = \{ 0 \}
+\item 
+char \mbox{\hyperlink{_sd_card_8cpp_aed3ab64f344638b8f4c3ec4869ecb79f}{File\+Name}} \mbox{[}50\mbox{]} = \{ 0 \}
+\item 
+char \mbox{\hyperlink{_sd_card_8cpp_af15a80915c6562cd6227b977a4b17d63}{Folder\+Name}} \mbox{[}50\mbox{]} = \{ 0 \}
+\item 
+Semaphore\+Handle\+\_\+t \mbox{\hyperlink{_sd_card_8cpp_a4d606f3e118ce5842a369376c2c5dcc5}{Sem\+SDCard}}
+\item 
+char \mbox{\hyperlink{_sd_card_8cpp_a98bf720ae93a28bd7717d92b5a797403}{output0}} \mbox{[}(9 \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}+2 -\/((9 \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}+2) \% 3))/3 \texorpdfstring{$\ast$}{*}4+1\mbox{]}
+\item 
+char \mbox{\hyperlink{_sd_card_8cpp_ace4bbdc55bdf72c238ad525f31ebd95a}{output1}} \mbox{[}(9 \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}+2 -\/((9 \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}+2) \% 3))/3 \texorpdfstring{$\ast$}{*}4+1\mbox{]}
+\item 
+\mbox{\hyperlink{class_m_c_p7940___class}{MCP7940\+\_\+\+Class}} \mbox{\hyperlink{_sd_card_8cpp_a82ae794926bc82ca949420cdf3fbbfa9}{MCP7940}}
+\item 
+bool \mbox{\hyperlink{_sd_card_8cpp_a64a0df946f24b2e9c5b62b2d29ecd742}{is\+Sd\+Init}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{_sd_card_8cpp_af0283e3397c8441bf996246212ecd10e}\label{_sd_card_8cpp_af0283e3397c8441bf996246212ecd10e} 
+\index{SdCard.cpp@{SdCard.cpp}!appendFile@{appendFile}}
+\index{appendFile@{appendFile}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{appendFile()}{appendFile()}}
+{\footnotesize\ttfamily void append\+File (\begin{DoxyParamCaption}\item[{fs\+::\+FS \&}]{fs,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{path,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{message1,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{message2 }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_af0283e3397c8441bf996246212ecd10e}{append\+File()} fonksiyonu SD kart içerisindekie dosyaya veri eklenmesini sağlar 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fs} & dosya sistemi pointeri \\
+\hline
+\mbox{\texttt{ in}}  & {\em path} & yazılacak dosyanın yolu \\
+\hline
+\mbox{\texttt{ in}}  & {\em message1} & dosyaya yazılacak mesajın içeriği \\
+\hline
+\mbox{\texttt{ in}}  & {\em message2} & dosyaya yazılacak mesajın içeriği \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00166}{166}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_ad77305a327c7e9593872e3a1cc5a3eae}\label{_sd_card_8cpp_ad77305a327c7e9593872e3a1cc5a3eae} 
+\index{SdCard.cpp@{SdCard.cpp}!createDir@{createDir}}
+\index{createDir@{createDir}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{createDir()}{createDir()}}
+{\footnotesize\ttfamily void create\+Dir (\begin{DoxyParamCaption}\item[{fs\+::\+FS \&}]{fs,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{path }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_ad77305a327c7e9593872e3a1cc5a3eae}{create\+Dir()} fonksiyonu SD kart içerisindeki klasör oluşturmak için kullanılır 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fs} & dosya sistemi pointeri \\
+\hline
+\mbox{\texttt{ in}}  & {\em path} & oluşturulacak klasör yolu \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00091}{91}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a539a0ab36133d19baf630c5f09367c1d}\label{_sd_card_8cpp_a539a0ab36133d19baf630c5f09367c1d} 
+\index{SdCard.cpp@{SdCard.cpp}!deleteFile@{deleteFile}}
+\index{deleteFile@{deleteFile}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{deleteFile()}{deleteFile()}}
+{\footnotesize\ttfamily void delete\+File (\begin{DoxyParamCaption}\item[{fs\+::\+FS \&}]{fs,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{path }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_a539a0ab36133d19baf630c5f09367c1d}{delete\+File()} fonksiyonu SD kart içerisindekie dosyanın silinmesini sağlar 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fs} & dosya sistemi pointeri \\
+\hline
+\mbox{\texttt{ in}}  & {\em path} & silinecek dosyanın yolu \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00211}{211}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a8841578fe91cace6206676f0e751cab5}\label{_sd_card_8cpp_a8841578fe91cace6206676f0e751cab5} 
+\index{SdCard.cpp@{SdCard.cpp}!listDir@{listDir}}
+\index{listDir@{listDir}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{listDir()}{listDir()}}
+{\footnotesize\ttfamily void list\+Dir (\begin{DoxyParamCaption}\item[{fs\+::\+FS \&}]{fs,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{dirname,  }\item[{uint8\+\_\+t}]{levels }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_a8841578fe91cace6206676f0e751cab5}{list\+Dir()} fonksiyonu SD kart içerisindeki dosya ve klasörlerin seri porta listelenmesini sağlar 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fs} & dosya sistemi pointeri \\
+\hline
+\mbox{\texttt{ in}}  & {\em dirname} & listelenecek dizinin adı \\
+\hline
+\mbox{\texttt{ in}}  & {\em levels} & dizin içerisinde kaç klasör içinin listeleneceğinin seçimi \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00042}{42}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a39694d8c816730fe5b678b70afa424ed}\label{_sd_card_8cpp_a39694d8c816730fe5b678b70afa424ed} 
+\index{SdCard.cpp@{SdCard.cpp}!readFile@{readFile}}
+\index{readFile@{readFile}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{readFile()}{readFile()}}
+{\footnotesize\ttfamily void read\+File (\begin{DoxyParamCaption}\item[{fs\+::\+FS \&}]{fs,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{path }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_a39694d8c816730fe5b678b70afa424ed}{read\+File()} fonksiyonu SD kart içerisindeki dosyanın içeriğini seri porta yazılmasını sağlar 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fs} & dosya sistemi pointeri \\
+\hline
+\mbox{\texttt{ in}}  & {\em path} & okunacak dosya yolu \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00121}{121}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a4bb1688c9435a8de57b1742b9b51c4c0}\label{_sd_card_8cpp_a4bb1688c9435a8de57b1742b9b51c4c0} 
+\index{SdCard.cpp@{SdCard.cpp}!removeDir@{removeDir}}
+\index{removeDir@{removeDir}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{removeDir()}{removeDir()}}
+{\footnotesize\ttfamily void remove\+Dir (\begin{DoxyParamCaption}\item[{fs\+::\+FS \&}]{fs,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{path }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_a4bb1688c9435a8de57b1742b9b51c4c0}{remove\+Dir()} fonksiyonu SD kart içerisinden klasör silmek için kullanılır 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fs} & dosya sistemi pointeri \\
+\hline
+\mbox{\texttt{ in}}  & {\em path} & silinecek klasör yolu \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00106}{106}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a79399a113c185d123e34bbeadda754a9}\label{_sd_card_8cpp_a79399a113c185d123e34bbeadda754a9} 
+\index{SdCard.cpp@{SdCard.cpp}!renameFile@{renameFile}}
+\index{renameFile@{renameFile}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{renameFile()}{renameFile()}}
+{\footnotesize\ttfamily void rename\+File (\begin{DoxyParamCaption}\item[{fs\+::\+FS \&}]{fs,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{path1,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{path2 }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_a79399a113c185d123e34bbeadda754a9}{rename\+File()} fonksiyonu SD kart içerisindekie dosyanın adının değiştirilmesini sağlar 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fs} & dosya sistemi pointeri \\
+\hline
+\mbox{\texttt{ in}}  & {\em path1} & ismi değiştirilecek dosyanın yolu \\
+\hline
+\mbox{\texttt{ in}}  & {\em path2} & isim değiştirildikten sonra dosyanın yolu \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00195}{195}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_abe29afded73d329da6c5b83517ec3480}\label{_sd_card_8cpp_abe29afded73d329da6c5b83517ec3480} 
+\index{SdCard.cpp@{SdCard.cpp}!SdCardSetDataReady@{SdCardSetDataReady}}
+\index{SdCardSetDataReady@{SdCardSetDataReady}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{SdCardSetDataReady()}{SdCardSetDataReady()}}
+{\footnotesize\ttfamily void Sd\+Card\+Set\+Data\+Ready (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_abe29afded73d329da6c5b83517ec3480}{Sd\+Card\+Set\+Data\+Ready()} fonksiyonu SD karta yazılmaya hazır veri olduğunda semaforu aktifleştirmek için kullanılır \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00033}{33}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_ab0b3d355313d8b34cf300d42a32e4fec}\label{_sd_card_8cpp_ab0b3d355313d8b34cf300d42a32e4fec} 
+\index{SdCard.cpp@{SdCard.cpp}!SdCardTasks@{SdCardTasks}}
+\index{SdCardTasks@{SdCardTasks}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{SdCardTasks()}{SdCardTasks()}}
+{\footnotesize\ttfamily void Sd\+Card\+Tasks (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{parameters }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_ab0b3d355313d8b34cf300d42a32e4fec}{Sd\+Card\+Tasks()} fonksiyonu SD işlemleri için oluşturulan thread
+
+SD kartın 4 bit modda kurulmasını, cihazın açıldığı günün adı ile kayıt klasörünün oluşturulmasını, cihazın açıldığı saat adi ile kayıt dosyasının oluşturulmasını ve kayıt aktif olduğu sürece BLE üzerinden telefona gönerilen verilerin base64 formatında depolanmasını sağlar 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em parameters} & thread kurulumunda aktarılan parametreler \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00241}{241}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a362d9e6ff949c4a635493cae7f76fa18}\label{_sd_card_8cpp_a362d9e6ff949c4a635493cae7f76fa18} 
+\index{SdCard.cpp@{SdCard.cpp}!SdCardTasksBegin@{SdCardTasksBegin}}
+\index{SdCardTasksBegin@{SdCardTasksBegin}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{SdCardTasksBegin()}{SdCardTasksBegin()}}
+{\footnotesize\ttfamily void Sd\+Card\+Tasks\+Begin (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_a362d9e6ff949c4a635493cae7f76fa18}{Sd\+Card\+Tasks\+Begin()} fonksiyonu SD işlemleri için thread ve semafor kurulumunu içerir \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00226}{226}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_adfdfe491c3b951586aeba25a0b8ccf80}\label{_sd_card_8cpp_adfdfe491c3b951586aeba25a0b8ccf80} 
+\index{SdCard.cpp@{SdCard.cpp}!writeFile@{writeFile}}
+\index{writeFile@{writeFile}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{writeFile()}{writeFile()}}
+{\footnotesize\ttfamily void write\+File (\begin{DoxyParamCaption}\item[{fs\+::\+FS \&}]{fs,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{path,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{message }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_adfdfe491c3b951586aeba25a0b8ccf80}{write\+File()} fonksiyonu SD kart içerisine dosya yazılmasını sağlar 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fs} & dosya sistemi pointeri \\
+\hline
+\mbox{\texttt{ in}}  & {\em path} & yazılacak dosyanın yolu \\
+\hline
+\mbox{\texttt{ in}}  & {\em message} & dosyaya yazılacak mesajın içeriği \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00143}{143}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{_sd_card_8cpp_a78f7c3cc11ce30f992647a9dd42d96eb}\label{_sd_card_8cpp_a78f7c3cc11ce30f992647a9dd42d96eb} 
+\index{SdCard.cpp@{SdCard.cpp}!clk@{clk}}
+\index{clk@{clk}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{clk}{clk}}
+{\footnotesize\ttfamily int clk = \mbox{\hyperlink{defines_8h_a4e980e4b2da9218896fb7d77b0ee8109}{Sd\+CLK}}}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00015}{15}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a85092d82ab6ea85dad51ba78cbda36a0}\label{_sd_card_8cpp_a85092d82ab6ea85dad51ba78cbda36a0} 
+\index{SdCard.cpp@{SdCard.cpp}!cmd@{cmd}}
+\index{cmd@{cmd}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{cmd}{cmd}}
+{\footnotesize\ttfamily int cmd = \mbox{\hyperlink{defines_8h_a2f8550b66db808c627b8258cdf9739f6}{Sd\+Cmd}}}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a40812442b1325bacac380bbe6c6ed30c}\label{_sd_card_8cpp_a40812442b1325bacac380bbe6c6ed30c} 
+\index{SdCard.cpp@{SdCard.cpp}!contex@{contex}}
+\index{contex@{contex}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{contex}{contex}}
+{\footnotesize\ttfamily char contex\mbox{[}200\mbox{]} = \{ 0 \}}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00022}{22}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_acd5369c8df7dd59d364fbaf8b6d49e1d}\label{_sd_card_8cpp_acd5369c8df7dd59d364fbaf8b6d49e1d} 
+\index{SdCard.cpp@{SdCard.cpp}!d0@{d0}}
+\index{d0@{d0}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{d0}{d0}}
+{\footnotesize\ttfamily int d0 = \mbox{\hyperlink{defines_8h_a7092b0b0b9e7621c52b2660b51329af6}{Sd\+Dat0}}}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_ae333c3953d8b3b3dc30ff91dc3b573d2}\label{_sd_card_8cpp_ae333c3953d8b3b3dc30ff91dc3b573d2} 
+\index{SdCard.cpp@{SdCard.cpp}!d1@{d1}}
+\index{d1@{d1}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{d1}{d1}}
+{\footnotesize\ttfamily int d1 = \mbox{\hyperlink{defines_8h_a052e9d2377a83e7e2596b99837a06fb7}{Sd\+Dat1}}}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a2b4a6cee6fdab3774b13a4de14abfba3}\label{_sd_card_8cpp_a2b4a6cee6fdab3774b13a4de14abfba3} 
+\index{SdCard.cpp@{SdCard.cpp}!d2@{d2}}
+\index{d2@{d2}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{d2}{d2}}
+{\footnotesize\ttfamily int d2 = \mbox{\hyperlink{defines_8h_a2e47836460ba00b7413a1c69501f74cd}{Sd\+Dat2}}}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a386c3ed013503ceea24ec5e48af048bd}\label{_sd_card_8cpp_a386c3ed013503ceea24ec5e48af048bd} 
+\index{SdCard.cpp@{SdCard.cpp}!d3@{d3}}
+\index{d3@{d3}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{d3}{d3}}
+{\footnotesize\ttfamily int d3 = \mbox{\hyperlink{defines_8h_aa3cd9b76368e7cd0914e903517bb0cc2}{Sd\+Dat3}}}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_aed3ab64f344638b8f4c3ec4869ecb79f}\label{_sd_card_8cpp_aed3ab64f344638b8f4c3ec4869ecb79f} 
+\index{SdCard.cpp@{SdCard.cpp}!FileName@{FileName}}
+\index{FileName@{FileName}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{FileName}{FileName}}
+{\footnotesize\ttfamily char File\+Name\mbox{[}50\mbox{]} = \{ 0 \}}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00022}{22}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_af15a80915c6562cd6227b977a4b17d63}\label{_sd_card_8cpp_af15a80915c6562cd6227b977a4b17d63} 
+\index{SdCard.cpp@{SdCard.cpp}!FolderName@{FolderName}}
+\index{FolderName@{FolderName}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{FolderName}{FolderName}}
+{\footnotesize\ttfamily char Folder\+Name\mbox{[}50\mbox{]} = \{ 0 \}}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00022}{22}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a64a0df946f24b2e9c5b62b2d29ecd742}\label{_sd_card_8cpp_a64a0df946f24b2e9c5b62b2d29ecd742} 
+\index{SdCard.cpp@{SdCard.cpp}!isSdInit@{isSdInit}}
+\index{isSdInit@{isSdInit}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{isSdInit}{isSdInit}}
+{\footnotesize\ttfamily bool is\+Sd\+Init = false}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a82ae794926bc82ca949420cdf3fbbfa9}\label{_sd_card_8cpp_a82ae794926bc82ca949420cdf3fbbfa9} 
+\index{SdCard.cpp@{SdCard.cpp}!MCP7940@{MCP7940}}
+\index{MCP7940@{MCP7940}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{MCP7940}{MCP7940}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_m_c_p7940___class}{MCP7940\+\_\+\+Class}} MCP7940\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{_r_t_c_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{_r_t_c_8cpp_source}{RTC.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a98bf720ae93a28bd7717d92b5a797403}\label{_sd_card_8cpp_a98bf720ae93a28bd7717d92b5a797403} 
+\index{SdCard.cpp@{SdCard.cpp}!output0@{output0}}
+\index{output0@{output0}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{output0}{output0}}
+{\footnotesize\ttfamily char output0\mbox{[}(9 \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}+2 -\/((9 \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}+2) \% 3))/3 \texorpdfstring{$\ast$}{*}4+1\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00026}{26}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_ace4bbdc55bdf72c238ad525f31ebd95a}\label{_sd_card_8cpp_ace4bbdc55bdf72c238ad525f31ebd95a} 
+\index{SdCard.cpp@{SdCard.cpp}!output1@{output1}}
+\index{output1@{output1}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{output1}{output1}}
+{\footnotesize\ttfamily char output1\mbox{[}(9 \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}+2 -\/((9 \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}+2) \% 3))/3 \texorpdfstring{$\ast$}{*}4+1\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00027}{27}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8cpp_a4d606f3e118ce5842a369376c2c5dcc5}\label{_sd_card_8cpp_a4d606f3e118ce5842a369376c2c5dcc5} 
+\index{SdCard.cpp@{SdCard.cpp}!SemSDCard@{SemSDCard}}
+\index{SemSDCard@{SemSDCard}!SdCard.cpp@{SdCard.cpp}}
+\doxysubsubsection{\texorpdfstring{SemSDCard}{SemSDCard}}
+{\footnotesize\ttfamily Semaphore\+Handle\+\_\+t Sem\+SDCard}
+
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+

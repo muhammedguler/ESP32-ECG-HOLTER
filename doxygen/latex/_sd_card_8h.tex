@@ -1,0 +1,68 @@
+\doxysection{Sd\+Card.\+h File Reference}
+\hypertarget{_sd_card_8h}{}\label{_sd_card_8h}\index{SdCard.h@{SdCard.h}}
+{\ttfamily \#include "{}defines.\+h"{}}\newline
+{\ttfamily \#include "{}FS.\+h"{}}\newline
+{\ttfamily \#include "{}SD\+\_\+\+MMC.\+h"{}}\newline
+{\ttfamily \#include "{}Hardware\+Serial.\+h"{}}\newline
+{\ttfamily \#include "{}esp32-\/hal-\/gpio.\+h"{}}\newline
+{\ttfamily \#include "{}RTC.\+h"{}}\newline
+{\ttfamily \#include "{}ECG.\+h"{}}\newline
+{\ttfamily \#include "{}arduino\+\_\+base64.\+hpp"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_sd_card_8h_a362d9e6ff949c4a635493cae7f76fa18}{Sd\+Card\+Tasks\+Begin}} (void)
+\item 
+void \mbox{\hyperlink{_sd_card_8h_ab0b3d355313d8b34cf300d42a32e4fec}{Sd\+Card\+Tasks}} (void \texorpdfstring{$\ast$}{*}parameters)
+\item 
+void \mbox{\hyperlink{_sd_card_8h_abe29afded73d329da6c5b83517ec3480}{Sd\+Card\+Set\+Data\+Ready}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{_sd_card_8h_abe29afded73d329da6c5b83517ec3480}\label{_sd_card_8h_abe29afded73d329da6c5b83517ec3480} 
+\index{SdCard.h@{SdCard.h}!SdCardSetDataReady@{SdCardSetDataReady}}
+\index{SdCardSetDataReady@{SdCardSetDataReady}!SdCard.h@{SdCard.h}}
+\doxysubsubsection{\texorpdfstring{SdCardSetDataReady()}{SdCardSetDataReady()}}
+{\footnotesize\ttfamily void Sd\+Card\+Set\+Data\+Ready (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_abe29afded73d329da6c5b83517ec3480}{Sd\+Card\+Set\+Data\+Ready()} fonksiyonu SD karta yazılmaya hazır veri olduğunda semaforu aktifleştirmek için kullanılır \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00033}{33}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8h_ab0b3d355313d8b34cf300d42a32e4fec}\label{_sd_card_8h_ab0b3d355313d8b34cf300d42a32e4fec} 
+\index{SdCard.h@{SdCard.h}!SdCardTasks@{SdCardTasks}}
+\index{SdCardTasks@{SdCardTasks}!SdCard.h@{SdCard.h}}
+\doxysubsubsection{\texorpdfstring{SdCardTasks()}{SdCardTasks()}}
+{\footnotesize\ttfamily void Sd\+Card\+Tasks (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{parameters }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_ab0b3d355313d8b34cf300d42a32e4fec}{Sd\+Card\+Tasks()} fonksiyonu SD işlemleri için oluşturulan thread
+
+SD kartın 4 bit modda kurulmasını, cihazın açıldığı günün adı ile kayıt klasörünün oluşturulmasını, cihazın açıldığı saat adi ile kayıt dosyasının oluşturulmasını ve kayıt aktif olduğu sürece BLE üzerinden telefona gönerilen verilerin base64 formatında depolanmasını sağlar 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em parameters} & thread kurulumunda aktarılan parametreler \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00241}{241}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+
+\Hypertarget{_sd_card_8h_a362d9e6ff949c4a635493cae7f76fa18}\label{_sd_card_8h_a362d9e6ff949c4a635493cae7f76fa18} 
+\index{SdCard.h@{SdCard.h}!SdCardTasksBegin@{SdCardTasksBegin}}
+\index{SdCardTasksBegin@{SdCardTasksBegin}!SdCard.h@{SdCard.h}}
+\doxysubsubsection{\texorpdfstring{SdCardTasksBegin()}{SdCardTasksBegin()}}
+{\footnotesize\ttfamily void Sd\+Card\+Tasks\+Begin (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\doxylink{_sd_card_8cpp_a362d9e6ff949c4a635493cae7f76fa18}{Sd\+Card\+Tasks\+Begin()} fonksiyonu SD işlemleri için thread ve semafor kurulumunu içerir \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_sd_card_8cpp_source_l00226}{226}} of file \mbox{\hyperlink{_sd_card_8cpp_source}{Sd\+Card.\+cpp}}.
+

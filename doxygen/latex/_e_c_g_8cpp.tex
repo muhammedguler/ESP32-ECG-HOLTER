@@ -1,0 +1,363 @@
+\doxysection{ECG.\+cpp File Reference}
+\hypertarget{_e_c_g_8cpp}{}\label{_e_c_g_8cpp}\index{ECG.cpp@{ECG.cpp}}
+{\ttfamily \#include "{}ECG.\+h"{}}\newline
+{\ttfamily \#include "{}fdacoefs.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR \mbox{\hyperlink{_e_c_g_8cpp_aa953b6048c8b1f479c6bc76384e9743e}{isr\+Ads\+ALARM}} ()
+\item 
+void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR \mbox{\hyperlink{_e_c_g_8cpp_ae8a91689f83e02c59c69b53f8569a730}{isr\+ADS1293\+Complete}} ()
+\item 
+void IRAM\+\_\+\+ATTR \mbox{\hyperlink{_e_c_g_8cpp_ada06ab1c4bbd307a9fea75726c8894f1}{on\+Timer}} ()
+\item 
+void \mbox{\hyperlink{_e_c_g_8cpp_abad49b9cae6bb197d45389faae00babd}{ADS1293\+Task\+Begin}} (void)
+\item 
+void \mbox{\hyperlink{_e_c_g_8cpp_af1aef1a1e3a715b2395221444ce48bfe}{ADS1293\+Task}} (void \texorpdfstring{$\ast$}{*}Parameters)
+\item 
+int32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_ab271f8317b4bd7961e202d6c17d47b9b}{FIR\+\_\+\+Filter}} (uint32\+\_\+t input, int8\+\_\+t channel)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a87d92bd9c523756cac67f2638e2ced03}{ecg\+Ch1}} = 0
+\item 
+int32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a47c9643af71529e5f17965327186f1ef}{ecg\+Ch2}} = 0
+\item 
+int32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a84f875d0dc1990290505961329e0ee3b}{ecg\+Ch3}} = 0
+\item 
+int32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a686f0d73c6b25cfda9b2c185a997fd41}{ecg\+Filtered\+Ch1}} = 0
+\item 
+int32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a93ee72a86277fd1820f1635ab83fa10b}{ecg\+Filtered\+Ch2}} = 0
+\item 
+int32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a8a83fac43b8d002f4dba57aa1dc3f9be}{ecg\+Filtered\+Ch3}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a214ee2a6684022dc2926cb2dc1150f87}{ch1\+Circle\+Index}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a1ae457eaf51da7f548f55d3d320c62b8}{ch2\+Circle\+Index}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a2e7491247bc07b88feffb99923c9f569}{ch3\+Circle\+Index}} = 0
+\item 
+uint32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_af110b47ed67bff2e6400074d5b2e3d15}{ch1\+Reads\+Buffer}} \mbox{[}\mbox{\hyperlink{fdacoefs_8h_ad567ea9864a3046e47ab69cdc050ecfa}{BL}}\mbox{]}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_ab89a046eb13ed6106fbc52939e3019af}{ch2\+Reads\+Buffer}} \mbox{[}\mbox{\hyperlink{fdacoefs_8h_ad567ea9864a3046e47ab69cdc050ecfa}{BL}}\mbox{]}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_ad47758730b233514ed7a1158dc72160a}{ch3\+Reads\+Buffer}} \mbox{[}\mbox{\hyperlink{fdacoefs_8h_ad567ea9864a3046e47ab69cdc050ecfa}{BL}}\mbox{]}
+\item 
+hw\+\_\+timer\+\_\+t \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{_e_c_g_8cpp_a958d14fa8118b48f97dd7d3860810746}{My\+\_\+timer}} = NULL
+\item 
+\mbox{\hyperlink{classads1293}{ads1293}} \mbox{\hyperlink{_e_c_g_8cpp_a521396173248dadabada989b43618b57}{ADS1293}} (\mbox{\hyperlink{defines_8h_a986159f3cec7346f10bfecaf4e3b5e04}{Ads\+Drdy}}, \mbox{\hyperlink{defines_8h_ae922faec55df925379263ac337acdfef}{Ads\+CS}})
+\item 
+Semaphore\+Handle\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a5369eeca65390d8ee2999c2ff35666e9}{Sem\+ADS1293}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a8a030ef46d5f0efa3471aa9f0a0a1432}{point}} = 0
+\item 
+Base\+Type\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a9d9a749ad99ec3d4a6886d5277b9ba87}{x\+Higher\+Priority\+Task\+Woken}} = pd\+FALSE
+\item 
+bool \mbox{\hyperlink{_e_c_g_8cpp_ab382e8595c4d4a8b13f10a88591bd056}{Ads\+Alarm\+Occured}} = false
+\item 
+uint8\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_a070e9b32fe4c2d27b5695f106d44d37a}{send\+Buffer}} = 1
+\item 
+uint8\+\_\+t \mbox{\hyperlink{_e_c_g_8cpp_ab69e66693d7e93bdf0659cb643baac5b}{write\+Buffer}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{_e_c_g_8cpp_af1aef1a1e3a715b2395221444ce48bfe}\label{_e_c_g_8cpp_af1aef1a1e3a715b2395221444ce48bfe} 
+\index{ECG.cpp@{ECG.cpp}!ADS1293Task@{ADS1293Task}}
+\index{ADS1293Task@{ADS1293Task}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ADS1293Task()}{ADS1293Task()}}
+{\footnotesize\ttfamily void ADS1293\+Task (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{Parameters }\end{DoxyParamCaption})}
+
+ADS1293\+Tasks() fonksiyonu EKG okuma işlemleri için oluşturulan thread
+
+ADS1293\textquotesingle{}ün pin kurulumlarını, 400sps ve 5 prob modunda okuma ayarlarını içerir. Ayrıca EKG verisinin okunmasını, filtrelenmesini ve gönderme bufferlarına yazılmasını sağlar. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em parameters} & thread kurulumunda aktarılan parametreler \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00067}{67}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_abad49b9cae6bb197d45389faae00babd}\label{_e_c_g_8cpp_abad49b9cae6bb197d45389faae00babd} 
+\index{ECG.cpp@{ECG.cpp}!ADS1293TaskBegin@{ADS1293TaskBegin}}
+\index{ADS1293TaskBegin@{ADS1293TaskBegin}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ADS1293TaskBegin()}{ADS1293TaskBegin()}}
+{\footnotesize\ttfamily void ADS1293\+Task\+Begin (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+ADS1293\+Tasks\+Begin() fonksiyonu EKG okuma işlemleri için thread ve semafor kurulumunu içerir \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00054}{54}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_ab271f8317b4bd7961e202d6c17d47b9b}\label{_e_c_g_8cpp_ab271f8317b4bd7961e202d6c17d47b9b} 
+\index{ECG.cpp@{ECG.cpp}!FIR\_Filter@{FIR\_Filter}}
+\index{FIR\_Filter@{FIR\_Filter}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{FIR\_Filter()}{FIR\_Filter()}}
+{\footnotesize\ttfamily int32\+\_\+t FIR\+\_\+\+Filter (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{input,  }\item[{int8\+\_\+t}]{channel }\end{DoxyParamCaption})}
+
+\doxylink{_e_c_g_8cpp_ab271f8317b4bd7961e202d6c17d47b9b}{FIR\+\_\+\+Filter()} fonksiyonu okunan ham EKG verisinin filtrelenmesini sağlar
+
+Ham EKG verisinden DC ofseti ve 50Hz, 100Hz, 150Hz ve 200Hz de bulunan şebeke gürültüsü harmoniklerinin etkilerini elimine etmek için kullanılan filtre fonksiyonu.
+\begin{DoxyEnumerate}
+\item dereceden least-\/squares metodu kullanılarakoluşturulan FIR filtre kodu 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em input} & filtrelenecek ham ADS1293 verisi \\
+\hline
+\mbox{\texttt{ in}}  & {\em channel} & filtrelenecek ADS1293 kanalı \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+filtrelenmiş EKG verisi
+\end{DoxyReturn}
+
+\end{DoxyEnumerate}
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00162}{162}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_ae8a91689f83e02c59c69b53f8569a730}\label{_e_c_g_8cpp_ae8a91689f83e02c59c69b53f8569a730} 
+\index{ECG.cpp@{ECG.cpp}!isrADS1293Complete@{isrADS1293Complete}}
+\index{isrADS1293Complete@{isrADS1293Complete}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{isrADS1293Complete()}{isrADS1293Complete()}}
+{\footnotesize\ttfamily void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR isr\+ADS1293\+Complete (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\doxylink{_e_c_g_8cpp_ae8a91689f83e02c59c69b53f8569a730}{isr\+ADS1293\+Complete()} fonksiyonu ADS1293 entegresinde çevrim tamamlandığında tetiklenen fonksiyon.
+
+(kart tasarım hatası sebebiyle stabil çalışmıyor bu yüzden kullanılmıyor.) \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00037}{37}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_aa953b6048c8b1f479c6bc76384e9743e}\label{_e_c_g_8cpp_aa953b6048c8b1f479c6bc76384e9743e} 
+\index{ECG.cpp@{ECG.cpp}!isrAdsALARM@{isrAdsALARM}}
+\index{isrAdsALARM@{isrAdsALARM}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{isrAdsALARM()}{isrAdsALARM()}}
+{\footnotesize\ttfamily void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR isr\+Ads\+ALARM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\doxylink{_e_c_g_8cpp_aa953b6048c8b1f479c6bc76384e9743e}{isr\+Ads\+ALARM()} fonksiyonu ADS1293 entegresinde alarm oluştuğunda tetiklenen fonksiyon. \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_ada06ab1c4bbd307a9fea75726c8894f1}\label{_e_c_g_8cpp_ada06ab1c4bbd307a9fea75726c8894f1} 
+\index{ECG.cpp@{ECG.cpp}!onTimer@{onTimer}}
+\index{onTimer@{onTimer}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{onTimer()}{onTimer()}}
+{\footnotesize\ttfamily void IRAM\+\_\+\+ATTR on\+Timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\doxylink{_e_c_g_8cpp_ada06ab1c4bbd307a9fea75726c8894f1}{on\+Timer()} fonksiyonu ADS1293\textquotesingle{}ten 400hz örnekleme frekansı ile okuma yapılması için kurulan timer\textquotesingle{}in kesmesi \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00046}{46}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{_e_c_g_8cpp_a521396173248dadabada989b43618b57}\label{_e_c_g_8cpp_a521396173248dadabada989b43618b57} 
+\index{ECG.cpp@{ECG.cpp}!ADS1293@{ADS1293}}
+\index{ADS1293@{ADS1293}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ADS1293}{ADS1293}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classads1293}{ads1293}} ADS1293(\mbox{\hyperlink{defines_8h_a986159f3cec7346f10bfecaf4e3b5e04}{Ads\+Drdy}}, \mbox{\hyperlink{defines_8h_ae922faec55df925379263ac337acdfef}{Ads\+CS}}) (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{defines_8h_a986159f3cec7346f10bfecaf4e3b5e04}{Ads\+Drdy}}}]{,  }\item[{\mbox{\hyperlink{defines_8h_ae922faec55df925379263ac337acdfef}{Ads\+CS}}}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{_e_c_g_8cpp_ab382e8595c4d4a8b13f10a88591bd056}\label{_e_c_g_8cpp_ab382e8595c4d4a8b13f10a88591bd056} 
+\index{ECG.cpp@{ECG.cpp}!AdsAlarmOccured@{AdsAlarmOccured}}
+\index{AdsAlarmOccured@{AdsAlarmOccured}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{AdsAlarmOccured}{AdsAlarmOccured}}
+{\footnotesize\ttfamily bool Ads\+Alarm\+Occured = false}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00026}{26}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a214ee2a6684022dc2926cb2dc1150f87}\label{_e_c_g_8cpp_a214ee2a6684022dc2926cb2dc1150f87} 
+\index{ECG.cpp@{ECG.cpp}!ch1CircleIndex@{ch1CircleIndex}}
+\index{ch1CircleIndex@{ch1CircleIndex}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ch1CircleIndex}{ch1CircleIndex}}
+{\footnotesize\ttfamily uint32\+\_\+t ch1\+Circle\+Index = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_af110b47ed67bff2e6400074d5b2e3d15}\label{_e_c_g_8cpp_af110b47ed67bff2e6400074d5b2e3d15} 
+\index{ECG.cpp@{ECG.cpp}!ch1ReadsBuffer@{ch1ReadsBuffer}}
+\index{ch1ReadsBuffer@{ch1ReadsBuffer}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ch1ReadsBuffer}{ch1ReadsBuffer}}
+{\footnotesize\ttfamily uint32\+\_\+t ch1\+Reads\+Buffer\mbox{[}\mbox{\hyperlink{fdacoefs_8h_ad567ea9864a3046e47ab69cdc050ecfa}{BL}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a1ae457eaf51da7f548f55d3d320c62b8}\label{_e_c_g_8cpp_a1ae457eaf51da7f548f55d3d320c62b8} 
+\index{ECG.cpp@{ECG.cpp}!ch2CircleIndex@{ch2CircleIndex}}
+\index{ch2CircleIndex@{ch2CircleIndex}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ch2CircleIndex}{ch2CircleIndex}}
+{\footnotesize\ttfamily uint32\+\_\+t ch2\+Circle\+Index = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_ab89a046eb13ed6106fbc52939e3019af}\label{_e_c_g_8cpp_ab89a046eb13ed6106fbc52939e3019af} 
+\index{ECG.cpp@{ECG.cpp}!ch2ReadsBuffer@{ch2ReadsBuffer}}
+\index{ch2ReadsBuffer@{ch2ReadsBuffer}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ch2ReadsBuffer}{ch2ReadsBuffer}}
+{\footnotesize\ttfamily uint32\+\_\+t ch2\+Reads\+Buffer\mbox{[}\mbox{\hyperlink{fdacoefs_8h_ad567ea9864a3046e47ab69cdc050ecfa}{BL}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a2e7491247bc07b88feffb99923c9f569}\label{_e_c_g_8cpp_a2e7491247bc07b88feffb99923c9f569} 
+\index{ECG.cpp@{ECG.cpp}!ch3CircleIndex@{ch3CircleIndex}}
+\index{ch3CircleIndex@{ch3CircleIndex}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ch3CircleIndex}{ch3CircleIndex}}
+{\footnotesize\ttfamily uint32\+\_\+t ch3\+Circle\+Index = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_ad47758730b233514ed7a1158dc72160a}\label{_e_c_g_8cpp_ad47758730b233514ed7a1158dc72160a} 
+\index{ECG.cpp@{ECG.cpp}!ch3ReadsBuffer@{ch3ReadsBuffer}}
+\index{ch3ReadsBuffer@{ch3ReadsBuffer}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ch3ReadsBuffer}{ch3ReadsBuffer}}
+{\footnotesize\ttfamily uint32\+\_\+t ch3\+Reads\+Buffer\mbox{[}\mbox{\hyperlink{fdacoefs_8h_ad567ea9864a3046e47ab69cdc050ecfa}{BL}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a87d92bd9c523756cac67f2638e2ced03}\label{_e_c_g_8cpp_a87d92bd9c523756cac67f2638e2ced03} 
+\index{ECG.cpp@{ECG.cpp}!ecgCh1@{ecgCh1}}
+\index{ecgCh1@{ecgCh1}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ecgCh1}{ecgCh1}}
+{\footnotesize\ttfamily int32\+\_\+t ecg\+Ch1 = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a47c9643af71529e5f17965327186f1ef}\label{_e_c_g_8cpp_a47c9643af71529e5f17965327186f1ef} 
+\index{ECG.cpp@{ECG.cpp}!ecgCh2@{ecgCh2}}
+\index{ecgCh2@{ecgCh2}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ecgCh2}{ecgCh2}}
+{\footnotesize\ttfamily int32\+\_\+t ecg\+Ch2 = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a84f875d0dc1990290505961329e0ee3b}\label{_e_c_g_8cpp_a84f875d0dc1990290505961329e0ee3b} 
+\index{ECG.cpp@{ECG.cpp}!ecgCh3@{ecgCh3}}
+\index{ecgCh3@{ecgCh3}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ecgCh3}{ecgCh3}}
+{\footnotesize\ttfamily int32\+\_\+t ecg\+Ch3 = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a686f0d73c6b25cfda9b2c185a997fd41}\label{_e_c_g_8cpp_a686f0d73c6b25cfda9b2c185a997fd41} 
+\index{ECG.cpp@{ECG.cpp}!ecgFilteredCh1@{ecgFilteredCh1}}
+\index{ecgFilteredCh1@{ecgFilteredCh1}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ecgFilteredCh1}{ecgFilteredCh1}}
+{\footnotesize\ttfamily int32\+\_\+t ecg\+Filtered\+Ch1 = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a93ee72a86277fd1820f1635ab83fa10b}\label{_e_c_g_8cpp_a93ee72a86277fd1820f1635ab83fa10b} 
+\index{ECG.cpp@{ECG.cpp}!ecgFilteredCh2@{ecgFilteredCh2}}
+\index{ecgFilteredCh2@{ecgFilteredCh2}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ecgFilteredCh2}{ecgFilteredCh2}}
+{\footnotesize\ttfamily int32\+\_\+t ecg\+Filtered\+Ch2 = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00009}{9}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a8a83fac43b8d002f4dba57aa1dc3f9be}\label{_e_c_g_8cpp_a8a83fac43b8d002f4dba57aa1dc3f9be} 
+\index{ECG.cpp@{ECG.cpp}!ecgFilteredCh3@{ecgFilteredCh3}}
+\index{ecgFilteredCh3@{ecgFilteredCh3}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{ecgFilteredCh3}{ecgFilteredCh3}}
+{\footnotesize\ttfamily int32\+\_\+t ecg\+Filtered\+Ch3 = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a958d14fa8118b48f97dd7d3860810746}\label{_e_c_g_8cpp_a958d14fa8118b48f97dd7d3860810746} 
+\index{ECG.cpp@{ECG.cpp}!My\_timer@{My\_timer}}
+\index{My\_timer@{My\_timer}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{My\_timer}{My\_timer}}
+{\footnotesize\ttfamily hw\+\_\+timer\+\_\+t\texorpdfstring{$\ast$}{*} My\+\_\+timer = NULL}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a8a030ef46d5f0efa3471aa9f0a0a1432}\label{_e_c_g_8cpp_a8a030ef46d5f0efa3471aa9f0a0a1432} 
+\index{ECG.cpp@{ECG.cpp}!point@{point}}
+\index{point@{point}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{point}{point}}
+{\footnotesize\ttfamily uint16\+\_\+t point = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00022}{22}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a5369eeca65390d8ee2999c2ff35666e9}\label{_e_c_g_8cpp_a5369eeca65390d8ee2999c2ff35666e9} 
+\index{ECG.cpp@{ECG.cpp}!SemADS1293@{SemADS1293}}
+\index{SemADS1293@{SemADS1293}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{SemADS1293}{SemADS1293}}
+{\footnotesize\ttfamily Semaphore\+Handle\+\_\+t Sem\+ADS1293}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a070e9b32fe4c2d27b5695f106d44d37a}\label{_e_c_g_8cpp_a070e9b32fe4c2d27b5695f106d44d37a} 
+\index{ECG.cpp@{ECG.cpp}!sendBuffer@{sendBuffer}}
+\index{sendBuffer@{sendBuffer}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{sendBuffer}{sendBuffer}}
+{\footnotesize\ttfamily uint8\+\_\+t send\+Buffer = 1}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_ab69e66693d7e93bdf0659cb643baac5b}\label{_e_c_g_8cpp_ab69e66693d7e93bdf0659cb643baac5b} 
+\index{ECG.cpp@{ECG.cpp}!writeBuffer@{writeBuffer}}
+\index{writeBuffer@{writeBuffer}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{writeBuffer}{writeBuffer}}
+{\footnotesize\ttfamily uint8\+\_\+t write\+Buffer = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8cpp_a9d9a749ad99ec3d4a6886d5277b9ba87}\label{_e_c_g_8cpp_a9d9a749ad99ec3d4a6886d5277b9ba87} 
+\index{ECG.cpp@{ECG.cpp}!xHigherPriorityTaskWoken@{xHigherPriorityTaskWoken}}
+\index{xHigherPriorityTaskWoken@{xHigherPriorityTaskWoken}!ECG.cpp@{ECG.cpp}}
+\doxysubsubsection{\texorpdfstring{xHigherPriorityTaskWoken}{xHigherPriorityTaskWoken}}
+{\footnotesize\ttfamily Base\+Type\+\_\+t x\+Higher\+Priority\+Task\+Woken = pd\+FALSE}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+

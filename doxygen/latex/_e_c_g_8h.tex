@@ -1,0 +1,186 @@
+\doxysection{ECG.\+h File Reference}
+\hypertarget{_e_c_g_8h}{}\label{_e_c_g_8h}\index{ECG.h@{ECG.h}}
+{\ttfamily \#include "{}defines.\+h"{}}\newline
+{\ttfamily \#include $<$SPI.\+h$>$}\newline
+{\ttfamily \#include "{}ads1293.\+h"{}}\newline
+{\ttfamily \#include "{}Hardware\+Serial.\+h"{}}\newline
+{\ttfamily \#include "{}esp32-\/hal-\/gpio.\+h"{}}\newline
+{\ttfamily \#include "{}Ble\+Uart.\+h"{}}\newline
+{\ttfamily \#include "{}Card\+Control.\+h"{}}\newline
+{\ttfamily \#include "{}RTC.\+h"{}}\newline
+{\ttfamily \#include "{}Sd\+Card.\+h"{}}\newline
+{\ttfamily \#include "{}Arduino.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}~56
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR \mbox{\hyperlink{_e_c_g_8h_aa953b6048c8b1f479c6bc76384e9743e}{isr\+Ads\+ALARM}} ()
+\item 
+void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR \mbox{\hyperlink{_e_c_g_8h_ae8a91689f83e02c59c69b53f8569a730}{isr\+ADS1293\+Complete}} ()
+\item 
+void \mbox{\hyperlink{_e_c_g_8h_abad49b9cae6bb197d45389faae00babd}{ADS1293\+Task\+Begin}} (void)
+\item 
+void \mbox{\hyperlink{_e_c_g_8h_af1aef1a1e3a715b2395221444ce48bfe}{ADS1293\+Task}} (void \texorpdfstring{$\ast$}{*}Parameters)
+\item 
+int32\+\_\+t \mbox{\hyperlink{_e_c_g_8h_ab271f8317b4bd7961e202d6c17d47b9b}{FIR\+\_\+\+Filter}} (uint32\+\_\+t input, int8\+\_\+t channel)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{_e_c_g_8h_a070e9b32fe4c2d27b5695f106d44d37a}{send\+Buffer}}
+\item 
+bool \mbox{\hyperlink{_e_c_g_8h_abf8d6ce03a53174265630ac15ddeb939}{ble\+Data\+Ready}}
+\item 
+bool \mbox{\hyperlink{_e_c_g_8h_a61e0a16d1279aa966f1191f36465bfd4}{Sd\+Card\+Data\+Ready}}
+\item 
+Semaphore\+Handle\+\_\+t \mbox{\hyperlink{_e_c_g_8h_a5369eeca65390d8ee2999c2ff35666e9}{Sem\+ADS1293}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}\label{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503} 
+\index{ECG.h@{ECG.h}!bufferSize@{bufferSize}}
+\index{bufferSize@{bufferSize}!ECG.h@{ECG.h}}
+\doxysubsubsection{\texorpdfstring{bufferSize}{bufferSize}}
+{\footnotesize\ttfamily \#define buffer\+Size~56}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8h_source_l00015}{15}} of file \mbox{\hyperlink{_e_c_g_8h_source}{ECG.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{_e_c_g_8h_af1aef1a1e3a715b2395221444ce48bfe}\label{_e_c_g_8h_af1aef1a1e3a715b2395221444ce48bfe} 
+\index{ECG.h@{ECG.h}!ADS1293Task@{ADS1293Task}}
+\index{ADS1293Task@{ADS1293Task}!ECG.h@{ECG.h}}
+\doxysubsubsection{\texorpdfstring{ADS1293Task()}{ADS1293Task()}}
+{\footnotesize\ttfamily void ADS1293\+Task (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{Parameters }\end{DoxyParamCaption})}
+
+ADS1293\+Tasks() fonksiyonu EKG okuma işlemleri için oluşturulan thread
+
+ADS1293\textquotesingle{}ün pin kurulumlarını, 400sps ve 5 prob modunda okuma ayarlarını içerir. Ayrıca EKG verisinin okunmasını, filtrelenmesini ve gönderme bufferlarına yazılmasını sağlar. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em parameters} & thread kurulumunda aktarılan parametreler \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00067}{67}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8h_abad49b9cae6bb197d45389faae00babd}\label{_e_c_g_8h_abad49b9cae6bb197d45389faae00babd} 
+\index{ECG.h@{ECG.h}!ADS1293TaskBegin@{ADS1293TaskBegin}}
+\index{ADS1293TaskBegin@{ADS1293TaskBegin}!ECG.h@{ECG.h}}
+\doxysubsubsection{\texorpdfstring{ADS1293TaskBegin()}{ADS1293TaskBegin()}}
+{\footnotesize\ttfamily void ADS1293\+Task\+Begin (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+ADS1293\+Tasks\+Begin() fonksiyonu EKG okuma işlemleri için thread ve semafor kurulumunu içerir \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00054}{54}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8h_ab271f8317b4bd7961e202d6c17d47b9b}\label{_e_c_g_8h_ab271f8317b4bd7961e202d6c17d47b9b} 
+\index{ECG.h@{ECG.h}!FIR\_Filter@{FIR\_Filter}}
+\index{FIR\_Filter@{FIR\_Filter}!ECG.h@{ECG.h}}
+\doxysubsubsection{\texorpdfstring{FIR\_Filter()}{FIR\_Filter()}}
+{\footnotesize\ttfamily int32\+\_\+t FIR\+\_\+\+Filter (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{input,  }\item[{int8\+\_\+t}]{channel }\end{DoxyParamCaption})}
+
+\doxylink{_e_c_g_8cpp_ab271f8317b4bd7961e202d6c17d47b9b}{FIR\+\_\+\+Filter()} fonksiyonu okunan ham EKG verisinin filtrelenmesini sağlar
+
+Ham EKG verisinden DC ofseti ve 50Hz, 100Hz, 150Hz ve 200Hz de bulunan şebeke gürültüsü harmoniklerinin etkilerini elimine etmek için kullanılan filtre fonksiyonu.
+\begin{DoxyEnumerate}
+\item dereceden least-\/squares metodu kullanılarakoluşturulan FIR filtre kodu 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em input} & filtrelenecek ham ADS1293 verisi \\
+\hline
+\mbox{\texttt{ in}}  & {\em channel} & filtrelenecek ADS1293 kanalı \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+filtrelenmiş EKG verisi
+\end{DoxyReturn}
+
+\end{DoxyEnumerate}
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00162}{162}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8h_ae8a91689f83e02c59c69b53f8569a730}\label{_e_c_g_8h_ae8a91689f83e02c59c69b53f8569a730} 
+\index{ECG.h@{ECG.h}!isrADS1293Complete@{isrADS1293Complete}}
+\index{isrADS1293Complete@{isrADS1293Complete}!ECG.h@{ECG.h}}
+\doxysubsubsection{\texorpdfstring{isrADS1293Complete()}{isrADS1293Complete()}}
+{\footnotesize\ttfamily void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR isr\+ADS1293\+Complete (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\doxylink{_e_c_g_8cpp_ae8a91689f83e02c59c69b53f8569a730}{isr\+ADS1293\+Complete()} fonksiyonu ADS1293 entegresinde çevrim tamamlandığında tetiklenen fonksiyon.
+
+(kart tasarım hatası sebebiyle stabil çalışmıyor bu yüzden kullanılmıyor.) \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00037}{37}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8h_aa953b6048c8b1f479c6bc76384e9743e}\label{_e_c_g_8h_aa953b6048c8b1f479c6bc76384e9743e} 
+\index{ECG.h@{ECG.h}!isrAdsALARM@{isrAdsALARM}}
+\index{isrAdsALARM@{isrAdsALARM}!ECG.h@{ECG.h}}
+\doxysubsubsection{\texorpdfstring{isrAdsALARM()}{isrAdsALARM()}}
+{\footnotesize\ttfamily void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR isr\+Ads\+ALARM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\doxylink{_e_c_g_8cpp_aa953b6048c8b1f479c6bc76384e9743e}{isr\+Ads\+ALARM()} fonksiyonu ADS1293 entegresinde alarm oluştuğunda tetiklenen fonksiyon. \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{_e_c_g_8h_abf8d6ce03a53174265630ac15ddeb939}\label{_e_c_g_8h_abf8d6ce03a53174265630ac15ddeb939} 
+\index{ECG.h@{ECG.h}!bleDataReady@{bleDataReady}}
+\index{bleDataReady@{bleDataReady}!ECG.h@{ECG.h}}
+\doxysubsubsection{\texorpdfstring{bleDataReady}{bleDataReady}}
+{\footnotesize\ttfamily bool ble\+Data\+Ready\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_e_c_g_8h_a61e0a16d1279aa966f1191f36465bfd4}\label{_e_c_g_8h_a61e0a16d1279aa966f1191f36465bfd4} 
+\index{ECG.h@{ECG.h}!SdCardDataReady@{SdCardDataReady}}
+\index{SdCardDataReady@{SdCardDataReady}!ECG.h@{ECG.h}}
+\doxysubsubsection{\texorpdfstring{SdCardDataReady}{SdCardDataReady}}
+{\footnotesize\ttfamily bool Sd\+Card\+Data\+Ready}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8h_source_l00019}{19}} of file \mbox{\hyperlink{_e_c_g_8h_source}{ECG.\+h}}.
+
+\Hypertarget{_e_c_g_8h_a5369eeca65390d8ee2999c2ff35666e9}\label{_e_c_g_8h_a5369eeca65390d8ee2999c2ff35666e9} 
+\index{ECG.h@{ECG.h}!SemADS1293@{SemADS1293}}
+\index{SemADS1293@{SemADS1293}!ECG.h@{ECG.h}}
+\doxysubsubsection{\texorpdfstring{SemADS1293}{SemADS1293}}
+{\footnotesize\ttfamily Semaphore\+Handle\+\_\+t Sem\+ADS1293\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+
+\Hypertarget{_e_c_g_8h_a070e9b32fe4c2d27b5695f106d44d37a}\label{_e_c_g_8h_a070e9b32fe4c2d27b5695f106d44d37a} 
+\index{ECG.h@{ECG.h}!sendBuffer@{sendBuffer}}
+\index{sendBuffer@{sendBuffer}!ECG.h@{ECG.h}}
+\doxysubsubsection{\texorpdfstring{sendBuffer}{sendBuffer}}
+{\footnotesize\ttfamily uint8\+\_\+t send\+Buffer\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{_e_c_g_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{_e_c_g_8cpp_source}{ECG.\+cpp}}.
+

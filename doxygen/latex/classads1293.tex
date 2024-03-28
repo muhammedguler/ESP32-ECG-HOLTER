@@ -1,0 +1,277 @@
+\doxysection{ads1293 Class Reference}
+\hypertarget{classads1293}{}\label{classads1293}\index{ads1293@{ads1293}}
+
+
+{\ttfamily \#include $<$ads1293.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classads1293_a02b92913c442261374fcf4790d8178f1}{ads1293\+Begin3\+Lead\+ECG}} (enum \mbox{\hyperlink{ads1293_8h_ae4261ed7af57c15e4b0ca276d19075b4}{Sample\+Freq}} Freq)
+\item 
+void \mbox{\hyperlink{classads1293_a180a2cf43e7d00acb7e190da878659ed}{ads1293\+Begin5\+Lead\+ECG}} (enum \mbox{\hyperlink{ads1293_8h_ae4261ed7af57c15e4b0ca276d19075b4}{Sample\+Freq}} Freq)
+\item 
+int32\+\_\+t \mbox{\hyperlink{classads1293_a8513d8ba33b598508b6af2a981a501fb}{get\+ECGdata}} (uint8\+\_\+t channel)
+\item 
+void \mbox{\hyperlink{classads1293_ab4f53ac1f92353355f0a526b42db8c98}{set\+Ads1293\+Pins}} ()
+\item 
+void \mbox{\hyperlink{classads1293_a26078b665d256cc66f1b4011a60ac75b}{disable\+Ch}} (uint8\+\_\+t channel)
+\item 
+uint8\+\_\+t \mbox{\hyperlink{classads1293_a512fa234c79a1094de55420eb68b01b3}{ads1293\+Read\+Register}} (uint8\+\_\+t rd\+Address)
+\item 
+uint8\+\_\+t \mbox{\hyperlink{classads1293_a864e2c1a99b19d66e10db40c1f411c40}{read\+Error\+Status}} (uint8\+\_\+t rd\+Address)
+\item 
+uint8\+\_\+t \mbox{\hyperlink{classads1293_aec064e27d99bcb40a4c88601264c03a3}{read\+Lead\+Error\+Status}} ()
+\item 
+bool \mbox{\hyperlink{classads1293_a292d11258ffd6cb775333c6dc64c7b86}{attach\+Test\+Signal}} (uint8\+\_\+t channel, uint8\+\_\+t pol)
+\item 
+void \mbox{\hyperlink{classads1293_a1f32e22857da97711a53965658881696}{set\+Sampling\+Rate}} (enum \mbox{\hyperlink{ads1293_8h_ae4261ed7af57c15e4b0ca276d19075b4}{Sample\+Freq}})
+\item 
+uint8\+\_\+t \mbox{\hyperlink{classads1293_a129a6af0c687a5c55835bf5bd4c6365c}{read\+Error\+Status}} ()
+\item 
+void \mbox{\hyperlink{classads1293_a5b60df3461fab41a3703243b0a96f0a3}{ads1293\+Write\+Register}} (uint8\+\_\+t wr\+Address, uint8\+\_\+t data)
+\item 
+\mbox{\hyperlink{classads1293_ac1db4eeb038d2f224537fb3aa8ccb059}{ads1293}} (uint8\+\_\+t drdy, uint8\+\_\+t chip\+Select)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{classads1293_ad13a4eefa8e23e9f3f85c6af8193d5ec}{drdy\+Pin}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{classads1293_a20587ced4026b394492fcb6ab1bf7b9c}{cs\+Pin}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{ads1293_8h_source_l00139}{139}} of file \mbox{\hyperlink{ads1293_8h_source}{ads1293.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classads1293_ac1db4eeb038d2f224537fb3aa8ccb059}\label{classads1293_ac1db4eeb038d2f224537fb3aa8ccb059} 
+\index{ads1293@{ads1293}!ads1293@{ads1293}}
+\index{ads1293@{ads1293}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{ads1293()}{ads1293()}}
+{\footnotesize\ttfamily ads1293\+::ads1293 (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{drdy,  }\item[{uint8\+\_\+t}]{chip\+Select }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ads1293_8h_source_l00157}{157}} of file \mbox{\hyperlink{ads1293_8h_source}{ads1293.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classads1293_a02b92913c442261374fcf4790d8178f1}\label{classads1293_a02b92913c442261374fcf4790d8178f1} 
+\index{ads1293@{ads1293}!ads1293Begin3LeadECG@{ads1293Begin3LeadECG}}
+\index{ads1293Begin3LeadECG@{ads1293Begin3LeadECG}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{ads1293Begin3LeadECG()}{ads1293Begin3LeadECG()}}
+{\footnotesize\ttfamily void ads1293\+::ads1293\+Begin3\+Lead\+ECG (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{ads1293_8h_ae4261ed7af57c15e4b0ca276d19075b4}{Sample\+Freq}}}]{Freq }\end{DoxyParamCaption})}
+
+\doxylink{classads1293_a02b92913c442261374fcf4790d8178f1}{ads1293\+Begin3\+Lead\+ECG()} fonksiyonu ADS1293 entegresini 3 problu modda kurmak için kullanılır. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Freq} & ADS1293 entegresinin örnekleme hızını ayarlamak için kullanılır. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{ads1293_8cpp_source_l00047}{47}} of file \mbox{\hyperlink{ads1293_8cpp_source}{ads1293.\+cpp}}.
+
+\Hypertarget{classads1293_a180a2cf43e7d00acb7e190da878659ed}\label{classads1293_a180a2cf43e7d00acb7e190da878659ed} 
+\index{ads1293@{ads1293}!ads1293Begin5LeadECG@{ads1293Begin5LeadECG}}
+\index{ads1293Begin5LeadECG@{ads1293Begin5LeadECG}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{ads1293Begin5LeadECG()}{ads1293Begin5LeadECG()}}
+{\footnotesize\ttfamily void ads1293\+::ads1293\+Begin5\+Lead\+ECG (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{ads1293_8h_ae4261ed7af57c15e4b0ca276d19075b4}{Sample\+Freq}}}]{Freq }\end{DoxyParamCaption})}
+
+\doxylink{classads1293_a180a2cf43e7d00acb7e190da878659ed}{ads1293\+Begin5\+Lead\+ECG()} fonksiyonu ADS1293 entegresini 5 problu modda kurmak için kullanılır. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Freq} & ADS1293 entegresinin örnekleme hızını ayarlamak için kullanılır. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{ads1293_8cpp_source_l00088}{88}} of file \mbox{\hyperlink{ads1293_8cpp_source}{ads1293.\+cpp}}.
+
+\Hypertarget{classads1293_a512fa234c79a1094de55420eb68b01b3}\label{classads1293_a512fa234c79a1094de55420eb68b01b3} 
+\index{ads1293@{ads1293}!ads1293ReadRegister@{ads1293ReadRegister}}
+\index{ads1293ReadRegister@{ads1293ReadRegister}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{ads1293ReadRegister()}{ads1293ReadRegister()}}
+{\footnotesize\ttfamily uint8\+\_\+t ads1293\+::ads1293\+Read\+Register (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{rd\+Address }\end{DoxyParamCaption})}
+
+\doxylink{classads1293_a512fa234c79a1094de55420eb68b01b3}{ads1293\+Read\+Register()} fonksiyonu ADS1293 entegresinin seçilen bellek adresindeki verinin okunmasını sağlar 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em wr\+Address} & ADS1293 entegresinin bellek adresi \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bellek adresindeki 8 bit veri
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{ads1293_8cpp_source_l00150}{150}} of file \mbox{\hyperlink{ads1293_8cpp_source}{ads1293.\+cpp}}.
+
+\Hypertarget{classads1293_a5b60df3461fab41a3703243b0a96f0a3}\label{classads1293_a5b60df3461fab41a3703243b0a96f0a3} 
+\index{ads1293@{ads1293}!ads1293WriteRegister@{ads1293WriteRegister}}
+\index{ads1293WriteRegister@{ads1293WriteRegister}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{ads1293WriteRegister()}{ads1293WriteRegister()}}
+{\footnotesize\ttfamily void ads1293\+::ads1293\+Write\+Register (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{wr\+Address,  }\item[{uint8\+\_\+t}]{data }\end{DoxyParamCaption})}
+
+\doxylink{classads1293_a5b60df3461fab41a3703243b0a96f0a3}{ads1293\+Write\+Register()} fonksiyonu ADS1293 entegresinin seçilen bellek adaresine istenilen verinin yazılmasını sağlar 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em wr\+Address} & ADS1293 entegresinin bellek adresi \\
+\hline
+\mbox{\texttt{ in}}  & {\em data} & ilgili bellek adresine yazılacak veri \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{ads1293_8cpp_source_l00136}{136}} of file \mbox{\hyperlink{ads1293_8cpp_source}{ads1293.\+cpp}}.
+
+\Hypertarget{classads1293_a292d11258ffd6cb775333c6dc64c7b86}\label{classads1293_a292d11258ffd6cb775333c6dc64c7b86} 
+\index{ads1293@{ads1293}!attachTestSignal@{attachTestSignal}}
+\index{attachTestSignal@{attachTestSignal}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{attachTestSignal()}{attachTestSignal()}}
+{\footnotesize\ttfamily bool ads1293\+::attach\+Test\+Signal (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel,  }\item[{uint8\+\_\+t}]{pol }\end{DoxyParamCaption})}
+
+\doxylink{classads1293_a292d11258ffd6cb775333c6dc64c7b86}{attach\+Test\+Signal()} fonksiyonu ADS1293 entegresinin istenilen kanalına test sinyali uygulamak için kullanılır. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em channel} & kanal seçim değişkeni 1. in 1 -\/ 2 2. in 3 3. in 5 \\
+\hline
+\mbox{\texttt{ in}}  & {\em pol} & seçilen kanalı maksimum, minimum veya sıfır seviyesine setlemek için kullanılır. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+hata veya başarı durumu döner
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{ads1293_8cpp_source_l00260}{260}} of file \mbox{\hyperlink{ads1293_8cpp_source}{ads1293.\+cpp}}.
+
+\Hypertarget{classads1293_a26078b665d256cc66f1b4011a60ac75b}\label{classads1293_a26078b665d256cc66f1b4011a60ac75b} 
+\index{ads1293@{ads1293}!disableCh@{disableCh}}
+\index{disableCh@{disableCh}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{disableCh()}{disableCh()}}
+{\footnotesize\ttfamily void ads1293\+::disable\+Ch (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel }\end{DoxyParamCaption})}
+
+\Hypertarget{classads1293_a8513d8ba33b598508b6af2a981a501fb}\label{classads1293_a8513d8ba33b598508b6af2a981a501fb} 
+\index{ads1293@{ads1293}!getECGdata@{getECGdata}}
+\index{getECGdata@{getECGdata}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{getECGdata()}{getECGdata()}}
+{\footnotesize\ttfamily int32\+\_\+t ads1293\+::get\+ECGdata (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel }\end{DoxyParamCaption})}
+
+\doxylink{classads1293_a8513d8ba33b598508b6af2a981a501fb}{get\+ECGdata()} fonksiyonu istenilen ADC\textquotesingle{}nin verisini okumak için kullanılır 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em channel} & kanal seçim değişkeni 1. in 1-\/2 2. in 3 3. in 5 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+24 bit EKG verisi
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{ads1293_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{ads1293_8cpp_source}{ads1293.\+cpp}}.
+
+\Hypertarget{classads1293_a129a6af0c687a5c55835bf5bd4c6365c}\label{classads1293_a129a6af0c687a5c55835bf5bd4c6365c} 
+\index{ads1293@{ads1293}!readErrorStatus@{readErrorStatus}}
+\index{readErrorStatus@{readErrorStatus}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{readErrorStatus()}{readErrorStatus()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily uint8\+\_\+t ads1293\+::read\+Error\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\doxylink{classads1293_a129a6af0c687a5c55835bf5bd4c6365c}{read\+Error\+Status()} fonksiyonu ADS1293 entegresinin hata durumlarını görüntülemek için kullanılır. \begin{DoxyReturn}{Returns}
+8 bit hata bayrakları
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{ads1293_8cpp_source_l00245}{245}} of file \mbox{\hyperlink{ads1293_8cpp_source}{ads1293.\+cpp}}.
+
+\Hypertarget{classads1293_a864e2c1a99b19d66e10db40c1f411c40}\label{classads1293_a864e2c1a99b19d66e10db40c1f411c40} 
+\index{ads1293@{ads1293}!readErrorStatus@{readErrorStatus}}
+\index{readErrorStatus@{readErrorStatus}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{readErrorStatus()}{readErrorStatus()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily uint8\+\_\+t ads1293\+::read\+Error\+Status (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{rd\+Address }\end{DoxyParamCaption})}
+
+\Hypertarget{classads1293_aec064e27d99bcb40a4c88601264c03a3}\label{classads1293_aec064e27d99bcb40a4c88601264c03a3} 
+\index{ads1293@{ads1293}!readLeadErrorStatus@{readLeadErrorStatus}}
+\index{readLeadErrorStatus@{readLeadErrorStatus}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{readLeadErrorStatus()}{readLeadErrorStatus()}}
+{\footnotesize\ttfamily uint8\+\_\+t ads1293\+::read\+Lead\+Error\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\doxylink{classads1293_aec064e27d99bcb40a4c88601264c03a3}{read\+Lead\+Error\+Status()} fonksiyonu hangi elektrodun takılı olmadığını gösterir. ~\newline
+ \begin{DoxyReturn}{Returns}
+8 bit çıkık elektrod bayrakları
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{ads1293_8cpp_source_l00252}{252}} of file \mbox{\hyperlink{ads1293_8cpp_source}{ads1293.\+cpp}}.
+
+\Hypertarget{classads1293_ab4f53ac1f92353355f0a526b42db8c98}\label{classads1293_ab4f53ac1f92353355f0a526b42db8c98} 
+\index{ads1293@{ads1293}!setAds1293Pins@{setAds1293Pins}}
+\index{setAds1293Pins@{setAds1293Pins}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{setAds1293Pins()}{setAds1293Pins()}}
+{\footnotesize\ttfamily void ads1293\+::set\+Ads1293\+Pins (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\doxylink{classads1293_ab4f53ac1f92353355f0a526b42db8c98}{set\+Ads1293\+Pins()} fonksiyonu ADS1293 entegresinin SPI ve kesme pinlerinin kurulumu için kullanılır. \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{ads1293_8cpp_source_l00035}{35}} of file \mbox{\hyperlink{ads1293_8cpp_source}{ads1293.\+cpp}}.
+
+\Hypertarget{classads1293_a1f32e22857da97711a53965658881696}\label{classads1293_a1f32e22857da97711a53965658881696} 
+\index{ads1293@{ads1293}!setSamplingRate@{setSamplingRate}}
+\index{setSamplingRate@{setSamplingRate}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{setSamplingRate()}{setSamplingRate()}}
+{\footnotesize\ttfamily void ads1293\+::set\+Sampling\+Rate (\begin{DoxyParamCaption}\item[{enum \mbox{\hyperlink{ads1293_8h_ae4261ed7af57c15e4b0ca276d19075b4}{Sample\+Freq}}}]{Freq }\end{DoxyParamCaption})}
+
+\doxylink{classads1293_a1f32e22857da97711a53965658881696}{set\+Sampling\+Rate()} fonksiyonu ADS1293 entegresinin örnekleme frekansını ayarlamak için kullanılır. ~\newline
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Freq} & ADS1293 entegresinin örnekleme frekansı ayarıdır. enum Sample\+Freq içinde tanımlı olan değerleri alabilir. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{ads1293_8cpp_source_l00215}{215}} of file \mbox{\hyperlink{ads1293_8cpp_source}{ads1293.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classads1293_a20587ced4026b394492fcb6ab1bf7b9c}\label{classads1293_a20587ced4026b394492fcb6ab1bf7b9c} 
+\index{ads1293@{ads1293}!csPin@{csPin}}
+\index{csPin@{csPin}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{csPin}{csPin}}
+{\footnotesize\ttfamily uint8\+\_\+t ads1293\+::cs\+Pin}
+
+
+
+Definition at line \mbox{\hyperlink{ads1293_8h_source_l00142}{142}} of file \mbox{\hyperlink{ads1293_8h_source}{ads1293.\+h}}.
+
+\Hypertarget{classads1293_ad13a4eefa8e23e9f3f85c6af8193d5ec}\label{classads1293_ad13a4eefa8e23e9f3f85c6af8193d5ec} 
+\index{ads1293@{ads1293}!drdyPin@{drdyPin}}
+\index{drdyPin@{drdyPin}!ads1293@{ads1293}}
+\doxysubsubsection{\texorpdfstring{drdyPin}{drdyPin}}
+{\footnotesize\ttfamily uint8\+\_\+t ads1293\+::drdy\+Pin}
+
+
+
+Definition at line \mbox{\hyperlink{ads1293_8h_source_l00141}{141}} of file \mbox{\hyperlink{ads1293_8h_source}{ads1293.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{ads1293_8h}{ads1293.\+h}}\item 
+\mbox{\hyperlink{ads1293_8cpp}{ads1293.\+cpp}}\end{DoxyCompactItemize}

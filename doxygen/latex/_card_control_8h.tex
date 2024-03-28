@@ -1,0 +1,379 @@
+\doxysection{Card\+Control.\+h File Reference}
+\hypertarget{_card_control_8h}{}\label{_card_control_8h}\index{CardControl.h@{CardControl.h}}
+{\ttfamily \#include "{}defines.\+h"{}}\newline
+{\ttfamily \#include "{}songs.\+h"{}}\newline
+{\ttfamily \#include "{}Hardware\+Serial.\+h"{}}\newline
+{\ttfamily \#include "{}esp32-\/hal-\/gpio.\+h"{}}\newline
+{\ttfamily \#include "{}Ble\+Uart.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_card_control_8h_a2669d0ef1c2bafc34699fa12e45992a2}{CONVERSIONS\+\_\+\+PER\+\_\+\+PIN}}~5
+\item 
+\#define \mbox{\hyperlink{_card_control_8h_aa94652a9b46345f82d0886ee4967be85}{nominal\+\_\+resistance}}~10000
+\item 
+\#define \mbox{\hyperlink{_card_control_8h_a822df2c385c9d4e85a7a228e2a75eb98}{nominal\+\_\+temeprature}}~25
+\item 
+\#define \mbox{\hyperlink{_card_control_8h_a70f0cd625f5095b234dd01bad8ca194e}{samplingrate}}~5
+\item 
+\#define \mbox{\hyperlink{_card_control_8h_a40b4fe45622d5b33767ead7735f354c4}{beta}}~3434
+\item 
+\#define \mbox{\hyperlink{_card_control_8h_a97bb5fd2772572f117e9db885cba4a71}{Rt}}~10000
+\item 
+\#define \mbox{\hyperlink{_card_control_8h_a30ab9da60435727bc80839d416461b8f}{R0}}~10000
+\item 
+\#define \mbox{\hyperlink{_card_control_8h_ad41b89d4eb6d63a0def5e5fd2a5ab326}{T0}}~298.\+15
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR \mbox{\hyperlink{_card_control_8h_ab31d317e8015e413bd75d2c2f773f235}{isr\+Buton1}} ()
+\item 
+void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR \mbox{\hyperlink{_card_control_8h_ad2b507e1a8dbb844b29237f273d65e64}{isr\+Buton2}} ()
+\item 
+void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR \mbox{\hyperlink{_card_control_8h_ab99ec1655405c7c4eed3866a598ffbde}{adc\+Complete}} ()
+\item 
+void \mbox{\hyperlink{_card_control_8h_a727917fa75d23899dce89f84a3307bae}{Card\+Control\+Task}} (void \texorpdfstring{$\ast$}{*}Parameters)
+\item 
+void \mbox{\hyperlink{_card_control_8h_a467367cd0713f21777091d1771f2c517}{Card\+Control\+Task\+Begin}} (void)
+\item 
+void \mbox{\hyperlink{_card_control_8h_a802dd2cc4c9494e07778ec4ab0f68eec}{Adc\+Operation}} (void)
+\item 
+void \mbox{\hyperlink{_card_control_8h_a7e7a2df15cfe1399d9334152294ceb0b}{led\+Operation}} (void)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{_card_control_8h_a9f14378327949a700de546429052b714}{Button1\+Pressed}}
+\item 
+bool \mbox{\hyperlink{_card_control_8h_a6cc91f89676b8d31da78f40fb2ceaa05}{Button2\+Pressed}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{_card_control_8h_ab2bea8ddabb04d8c78dd471f25c1e76b}{ADC\+\_\+\+Pins}} \mbox{[}2\mbox{]}
+\item 
+bool \mbox{\hyperlink{_card_control_8h_ac42d630276afdd0c9f55ebc7b0320a46}{record\+Status}}
+\item 
+float \mbox{\hyperlink{_card_control_8h_af08a68a8f0fd3c1677a125496af18f3a}{Card\+Temperature\+Float}}
+\item 
+float \mbox{\hyperlink{_card_control_8h_a9978c5386737b5b987e916f5d2b59f5f}{TempC}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{_card_control_8h_aec5a5b270109b3d9af73531655d36932}{Battery\+Voltage}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{_card_control_8h_a660fb8c47a615dc4dcf4802e374f7976}{Card\+Temperature}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{_card_control_8h_a772f04d1507f57cf942cde37565603ae}{Battery\+Percentage}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{_card_control_8h_a9c4fd350a03790a1ecf343f46d8f9eb6}{Chg\+Stat\+Read}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{_card_control_8h_a063ae0e2d9e6b5403e84c8038909487f}{Chg\+Inok\+Read}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{_card_control_8h_a0a7ed9bd6f1fa671f92a27062c49f055}{button\+Press\+Time}} \mbox{[}2\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_card_control_8h_a40b4fe45622d5b33767ead7735f354c4}\label{_card_control_8h_a40b4fe45622d5b33767ead7735f354c4} 
+\index{CardControl.h@{CardControl.h}!beta@{beta}}
+\index{beta@{beta}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{beta}{beta}}
+{\footnotesize\ttfamily \#define beta~3434}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8h_source_l00014}{14}} of file \mbox{\hyperlink{_card_control_8h_source}{Card\+Control.\+h}}.
+
+\Hypertarget{_card_control_8h_a2669d0ef1c2bafc34699fa12e45992a2}\label{_card_control_8h_a2669d0ef1c2bafc34699fa12e45992a2} 
+\index{CardControl.h@{CardControl.h}!CONVERSIONS\_PER\_PIN@{CONVERSIONS\_PER\_PIN}}
+\index{CONVERSIONS\_PER\_PIN@{CONVERSIONS\_PER\_PIN}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{CONVERSIONS\_PER\_PIN}{CONVERSIONS\_PER\_PIN}}
+{\footnotesize\ttfamily \#define CONVERSIONS\+\_\+\+PER\+\_\+\+PIN~5}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8h_source_l00009}{9}} of file \mbox{\hyperlink{_card_control_8h_source}{Card\+Control.\+h}}.
+
+\Hypertarget{_card_control_8h_aa94652a9b46345f82d0886ee4967be85}\label{_card_control_8h_aa94652a9b46345f82d0886ee4967be85} 
+\index{CardControl.h@{CardControl.h}!nominal\_resistance@{nominal\_resistance}}
+\index{nominal\_resistance@{nominal\_resistance}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{nominal\_resistance}{nominal\_resistance}}
+{\footnotesize\ttfamily \#define nominal\+\_\+resistance~10000}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8h_source_l00011}{11}} of file \mbox{\hyperlink{_card_control_8h_source}{Card\+Control.\+h}}.
+
+\Hypertarget{_card_control_8h_a822df2c385c9d4e85a7a228e2a75eb98}\label{_card_control_8h_a822df2c385c9d4e85a7a228e2a75eb98} 
+\index{CardControl.h@{CardControl.h}!nominal\_temeprature@{nominal\_temeprature}}
+\index{nominal\_temeprature@{nominal\_temeprature}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{nominal\_temeprature}{nominal\_temeprature}}
+{\footnotesize\ttfamily \#define nominal\+\_\+temeprature~25}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8h_source_l00012}{12}} of file \mbox{\hyperlink{_card_control_8h_source}{Card\+Control.\+h}}.
+
+\Hypertarget{_card_control_8h_a30ab9da60435727bc80839d416461b8f}\label{_card_control_8h_a30ab9da60435727bc80839d416461b8f} 
+\index{CardControl.h@{CardControl.h}!R0@{R0}}
+\index{R0@{R0}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{R0}{R0}}
+{\footnotesize\ttfamily \#define R0~10000}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8h_source_l00016}{16}} of file \mbox{\hyperlink{_card_control_8h_source}{Card\+Control.\+h}}.
+
+\Hypertarget{_card_control_8h_a97bb5fd2772572f117e9db885cba4a71}\label{_card_control_8h_a97bb5fd2772572f117e9db885cba4a71} 
+\index{CardControl.h@{CardControl.h}!Rt@{Rt}}
+\index{Rt@{Rt}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{Rt}{Rt}}
+{\footnotesize\ttfamily \#define Rt~10000}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8h_source_l00015}{15}} of file \mbox{\hyperlink{_card_control_8h_source}{Card\+Control.\+h}}.
+
+\Hypertarget{_card_control_8h_a70f0cd625f5095b234dd01bad8ca194e}\label{_card_control_8h_a70f0cd625f5095b234dd01bad8ca194e} 
+\index{CardControl.h@{CardControl.h}!samplingrate@{samplingrate}}
+\index{samplingrate@{samplingrate}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{samplingrate}{samplingrate}}
+{\footnotesize\ttfamily \#define samplingrate~5}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8h_source_l00013}{13}} of file \mbox{\hyperlink{_card_control_8h_source}{Card\+Control.\+h}}.
+
+\Hypertarget{_card_control_8h_ad41b89d4eb6d63a0def5e5fd2a5ab326}\label{_card_control_8h_ad41b89d4eb6d63a0def5e5fd2a5ab326} 
+\index{CardControl.h@{CardControl.h}!T0@{T0}}
+\index{T0@{T0}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{T0}{T0}}
+{\footnotesize\ttfamily \#define T0~298.\+15}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8h_source_l00017}{17}} of file \mbox{\hyperlink{_card_control_8h_source}{Card\+Control.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{_card_control_8h_ab99ec1655405c7c4eed3866a598ffbde}\label{_card_control_8h_ab99ec1655405c7c4eed3866a598ffbde} 
+\index{CardControl.h@{CardControl.h}!adcComplete@{adcComplete}}
+\index{adcComplete@{adcComplete}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{adcComplete()}{adcComplete()}}
+{\footnotesize\ttfamily void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR adc\+Complete (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\doxylink{_card_control_8cpp_ab31d317e8015e413bd75d2c2f773f235}{isr\+Buton1()} fonksiyonu ADC çevrim işlemi bitince tetiklenen fonksiyon. \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00139}{139}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_a802dd2cc4c9494e07778ec4ab0f68eec}\label{_card_control_8h_a802dd2cc4c9494e07778ec4ab0f68eec} 
+\index{CardControl.h@{CardControl.h}!AdcOperation@{AdcOperation}}
+\index{AdcOperation@{AdcOperation}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{AdcOperation()}{AdcOperation()}}
+{\footnotesize\ttfamily void Adc\+Operation (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\doxylink{_card_control_8cpp_a802dd2cc4c9494e07778ec4ab0f68eec}{Adc\+Operation()} fonksiyonu ADC okumasına göre kart sıcaklığının, batarya geriliminin ve batarya yüzdesinin hesplandığı fonksiyon \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00147}{147}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_a727917fa75d23899dce89f84a3307bae}\label{_card_control_8h_a727917fa75d23899dce89f84a3307bae} 
+\index{CardControl.h@{CardControl.h}!CardControlTask@{CardControlTask}}
+\index{CardControlTask@{CardControlTask}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{CardControlTask()}{CardControlTask()}}
+{\footnotesize\ttfamily void Card\+Control\+Task (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{Parameters }\end{DoxyParamCaption})}
+
+\doxylink{_card_control_8cpp_a727917fa75d23899dce89f84a3307bae}{Card\+Control\+Task()} fonksiyonu Cihaz kontrol işlemleri için oluşturulan thread
+
+kart üzerinde bulunan buton, led, buzzer, Pil, şarj entegresi , sıcaklık sensörü ve akıllı açma kapama entegresinin yönetilmesini sağlar. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em parameters} & thread kurulumunda aktarılan parametreler \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+Serial.\+println("{}\+CS "{} + String(\+Chg\+Stat\+Read) + "{} CI "{} + String(\+Chg\+Inok\+Read) + "{} BV "{} + String(\+Battery\+Voltage) + "{} BP "{} + String(\+Battery\+Percentage) + "{} T "{} + String(\+Card\+Temperature));
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00053}{53}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_a467367cd0713f21777091d1771f2c517}\label{_card_control_8h_a467367cd0713f21777091d1771f2c517} 
+\index{CardControl.h@{CardControl.h}!CardControlTaskBegin@{CardControlTaskBegin}}
+\index{CardControlTaskBegin@{CardControlTaskBegin}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{CardControlTaskBegin()}{CardControlTaskBegin()}}
+{\footnotesize\ttfamily void Card\+Control\+Task\+Begin (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\doxylink{_card_control_8cpp_a467367cd0713f21777091d1771f2c517}{Card\+Control\+Task\+Begin()} fonksiyonu cihaz kontrol işlemleri için thread kurulumunu içerir \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00040}{40}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_ab31d317e8015e413bd75d2c2f773f235}\label{_card_control_8h_ab31d317e8015e413bd75d2c2f773f235} 
+\index{CardControl.h@{CardControl.h}!isrButon1@{isrButon1}}
+\index{isrButon1@{isrButon1}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{isrButon1()}{isrButon1()}}
+{\footnotesize\ttfamily void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR isr\+Buton1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\doxylink{_card_control_8cpp_ab31d317e8015e413bd75d2c2f773f235}{isr\+Buton1()} fonksiyonu açma kapama / kayıt butonuna basılınca tetiklenen fonksiyon. \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00123}{123}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_ad2b507e1a8dbb844b29237f273d65e64}\label{_card_control_8h_ad2b507e1a8dbb844b29237f273d65e64} 
+\index{CardControl.h@{CardControl.h}!isrButon2@{isrButon2}}
+\index{isrButon2@{isrButon2}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{isrButon2()}{isrButon2()}}
+{\footnotesize\ttfamily void ARDUINO\+\_\+\+ISR\+\_\+\+ATTR isr\+Buton2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\doxylink{_card_control_8cpp_ab31d317e8015e413bd75d2c2f773f235}{isr\+Buton1()} fonksiyonu aritmi kayıt basılınca tetiklenen fonksiyon. \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00131}{131}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_a7e7a2df15cfe1399d9334152294ceb0b}\label{_card_control_8h_a7e7a2df15cfe1399d9334152294ceb0b} 
+\index{CardControl.h@{CardControl.h}!ledOperation@{ledOperation}}
+\index{ledOperation@{ledOperation}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{ledOperation()}{ledOperation()}}
+{\footnotesize\ttfamily void led\+Operation (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\doxylink{_card_control_8cpp_a6babf4db420129f8bce11325504b665f}{led\+Operation()} fonksiyonu bildirim LED\textquotesingle{}inin cihaz durumuna bağlı olarak uygun şekilde yanıp sönmesini kontrol eder
+
+bildirim LED\textquotesingle{}inin şarj işlemi esnasında batarya doluluğuna göre kırmızıdan yeşile değişimini sağlar. normal çalışma esnasında bluetooth bağlı ise bildirim ledinin mavi yanıp sönmesini sağlar. kayıt aktif ise bildirim LED\textquotesingle{}inin yeşil yanıp sönmesini sağlar. kayıt duraklatılmış ise bildirim LED\textquotesingle{}inin sarı yanıp sönmesini sağlar. cihaz kapanmak üzere ise bildirim LED\textquotesingle{}inin kırmızı yanmasını ve kapanış sesinin çalımasını sağlar. \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00171}{171}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{_card_control_8h_ab2bea8ddabb04d8c78dd471f25c1e76b}\label{_card_control_8h_ab2bea8ddabb04d8c78dd471f25c1e76b} 
+\index{CardControl.h@{CardControl.h}!ADC\_Pins@{ADC\_Pins}}
+\index{ADC\_Pins@{ADC\_Pins}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{ADC\_Pins}{ADC\_Pins}}
+{\footnotesize\ttfamily uint8\+\_\+t ADC\+\_\+\+Pins\mbox{[}2\mbox{]}\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_a772f04d1507f57cf942cde37565603ae}\label{_card_control_8h_a772f04d1507f57cf942cde37565603ae} 
+\index{CardControl.h@{CardControl.h}!BatteryPercentage@{BatteryPercentage}}
+\index{BatteryPercentage@{BatteryPercentage}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{BatteryPercentage}{BatteryPercentage}}
+{\footnotesize\ttfamily uint8\+\_\+t Battery\+Percentage}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8h_source_l00026}{26}} of file \mbox{\hyperlink{_card_control_8h_source}{Card\+Control.\+h}}.
+
+\Hypertarget{_card_control_8h_aec5a5b270109b3d9af73531655d36932}\label{_card_control_8h_aec5a5b270109b3d9af73531655d36932} 
+\index{CardControl.h@{CardControl.h}!BatteryVoltage@{BatteryVoltage}}
+\index{BatteryVoltage@{BatteryVoltage}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{BatteryVoltage}{BatteryVoltage}}
+{\footnotesize\ttfamily uint32\+\_\+t Battery\+Voltage\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_a9f14378327949a700de546429052b714}\label{_card_control_8h_a9f14378327949a700de546429052b714} 
+\index{CardControl.h@{CardControl.h}!Button1Pressed@{Button1Pressed}}
+\index{Button1Pressed@{Button1Pressed}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{Button1Pressed}{Button1Pressed}}
+{\footnotesize\ttfamily bool Button1\+Pressed\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00023}{23}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_a6cc91f89676b8d31da78f40fb2ceaa05}\label{_card_control_8h_a6cc91f89676b8d31da78f40fb2ceaa05} 
+\index{CardControl.h@{CardControl.h}!Button2Pressed@{Button2Pressed}}
+\index{Button2Pressed@{Button2Pressed}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{Button2Pressed}{Button2Pressed}}
+{\footnotesize\ttfamily bool Button2\+Pressed}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8h_source_l00019}{19}} of file \mbox{\hyperlink{_card_control_8h_source}{Card\+Control.\+h}}.
+
+\Hypertarget{_card_control_8h_a0a7ed9bd6f1fa671f92a27062c49f055}\label{_card_control_8h_a0a7ed9bd6f1fa671f92a27062c49f055} 
+\index{CardControl.h@{CardControl.h}!buttonPressTime@{buttonPressTime}}
+\index{buttonPressTime@{buttonPressTime}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{buttonPressTime}{buttonPressTime}}
+{\footnotesize\ttfamily uint32\+\_\+t button\+Press\+Time\mbox{[}2\mbox{]}\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00025}{25}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_a660fb8c47a615dc4dcf4802e374f7976}\label{_card_control_8h_a660fb8c47a615dc4dcf4802e374f7976} 
+\index{CardControl.h@{CardControl.h}!CardTemperature@{CardTemperature}}
+\index{CardTemperature@{CardTemperature}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{CardTemperature}{CardTemperature}}
+{\footnotesize\ttfamily uint8\+\_\+t Card\+Temperature\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_af08a68a8f0fd3c1677a125496af18f3a}\label{_card_control_8h_af08a68a8f0fd3c1677a125496af18f3a} 
+\index{CardControl.h@{CardControl.h}!CardTemperatureFloat@{CardTemperatureFloat}}
+\index{CardTemperatureFloat@{CardTemperatureFloat}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{CardTemperatureFloat}{CardTemperatureFloat}}
+{\footnotesize\ttfamily float Card\+Temperature\+Float\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_a063ae0e2d9e6b5403e84c8038909487f}\label{_card_control_8h_a063ae0e2d9e6b5403e84c8038909487f} 
+\index{CardControl.h@{CardControl.h}!ChgInokRead@{ChgInokRead}}
+\index{ChgInokRead@{ChgInokRead}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{ChgInokRead}{ChgInokRead}}
+{\footnotesize\ttfamily uint8\+\_\+t Chg\+Inok\+Read}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8h_source_l00027}{27}} of file \mbox{\hyperlink{_card_control_8h_source}{Card\+Control.\+h}}.
+
+\Hypertarget{_card_control_8h_a9c4fd350a03790a1ecf343f46d8f9eb6}\label{_card_control_8h_a9c4fd350a03790a1ecf343f46d8f9eb6} 
+\index{CardControl.h@{CardControl.h}!ChgStatRead@{ChgStatRead}}
+\index{ChgStatRead@{ChgStatRead}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{ChgStatRead}{ChgStatRead}}
+{\footnotesize\ttfamily uint8\+\_\+t Chg\+Stat\+Read\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_ac42d630276afdd0c9f55ebc7b0320a46}\label{_card_control_8h_ac42d630276afdd0c9f55ebc7b0320a46} 
+\index{CardControl.h@{CardControl.h}!recordStatus@{recordStatus}}
+\index{recordStatus@{recordStatus}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{recordStatus}{recordStatus}}
+{\footnotesize\ttfamily bool record\+Status\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8cpp_source_l00032}{32}} of file \mbox{\hyperlink{_card_control_8cpp_source}{Card\+Control.\+cpp}}.
+
+\Hypertarget{_card_control_8h_a9978c5386737b5b987e916f5d2b59f5f}\label{_card_control_8h_a9978c5386737b5b987e916f5d2b59f5f} 
+\index{CardControl.h@{CardControl.h}!TempC@{TempC}}
+\index{TempC@{TempC}!CardControl.h@{CardControl.h}}
+\doxysubsubsection{\texorpdfstring{TempC}{TempC}}
+{\footnotesize\ttfamily float TempC}
+
+
+
+Definition at line \mbox{\hyperlink{_card_control_8h_source_l00024}{24}} of file \mbox{\hyperlink{_card_control_8h_source}{Card\+Control.\+h}}.
+

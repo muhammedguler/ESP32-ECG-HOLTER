@@ -1,0 +1,34 @@
+\doxysection{ECG.\+h}
+\hypertarget{_e_c_g_8h_source}{}\label{_e_c_g_8h_source}\mbox{\hyperlink{_e_c_g_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ ECG\_ADS}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ ECG\_ADS}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{defines_8h}{defines.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <SPI.h>}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ads1293_8h}{ads1293.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}HardwareSerial.h"{}}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}esp32-\/hal-\/gpio.h"{}}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_ble_uart_8h}{BleUart.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_card_control_8h}{CardControl.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_r_t_c_8h}{RTC.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_sd_card_8h}{SdCard.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}Arduino.h"{}}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00015}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{00015}}\ \textcolor{preprocessor}{\#define\ bufferSize\ 56}}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00017}00017\ \textcolor{keyword}{extern}\ uint8\_t\ \mbox{\hyperlink{_e_c_g_8h_a070e9b32fe4c2d27b5695f106d44d37a}{sendBuffer}};}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00019}\mbox{\hyperlink{_e_c_g_8h_a61e0a16d1279aa966f1191f36465bfd4}{00019}}\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{_e_c_g_8h_abf8d6ce03a53174265630ac15ddeb939}{bleDataReady}},\ \mbox{\hyperlink{_e_c_g_8h_a61e0a16d1279aa966f1191f36465bfd4}{SdCardDataReady}};}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00020}00020\ \textcolor{keyword}{extern}\ SemaphoreHandle\_t\ \mbox{\hyperlink{_e_c_g_8h_a5369eeca65390d8ee2999c2ff35666e9}{SemADS1293}};}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00022}00022\ \textcolor{keywordtype}{void}\ ARDUINO\_ISR\_ATTR\ \mbox{\hyperlink{_e_c_g_8h_aa953b6048c8b1f479c6bc76384e9743e}{isrAdsALARM}}();}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00023}00023\ \textcolor{keywordtype}{void}\ ARDUINO\_ISR\_ATTR\ \mbox{\hyperlink{_e_c_g_8h_ae8a91689f83e02c59c69b53f8569a730}{isrADS1293Complete}}();}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00025}00025\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{_e_c_g_8h_abad49b9cae6bb197d45389faae00babd}{ADS1293TaskBegin}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00026}00026\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{_e_c_g_8h_af1aef1a1e3a715b2395221444ce48bfe}{ADS1293Task}}(\textcolor{keywordtype}{void}*\ Parameters);}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00027}00027\ int32\_t\ \mbox{\hyperlink{_e_c_g_8h_ab271f8317b4bd7961e202d6c17d47b9b}{FIR\_Filter}}(uint32\_t\ input,\ int8\_t\ channel);}
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_e_c_g_8h_source_l00029}00029\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

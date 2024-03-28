@@ -1,0 +1,408 @@
+\doxysection{Date\+Time Class Reference}
+\hypertarget{class_date_time}{}\label{class_date_time}\index{DateTime@{DateTime}}
+
+
+Simple general-\/purpose date/time class.  
+
+
+
+
+{\ttfamily \#include $<$MCP7940.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_date_time_af42f356752ec542faf262f485bd44a0b}{Date\+Time}} (uint32\+\_\+t t=0)
+\item 
+\mbox{\hyperlink{class_date_time_aad62a6709a1e65e6860b1efaf8c347e9}{Date\+Time}} (uint16\+\_\+t \mbox{\hyperlink{class_date_time_a04bc8f3d3452bf8fcc5f1e82d86d7fe8}{year}}, uint8\+\_\+t \mbox{\hyperlink{class_date_time_a10d35aa20ebb179cdb4b61f90dfcfe74}{month}}, uint8\+\_\+t \mbox{\hyperlink{class_date_time_a6e653eaef31e4956ee9bf67b4874a9a8}{day}}, uint8\+\_\+t \mbox{\hyperlink{class_date_time_ac17441fb0c669bcf3be5de278335e8d0}{hour}}=0, uint8\+\_\+t min=0, uint8\+\_\+t sec=0)
+\item 
+\mbox{\hyperlink{class_date_time_a50502a3a29409c6c2507638779df1a9d}{Date\+Time}} (const \mbox{\hyperlink{class_date_time}{Date\+Time}} \&copy)
+\item 
+\mbox{\hyperlink{class_date_time_aabeb5303c98a004439fe337bb5f5da63}{Date\+Time}} (const char \texorpdfstring{$\ast$}{*}date, const char \texorpdfstring{$\ast$}{*}time)
+\item 
+\mbox{\hyperlink{class_date_time_a75e22d94bd5ab883ec56e6581e04a2d7}{Date\+Time}} (const \+\_\+\+\_\+\+Flash\+String\+Helper \texorpdfstring{$\ast$}{*}date, const \+\_\+\+\_\+\+Flash\+String\+Helper \texorpdfstring{$\ast$}{*}time)
+\item 
+uint16\+\_\+t \mbox{\hyperlink{class_date_time_a04bc8f3d3452bf8fcc5f1e82d86d7fe8}{year}} () const
+\item 
+uint8\+\_\+t \mbox{\hyperlink{class_date_time_a10d35aa20ebb179cdb4b61f90dfcfe74}{month}} () const
+\item 
+uint8\+\_\+t \mbox{\hyperlink{class_date_time_a6e653eaef31e4956ee9bf67b4874a9a8}{day}} () const
+\item 
+uint8\+\_\+t \mbox{\hyperlink{class_date_time_ac17441fb0c669bcf3be5de278335e8d0}{hour}} () const
+\item 
+uint8\+\_\+t \mbox{\hyperlink{class_date_time_a8dac4d21cf40f1b6f1ec5973024709ed}{minute}} () const
+\item 
+uint8\+\_\+t \mbox{\hyperlink{class_date_time_adacdb3c0984bc73c2b48e5d1995a6c01}{second}} () const
+\item 
+uint8\+\_\+t \mbox{\hyperlink{class_date_time_a958229f0d6a46d092658028d25a9e65c}{day\+Of\+The\+Week}} () const
+\item 
+long \mbox{\hyperlink{class_date_time_adae8d9c0249f99944bcec7701bd2937e}{secondstime}} () const
+\item 
+uint32\+\_\+t \mbox{\hyperlink{class_date_time_ae4629e7b2ffeac4a0c8f8c3f9c545990}{unixtime}} (void) const
+\item 
+\mbox{\hyperlink{class_date_time}{Date\+Time}} \mbox{\hyperlink{class_date_time_ae043350a8bfa362aabbc9f5ee658b4e6}{operator+}} (const \mbox{\hyperlink{class_time_span}{Time\+Span}} \&span)
+\item 
+\mbox{\hyperlink{class_date_time}{Date\+Time}} \mbox{\hyperlink{class_date_time_acbdcc7a6b55924552e72696d9e5bbb98}{operator-\/}} (const \mbox{\hyperlink{class_time_span}{Time\+Span}} \&span)
+\item 
+\mbox{\hyperlink{class_time_span}{Time\+Span}} \mbox{\hyperlink{class_date_time_a005fb6b5723a393da66e821a93cec5a5}{operator-\/}} (const \mbox{\hyperlink{class_date_time}{Date\+Time}} \&right)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{class_date_time_ac0b5906cbb32751988603bf0388e7ab9}{y\+Off}}
+\begin{DoxyCompactList}\small\item\em Internal year offset value. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{class_date_time_a04c79ec05511462bc6a015e5b1088609}{m}}
+\begin{DoxyCompactList}\small\item\em Internal month value. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{class_date_time_abad2ae4520c8a7f87fd242c0d9a53256}{d}}
+\begin{DoxyCompactList}\small\item\em Internal day value. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{class_date_time_ad65c31b7b4bf0430311e5bdf3f343371}{hh}}
+\begin{DoxyCompactList}\small\item\em Internal hour value. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{class_date_time_af2cbffff9349832135c3280a18d21510}{mm}}
+\begin{DoxyCompactList}\small\item\em Internal minute value. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{class_date_time_a38da3481e6355fcf8ceb4c57eb9db0ce}{ss}}
+\begin{DoxyCompactList}\small\item\em Internal seconds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Simple general-\/purpose date/time class. 
+
+Copied from RTClib. For further information on this implementation see \href{https://github.com/SV-Zanshin/MCP7940/wiki/DateTimeClass}{\texttt{ https\+://github.\+com/\+SV-\/\+Zanshin/\+MCP7940/wiki/\+Date\+Time\+Class}} 
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00077}{77}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_date_time_af42f356752ec542faf262f485bd44a0b}\label{class_date_time_af42f356752ec542faf262f485bd44a0b} 
+\index{DateTime@{DateTime}!DateTime@{DateTime}}
+\index{DateTime@{DateTime}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{DateTime()}{DateTime()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily Date\+Time\+::\+Date\+Time (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{t = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+\doxylink{class_date_time}{Date\+Time} constructor (overloaded)
+
+Class Constructor for \doxylink{class_date_time}{Date\+Time} instantiates the class. This is an overloaded class constructor so there are multiple definitions. This implementation ignores time zones and DST changes. It also ignores leap seconds, see \href{http://en.wikipedia.org/wiki/Leap_second}{\texttt{ http\+://en.\+wikipedia.\+org/wiki/\+Leap\+\_\+second}} 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em t} & seconds since the year 1970 (UNIX timet)\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8cpp_source_l00059}{59}} of file \mbox{\hyperlink{_m_c_p7940_8cpp_source}{MCP7940.\+cpp}}.
+
+\Hypertarget{class_date_time_aad62a6709a1e65e6860b1efaf8c347e9}\label{class_date_time_aad62a6709a1e65e6860b1efaf8c347e9} 
+\index{DateTime@{DateTime}!DateTime@{DateTime}}
+\index{DateTime@{DateTime}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{DateTime()}{DateTime()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily Date\+Time\+::\+Date\+Time (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{year,  }\item[{uint8\+\_\+t}]{month,  }\item[{uint8\+\_\+t}]{day,  }\item[{uint8\+\_\+t}]{hour = {\ttfamily 0},  }\item[{uint8\+\_\+t}]{min = {\ttfamily 0},  }\item[{uint8\+\_\+t}]{sec = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+\doxylink{class_date_time}{Date\+Time} constructor (overloaded)
+
+Class Constructor for \doxylink{class_date_time}{Date\+Time} instantiates the class. This is an overloaded class constructor so there are multiple definitions. This implementation sets each component of the date/time separately 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em year} & Year \\
+\hline
+\mbox{\texttt{ in}}  & {\em month} & Month \\
+\hline
+\mbox{\texttt{ in}}  & {\em day} & Day \\
+\hline
+\mbox{\texttt{ in}}  & {\em hour} & Hour \\
+\hline
+\mbox{\texttt{ in}}  & {\em min} & Minute \\
+\hline
+\mbox{\texttt{ in}}  & {\em sec} & Second\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8cpp_source_l00087}{87}} of file \mbox{\hyperlink{_m_c_p7940_8cpp_source}{MCP7940.\+cpp}}.
+
+\Hypertarget{class_date_time_a50502a3a29409c6c2507638779df1a9d}\label{class_date_time_a50502a3a29409c6c2507638779df1a9d} 
+\index{DateTime@{DateTime}!DateTime@{DateTime}}
+\index{DateTime@{DateTime}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{DateTime()}{DateTime()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily Date\+Time\+::\+Date\+Time (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_date_time}{Date\+Time}} \&}]{copy }\end{DoxyParamCaption})}
+
+\doxylink{class_date_time}{Date\+Time} constructor (overloaded)
+
+Class Constructor for \doxylink{class_date_time}{Date\+Time} instantiates the class. This is an overloaded class constructor so there are multiple definitions. This implementation take a \doxylink{class_date_time}{Date\+Time} class value as the defining value 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em copy} & \doxylink{class_date_time}{Date\+Time} class\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8cpp_source_l00110}{110}} of file \mbox{\hyperlink{_m_c_p7940_8cpp_source}{MCP7940.\+cpp}}.
+
+\Hypertarget{class_date_time_aabeb5303c98a004439fe337bb5f5da63}\label{class_date_time_aabeb5303c98a004439fe337bb5f5da63} 
+\index{DateTime@{DateTime}!DateTime@{DateTime}}
+\index{DateTime@{DateTime}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{DateTime()}{DateTime()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily Date\+Time\+::\+Date\+Time (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{date,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{time }\end{DoxyParamCaption})}
+
+\doxylink{class_date_time}{Date\+Time} constructor (overloaded)
+
+Class Constructor for \doxylink{class_date_time}{Date\+Time} instantiates the class. This is an overloaded class constructor so there are multiple definitions. This implementation uses a Date string formatted as "{}\+MMM DD YYYY"{} and a time string formatted as "{}hh\+:mm\+:ss"{} for the value 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em date} & Pointer to date string \\
+\hline
+\mbox{\texttt{ in}}  & {\em time} & Pointer to time string\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8cpp_source_l00119}{119}} of file \mbox{\hyperlink{_m_c_p7940_8cpp_source}{MCP7940.\+cpp}}.
+
+\Hypertarget{class_date_time_a75e22d94bd5ab883ec56e6581e04a2d7}\label{class_date_time_a75e22d94bd5ab883ec56e6581e04a2d7} 
+\index{DateTime@{DateTime}!DateTime@{DateTime}}
+\index{DateTime@{DateTime}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{DateTime()}{DateTime()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily Date\+Time\+::\+Date\+Time (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper \texorpdfstring{$\ast$}{*}}]{date,  }\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper \texorpdfstring{$\ast$}{*}}]{time }\end{DoxyParamCaption})}
+
+\doxylink{class_date_time}{Date\+Time} constructor (overloaded)
+
+Class Constructor for \doxylink{class_date_time}{Date\+Time} instantiates the class. This is an overloaded class constructor so there are multiple definitions. This implementation uses the compile date and time as the value to set. It only works when the compiler runs in English. This implementation uses a Date string formatted as "{}\+MMM DD YYYY"{} and a time string formatted as "{}hh\+:mm\+:ss"{} for the value 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em date} & Pointer to date string \\
+\hline
+\mbox{\texttt{ in}}  & {\em time} & Pointer to time string\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8cpp_source_l00159}{159}} of file \mbox{\hyperlink{_m_c_p7940_8cpp_source}{MCP7940.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_date_time_a6e653eaef31e4956ee9bf67b4874a9a8}\label{class_date_time_a6e653eaef31e4956ee9bf67b4874a9a8} 
+\index{DateTime@{DateTime}!day@{day}}
+\index{day@{day}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{day()}{day()}}
+{\footnotesize\ttfamily uint8\+\_\+t Date\+Time\+::day (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+return the current day of the month
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00097}{97}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+\Hypertarget{class_date_time_a958229f0d6a46d092658028d25a9e65c}\label{class_date_time_a958229f0d6a46d092658028d25a9e65c} 
+\index{DateTime@{DateTime}!dayOfTheWeek@{dayOfTheWeek}}
+\index{dayOfTheWeek@{dayOfTheWeek}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{dayOfTheWeek()}{dayOfTheWeek()}}
+{\footnotesize\ttfamily uint8\+\_\+t Date\+Time\+::day\+Of\+The\+Week (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+return the current day-\/of-\/week where Monday is day 1, Sunday is 7 \begin{DoxyReturn}{Returns}
+integer day-\/of-\/week 1-\/7
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8cpp_source_l00175}{175}} of file \mbox{\hyperlink{_m_c_p7940_8cpp_source}{MCP7940.\+cpp}}.
+
+\Hypertarget{class_date_time_ac17441fb0c669bcf3be5de278335e8d0}\label{class_date_time_ac17441fb0c669bcf3be5de278335e8d0} 
+\index{DateTime@{DateTime}!hour@{hour}}
+\index{hour@{hour}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{hour()}{hour()}}
+{\footnotesize\ttfamily uint8\+\_\+t Date\+Time\+::hour (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+return the current hour
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00100}{100}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+\Hypertarget{class_date_time_a8dac4d21cf40f1b6f1ec5973024709ed}\label{class_date_time_a8dac4d21cf40f1b6f1ec5973024709ed} 
+\index{DateTime@{DateTime}!minute@{minute}}
+\index{minute@{minute}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{minute()}{minute()}}
+{\footnotesize\ttfamily uint8\+\_\+t Date\+Time\+::minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+return the current minute
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00103}{103}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+\Hypertarget{class_date_time_a10d35aa20ebb179cdb4b61f90dfcfe74}\label{class_date_time_a10d35aa20ebb179cdb4b61f90dfcfe74} 
+\index{DateTime@{DateTime}!month@{month}}
+\index{month@{month}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{month()}{month()}}
+{\footnotesize\ttfamily uint8\+\_\+t Date\+Time\+::month (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+return the current month
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00094}{94}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+\Hypertarget{class_date_time_ae043350a8bfa362aabbc9f5ee658b4e6}\label{class_date_time_ae043350a8bfa362aabbc9f5ee658b4e6} 
+\index{DateTime@{DateTime}!operator+@{operator+}}
+\index{operator+@{operator+}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_date_time}{Date\+Time}} Date\+Time\+::operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_time_span}{Time\+Span}} \&}]{span }\end{DoxyParamCaption})}
+
+return the current Unixtime overloaded "{}+"{} operator for class \doxylink{class_date_time}{Date\+Time} \begin{DoxyReturn}{Returns}
+Sum of two \doxylink{class_date_time}{Date\+Time} class instances
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8cpp_source_l00206}{206}} of file \mbox{\hyperlink{_m_c_p7940_8cpp_source}{MCP7940.\+cpp}}.
+
+\Hypertarget{class_date_time_a005fb6b5723a393da66e821a93cec5a5}\label{class_date_time_a005fb6b5723a393da66e821a93cec5a5} 
+\index{DateTime@{DateTime}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_time_span}{Time\+Span}} Date\+Time\+::operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_date_time}{Date\+Time}} \&}]{right }\end{DoxyParamCaption})}
+
+Overloaded "{}+"{} operator to add two timespans overloaded "{}-\/"{} operator for class \doxylink{class_date_time}{Date\+Time} \begin{DoxyReturn}{Returns}
+Difference of two \doxylink{class_date_time}{Date\+Time} class instances
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8cpp_source_l00220}{220}} of file \mbox{\hyperlink{_m_c_p7940_8cpp_source}{MCP7940.\+cpp}}.
+
+\Hypertarget{class_date_time_acbdcc7a6b55924552e72696d9e5bbb98}\label{class_date_time_acbdcc7a6b55924552e72696d9e5bbb98} 
+\index{DateTime@{DateTime}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_date_time}{Date\+Time}} Date\+Time\+::operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_time_span}{Time\+Span}} \&}]{span }\end{DoxyParamCaption})}
+
+Overloaded "{}+"{} operator to add two timespans overloaded "{}+"{} operator for class \doxylink{class_date_time}{Date\+Time} \begin{DoxyReturn}{Returns}
+Sum of \doxylink{class_date_time}{Date\+Time} class and \doxylink{class_time_span}{Time\+Span}
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8cpp_source_l00213}{213}} of file \mbox{\hyperlink{_m_c_p7940_8cpp_source}{MCP7940.\+cpp}}.
+
+\Hypertarget{class_date_time_adacdb3c0984bc73c2b48e5d1995a6c01}\label{class_date_time_adacdb3c0984bc73c2b48e5d1995a6c01} 
+\index{DateTime@{DateTime}!second@{second}}
+\index{second@{second}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{second()}{second()}}
+{\footnotesize\ttfamily uint8\+\_\+t Date\+Time\+::second (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+return the current second
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00106}{106}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+\Hypertarget{class_date_time_adae8d9c0249f99944bcec7701bd2937e}\label{class_date_time_adae8d9c0249f99944bcec7701bd2937e} 
+\index{DateTime@{DateTime}!secondstime@{secondstime}}
+\index{secondstime@{secondstime}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{secondstime()}{secondstime()}}
+{\footnotesize\ttfamily long Date\+Time\+::secondstime (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+return the current day of the week starting at 0 return the time in seconds since the year 2000 \begin{DoxyReturn}{Returns}
+number of seconds since 2000-\/01-\/01 00\+:00\+:00
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8cpp_source_l00197}{197}} of file \mbox{\hyperlink{_m_c_p7940_8cpp_source}{MCP7940.\+cpp}}.
+
+\Hypertarget{class_date_time_ae4629e7b2ffeac4a0c8f8c3f9c545990}\label{class_date_time_ae4629e7b2ffeac4a0c8f8c3f9c545990} 
+\index{DateTime@{DateTime}!unixtime@{unixtime}}
+\index{unixtime@{unixtime}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{unixtime()}{unixtime()}}
+{\footnotesize\ttfamily uint32\+\_\+t Date\+Time\+::unixtime (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+return the current seconds in the year return the UNIX time, which is seconds since 1970-\/01-\/01 00\+:00\+:00 \begin{DoxyReturn}{Returns}
+number of seconds since 1970-\/01-\/01 00\+:00\+:00 (Unixtime)
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8cpp_source_l00187}{187}} of file \mbox{\hyperlink{_m_c_p7940_8cpp_source}{MCP7940.\+cpp}}.
+
+\Hypertarget{class_date_time_a04bc8f3d3452bf8fcc5f1e82d86d7fe8}\label{class_date_time_a04bc8f3d3452bf8fcc5f1e82d86d7fe8} 
+\index{DateTime@{DateTime}!year@{year}}
+\index{year@{year}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{year()}{year()}}
+{\footnotesize\ttfamily uint16\+\_\+t Date\+Time\+::year (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+return the current year
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00091}{91}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_date_time_abad2ae4520c8a7f87fd242c0d9a53256}\label{class_date_time_abad2ae4520c8a7f87fd242c0d9a53256} 
+\index{DateTime@{DateTime}!d@{d}}
+\index{d@{d}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{d}{d}}
+{\footnotesize\ttfamily uint8\+\_\+t Date\+Time\+::d\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Internal day value. 
+
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00119}{119}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+\Hypertarget{class_date_time_ad65c31b7b4bf0430311e5bdf3f343371}\label{class_date_time_ad65c31b7b4bf0430311e5bdf3f343371} 
+\index{DateTime@{DateTime}!hh@{hh}}
+\index{hh@{hh}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{hh}{hh}}
+{\footnotesize\ttfamily uint8\+\_\+t Date\+Time\+::hh\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Internal hour value. 
+
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00120}{120}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+\Hypertarget{class_date_time_a04c79ec05511462bc6a015e5b1088609}\label{class_date_time_a04c79ec05511462bc6a015e5b1088609} 
+\index{DateTime@{DateTime}!m@{m}}
+\index{m@{m}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{m}{m}}
+{\footnotesize\ttfamily uint8\+\_\+t Date\+Time\+::m\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Internal month value. 
+
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00118}{118}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+\Hypertarget{class_date_time_af2cbffff9349832135c3280a18d21510}\label{class_date_time_af2cbffff9349832135c3280a18d21510} 
+\index{DateTime@{DateTime}!mm@{mm}}
+\index{mm@{mm}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{mm}{mm}}
+{\footnotesize\ttfamily uint8\+\_\+t Date\+Time\+::mm\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Internal minute value. 
+
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00121}{121}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+\Hypertarget{class_date_time_a38da3481e6355fcf8ceb4c57eb9db0ce}\label{class_date_time_a38da3481e6355fcf8ceb4c57eb9db0ce} 
+\index{DateTime@{DateTime}!ss@{ss}}
+\index{ss@{ss}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{ss}{ss}}
+{\footnotesize\ttfamily uint8\+\_\+t Date\+Time\+::ss\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Internal seconds. 
+
+
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00122}{122}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+\Hypertarget{class_date_time_ac0b5906cbb32751988603bf0388e7ab9}\label{class_date_time_ac0b5906cbb32751988603bf0388e7ab9} 
+\index{DateTime@{DateTime}!yOff@{yOff}}
+\index{yOff@{yOff}!DateTime@{DateTime}}
+\doxysubsubsection{\texorpdfstring{yOff}{yOff}}
+{\footnotesize\ttfamily uint8\+\_\+t Date\+Time\+::y\+Off\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Internal year offset value. 
+
+Overloaded "{}-\/"{} operator subtract add two timespans 
+
+Definition at line \mbox{\hyperlink{_m_c_p7940_8h_source_l00117}{117}} of file \mbox{\hyperlink{_m_c_p7940_8h_source}{MCP7940.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_m_c_p7940_8h}{MCP7940.\+h}}\item 
+\mbox{\hyperlink{_m_c_p7940_8cpp}{MCP7940.\+cpp}}\end{DoxyCompactItemize}

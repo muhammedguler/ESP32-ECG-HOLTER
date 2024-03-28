@@ -1,0 +1,206 @@
+\doxysection{Ble\+Uart.\+cpp}
+\hypertarget{_ble_uart_8cpp_source}{}\label{_ble_uart_8cpp_source}\mbox{\hyperlink{_ble_uart_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_ble_uart_8h}{BleUart.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00002}00002\ \textcolor{comment}{//BLE\ server\ tanımlaması}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00003}\mbox{\hyperlink{_ble_uart_8cpp_ac871c365764e0411a3c3806439b2b19d}{00003}}\ BLEServer*\ \mbox{\hyperlink{_ble_uart_8cpp_ac871c365764e0411a3c3806439b2b19d}{pServer}}\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00004}00004\ \textcolor{comment}{//\ BLE\ veri\ gönderme\ karakterstiğinin\ tanımlaması.}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00005}\mbox{\hyperlink{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8}{00005}}\ BLECharacteristic*\ \mbox{\hyperlink{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8}{pTxCharacteristic}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00006}00006\ \textcolor{comment}{//\ bağlantı\ durumu\ bayraklarının\ tanımlanması}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00007}\mbox{\hyperlink{_ble_uart_8cpp_adaf8c0f3cd4270e214bc3491eb5aa7c1}{00007}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{_ble_uart_8cpp_a82ce0016b020197f9b0356800edae57a}{deviceConnected}}\ =\ \textcolor{keyword}{false},\ \mbox{\hyperlink{_ble_uart_8cpp_a75192623c088d57de02f8803296eaa96}{oldDeviceConnected}}\ =\ \textcolor{keyword}{false},\ \mbox{\hyperlink{_ble_uart_8cpp_adaf8c0f3cd4270e214bc3491eb5aa7c1}{bleDataReaded}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00008}00008\ \textcolor{comment}{//BLE\ Veri\ gönderme\ bufferlerinin\ tanımlanması}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00009}\mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{00009}}\ uint8\_t\ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[9\ *\ \mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{bufferSize}}]\ =\ \{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00010}\mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{00010}}\ uint8\_t\ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[9\ *\ \mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{bufferSize}}]\ =\ \{\ 0\ \};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00011}00011\ \textcolor{comment}{//\ cihaz\ ID'si\ değişkeninin\ tanımlanması}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00012}\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{00012}}\ uint32\_t\ \mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00013}00013\ \textcolor{comment}{//\ BLE'den\ gönderilmeye\ hazır\ veri\ olduğunu\ gösterir\ bayrak}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00014}\mbox{\hyperlink{_ble_uart_8cpp_abf8d6ce03a53174265630ac15ddeb939}{00014}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{_ble_uart_8cpp_abf8d6ce03a53174265630ac15ddeb939}{bleDataReady}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00015}00015\ \textcolor{comment}{//\ BLE\ operasyonlarını\ yöneten\ semaforun\ tanımlanması}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00016}\mbox{\hyperlink{_ble_uart_8cpp_add9bb898097daa91407b73bd23696a73}{00016}}\ SemaphoreHandle\_t\ \mbox{\hyperlink{_ble_uart_8cpp_add9bb898097daa91407b73bd23696a73}{SemBLE}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00017}00017\ \textcolor{comment}{//\ BLE\ karakteristiklerinin\ ID'lerinin\ tanımlanması}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00018}00018\ \textcolor{comment}{//\ See\ the\ following\ for\ generating\ UUIDs:}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00019}00019\ \textcolor{comment}{//\ https://www.uuidgenerator.net/}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00020}\mbox{\hyperlink{_ble_uart_8cpp_a445125ee8c34695376c85f10b38844d6}{00020}}\ \textcolor{preprocessor}{\#define\ SERVICE\_UUID\ "{}6E400001-\/B5A3-\/F393-\/E0A9-\/E50E24DCCA9E"{}\ \ }\textcolor{comment}{//\ UART\ service\ UUID}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00021}\mbox{\hyperlink{_ble_uart_8cpp_a9f4f730f861639550d7d03224aa0abff}{00021}}\ \textcolor{preprocessor}{\#define\ CHARACTERISTIC\_UUID\_RX\ "{}6E400002-\/B5A3-\/F393-\/E0A9-\/E50E24DCCA9E"{}}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00022}\mbox{\hyperlink{_ble_uart_8cpp_ad4181a351a9048aaca17ef09f91f15d7}{00022}}\ \textcolor{preprocessor}{\#define\ CHARACTERISTIC\_UUID\_TX\ "{}6E400003-\/B5A3-\/F393-\/E0A9-\/E50E24DCCA9E"{}}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00024}\mbox{\hyperlink{_ble_uart_8cpp_aeb2ce0b4fb342832d35fc94027b659c1}{00024}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{_ble_uart_8cpp_aeb2ce0b4fb342832d35fc94027b659c1}{BleUartTasksBegin}}(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00030}00030\ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_add9bb898097daa91407b73bd23696a73}{SemBLE}}\ =\ xSemaphoreCreateBinary();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00032}00032\ \ \ \ \ xTaskCreatePinnedToCore(}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_ad750ebb53345e6d44b73da20489a2fad}{BleUartTasks}},\ \textcolor{stringliteral}{"{}BleUartTasks"{}},}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ 4096\ *\ 4,}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ NULL,\ 5,}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ NULL,\ ARDUINO\_RUNNING\_CORE);}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00037}00037\ \ \ \ \ \textcolor{comment}{//Serial.println("{}Waiting\ a\ client\ connection\ to\ notify..."{});}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00038}00038\ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00040}\mbox{\hyperlink{_ble_uart_8cpp_ad750ebb53345e6d44b73da20489a2fad}{00040}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{_ble_uart_8cpp_ad750ebb53345e6d44b73da20489a2fad}{BleUartTasks}}(\textcolor{keywordtype}{void}*\ parameters)\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00051}00051\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 17;\ i\ =\ i\ +\ 8)\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}}\ |=\ ((ESP.getEfuseMac()\ >>\ (40\ -\/\ i))\ \&\ 0xff)\ <<\ i;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00053}00053\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00054}00054\ \ \ \ \ \textcolor{comment}{//\ Create\ the\ BLE\ Device}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00055}00055\ \ \ \ \ BLEDevice::init(\textcolor{stringliteral}{"{}Hamle\ EKG\ "{}}\ +\ String(\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}},\ HEX));}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00056}00056\ \ \ \ \ BLEDevice::setMTU(517);}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{comment}{//\ Create\ the\ BLE\ Server}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00059}00059\ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_ac871c365764e0411a3c3806439b2b19d}{pServer}}\ =\ BLEDevice::createServer();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00060}00060\ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_ac871c365764e0411a3c3806439b2b19d}{pServer}}-\/>setCallbacks(\textcolor{keyword}{new}\ \mbox{\hyperlink{class_server_callbacks}{ServerCallbacks}}());}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{comment}{//\ Create\ the\ BLE\ Service}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00063}00063\ \ \ \ \ BLEService*\ pService\ =\ \mbox{\hyperlink{_ble_uart_8cpp_ac871c365764e0411a3c3806439b2b19d}{pServer}}-\/>createService(\mbox{\hyperlink{_ble_uart_8cpp_a445125ee8c34695376c85f10b38844d6}{SERVICE\_UUID}});}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00065}00065\ \ \ \ \ \textcolor{comment}{//\ Create\ a\ BLE\ Characteristic}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00066}00066\ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8}{pTxCharacteristic}}\ =\ pService-\/>createCharacteristic(}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_ad4181a351a9048aaca17ef09f91f15d7}{CHARACTERISTIC\_UUID\_TX}},}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ BLECharacteristic::PROPERTY\_NOTIFY);}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00070}00070\ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8}{pTxCharacteristic}}-\/>addDescriptor(\textcolor{keyword}{new}\ BLE2902());}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00072}00072\ \ \ \ \ BLECharacteristic*\ pRxCharacteristic\ =\ pService-\/>createCharacteristic(}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a9f4f730f861639550d7d03224aa0abff}{CHARACTERISTIC\_UUID\_RX}},}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ BLECharacteristic::PROPERTY\_WRITE);}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00076}00076\ \ \ \ \ pRxCharacteristic-\/>setCallbacks(\textcolor{keyword}{new}\ \mbox{\hyperlink{class_characteristic_callbacks}{CharacteristicCallbacks}}());}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00077}00077\ \ \ \ \ pRxCharacteristic-\/>addDescriptor(\textcolor{keyword}{new}\ BLE2902());}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{comment}{//\ Start\ the\ service}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00080}00080\ \ \ \ \ pService-\/>start();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00082}00082\ \ \ \ \ \textcolor{comment}{//\ Start\ advertising}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00083}00083\ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_ac871c365764e0411a3c3806439b2b19d}{pServer}}-\/>getAdvertising()-\/>start();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00085}00085\ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \textcolor{comment}{//taskYIELD();}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_ble_uart_8cpp_a82ce0016b020197f9b0356800edae57a}{deviceConnected}})\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_card_control_8cpp_ac42d630276afdd0c9f55ebc7b0320a46}{recordStatus}})\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_ble_uart_8cpp_abf8d6ce03a53174265630ac15ddeb939}{bleDataReady}})\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_abf8d6ce03a53174265630ac15ddeb939}{bleDataReady}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_e_c_g_8cpp_a070e9b32fe4c2d27b5695f106d44d37a}{sendBuffer}}\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[0]\ =\ (\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}}\ >>\ 24)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[1]\ =\ (\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}}\ >>\ 16)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[2]\ =\ (\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}}\ >>\ 8)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[3]\ =\ (\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}})\&0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[4]\ =\ (\mbox{\hyperlink{_card_control_8cpp_aec5a5b270109b3d9af73531655d36932}{BatteryVoltage}}\ >>\ 8)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[5]\ =\ \mbox{\hyperlink{_card_control_8cpp_aec5a5b270109b3d9af73531655d36932}{BatteryVoltage}}\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[6]\ =\ \mbox{\hyperlink{_card_control_8cpp_a772f04d1507f57cf942cde37565603ae}{BatteryPercentage}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[7]\ =\ \mbox{\hyperlink{_card_control_8cpp_a660fb8c47a615dc4dcf4802e374f7976}{CardTemperature}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[8]\ =\ \mbox{\hyperlink{_card_control_8cpp_a6cc91f89676b8d31da78f40fb2ceaa05}{Button2Pressed}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[9]\ =\ \mbox{\hyperlink{_card_control_8cpp_a9c4fd350a03790a1ecf343f46d8f9eb6}{ChgStatRead}}\ <<\ 1\ |\ \mbox{\hyperlink{_card_control_8cpp_a063ae0e2d9e6b5403e84c8038909487f}{ChgInokRead}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[10]\ =\ 0x01;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[11]\ =\ 0x90;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[12]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_a04bc8f3d3452bf8fcc5f1e82d86d7fe8}{year}}()\ -\/\ 2000;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[13]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_a10d35aa20ebb179cdb4b61f90dfcfe74}{month}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[14]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_a6e653eaef31e4956ee9bf67b4874a9a8}{day}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[15]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_ac17441fb0c669bcf3be5de278335e8d0}{hour}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[16]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_a8dac4d21cf40f1b6f1ec5973024709ed}{minute}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[17]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_adacdb3c0984bc73c2b48e5d1995a6c01}{second}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8}{pTxCharacteristic}}-\/>setValue((uint8\_t*)\mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}},\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}));}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//else}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ pTxCharacteristic-\/>setValue(txArray2);}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8}{pTxCharacteristic}}-\/>notify();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[0]\ =\ (\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}}\ >>\ 24)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[1]\ =\ (\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}}\ >>\ 16)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[2]\ =\ (\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}}\ >>\ 8)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[3]\ =\ (\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}})\&0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[4]\ =\ (\mbox{\hyperlink{_card_control_8cpp_aec5a5b270109b3d9af73531655d36932}{BatteryVoltage}}\ >>\ 8)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[5]\ =\ \mbox{\hyperlink{_card_control_8cpp_aec5a5b270109b3d9af73531655d36932}{BatteryVoltage}}\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[6]\ =\ \mbox{\hyperlink{_card_control_8cpp_a772f04d1507f57cf942cde37565603ae}{BatteryPercentage}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[7]\ =\ \mbox{\hyperlink{_card_control_8cpp_a660fb8c47a615dc4dcf4802e374f7976}{CardTemperature}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[8]\ =\ \mbox{\hyperlink{_card_control_8cpp_a6cc91f89676b8d31da78f40fb2ceaa05}{Button2Pressed}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[9]\ =\ \mbox{\hyperlink{_card_control_8cpp_a9c4fd350a03790a1ecf343f46d8f9eb6}{ChgStatRead}}\ <<\ 1\ |\ \mbox{\hyperlink{_card_control_8cpp_a063ae0e2d9e6b5403e84c8038909487f}{ChgInokRead}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[10]\ =\ 0x02;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[11]\ =\ 0x15;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[12]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_a04bc8f3d3452bf8fcc5f1e82d86d7fe8}{year}}()\ -\/\ 2000;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[13]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_a10d35aa20ebb179cdb4b61f90dfcfe74}{month}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[14]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_a6e653eaef31e4956ee9bf67b4874a9a8}{day}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[15]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_ac17441fb0c669bcf3be5de278335e8d0}{hour}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[16]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_a8dac4d21cf40f1b6f1ec5973024709ed}{minute}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}[17]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_adacdb3c0984bc73c2b48e5d1995a6c01}{second}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8}{pTxCharacteristic}}-\/>setValue((uint8\_t*)\mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}},\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{txArray1}}));}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//else}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ pTxCharacteristic-\/>setValue(txArray2);}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8}{pTxCharacteristic}}-\/>notify();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((millis()\ -\/\ \mbox{\hyperlink{_card_control_8cpp_a0a7ed9bd6f1fa671f92a27062c49f055}{buttonPressTime}}[1])\ >\ 2000)}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_card_control_8cpp_a6cc91f89676b8d31da78f40fb2ceaa05}{Button2Pressed}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (BufferSelect)}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//delay(3);\ \ //\ bluetooth\ stack\ will\ go\ into\ congestion,\ if\ too\ many\ packets\ are\ sent}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[0]\ =\ (\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}}\ >>\ 24)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[1]\ =\ (\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}}\ >>\ 16)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[2]\ =\ (\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}}\ >>\ 8)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[3]\ =\ (\mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chipId}})\&0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[4]\ =\ (\mbox{\hyperlink{_card_control_8cpp_aec5a5b270109b3d9af73531655d36932}{BatteryVoltage}}\ >>\ 8)\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[5]\ =\ \mbox{\hyperlink{_card_control_8cpp_aec5a5b270109b3d9af73531655d36932}{BatteryVoltage}}\ \&\ 0xFF;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[6]\ =\ \mbox{\hyperlink{_card_control_8cpp_a772f04d1507f57cf942cde37565603ae}{BatteryPercentage}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[7]\ =\ \mbox{\hyperlink{_card_control_8cpp_a660fb8c47a615dc4dcf4802e374f7976}{CardTemperature}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[8]\ =\ \mbox{\hyperlink{_card_control_8cpp_a6cc91f89676b8d31da78f40fb2ceaa05}{Button2Pressed}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[9]\ =\ \mbox{\hyperlink{_card_control_8cpp_a9c4fd350a03790a1ecf343f46d8f9eb6}{ChgStatRead}}\ <<\ 1\ |\ \mbox{\hyperlink{_card_control_8cpp_a063ae0e2d9e6b5403e84c8038909487f}{ChgInokRead}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[10]\ =\ 0x03;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[11]\ =\ 0x20;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[12]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_a04bc8f3d3452bf8fcc5f1e82d86d7fe8}{year}}()\ -\/\ 2000;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[13]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_a10d35aa20ebb179cdb4b61f90dfcfe74}{month}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[14]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_a6e653eaef31e4956ee9bf67b4874a9a8}{day}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[15]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_ac17441fb0c669bcf3be5de278335e8d0}{hour}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[16]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_a8dac4d21cf40f1b6f1ec5973024709ed}{minute}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}}[17]\ =\ \mbox{\hyperlink{_r_t_c_8cpp_ac023874b2154eac7297a7575008605fe}{now}}.\mbox{\hyperlink{class_date_time_adacdb3c0984bc73c2b48e5d1995a6c01}{second}}();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8}{pTxCharacteristic}}-\/>setValue((uint8\_t*)\mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{txArray0}},\ 18);}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//else}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ pTxCharacteristic-\/>setValue(txArray2);}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8}{pTxCharacteristic}}-\/>notify();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ disconnecting}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{_ble_uart_8cpp_a82ce0016b020197f9b0356800edae57a}{deviceConnected}}\ \&\&\ \mbox{\hyperlink{_ble_uart_8cpp_a75192623c088d57de02f8803296eaa96}{oldDeviceConnected}})\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ delay(500);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ give\ the\ bluetooth\ stack\ the\ chance\ to\ get\ things\ ready}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_ac871c365764e0411a3c3806439b2b19d}{pServer}}-\/>startAdvertising();\ \ \textcolor{comment}{//\ restart\ advertising}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Serial.println("{}start\ advertising"{});}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a75192623c088d57de02f8803296eaa96}{oldDeviceConnected}}\ =\ \mbox{\hyperlink{_ble_uart_8cpp_a82ce0016b020197f9b0356800edae57a}{deviceConnected}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ connecting}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_ble_uart_8cpp_a82ce0016b020197f9b0356800edae57a}{deviceConnected}}\ \&\&\ !\mbox{\hyperlink{_ble_uart_8cpp_a75192623c088d57de02f8803296eaa96}{oldDeviceConnected}})\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ do\ stuff\ here\ on\ connecting}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_a75192623c088d57de02f8803296eaa96}{oldDeviceConnected}}\ =\ \mbox{\hyperlink{_ble_uart_8cpp_a82ce0016b020197f9b0356800edae57a}{deviceConnected}};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ BLE'yi\ ilgilendiren\ işlem\ yoksa\ thread'in\ uyumasını\ sağlar}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ xSemaphoreTake(\mbox{\hyperlink{_ble_uart_8cpp_add9bb898097daa91407b73bd23696a73}{SemBLE}},\ portMAX\_DELAY);}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00182}00182\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00183}00183\ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00185}00185\ \textcolor{keywordtype}{void}\ ServerCallbacks::onConnect(BLEServer*\ \mbox{\hyperlink{_ble_uart_8cpp_ac871c365764e0411a3c3806439b2b19d}{pServer}})\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00191}00191\ \ \ \ \ \mbox{\hyperlink{_ble_uart_8h_a82ce0016b020197f9b0356800edae57a}{deviceConnected}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00192}00192\ \ \ \ \ BaseType\_t\ \mbox{\hyperlink{_e_c_g_8cpp_a9d9a749ad99ec3d4a6886d5277b9ba87}{xHigherPriorityTaskWoken}}\ =\ pdFALSE;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00193}00193\ \ \ \ \ xSemaphoreGiveFromISR(\mbox{\hyperlink{_ble_uart_8cpp_add9bb898097daa91407b73bd23696a73}{SemBLE}},\ \&\mbox{\hyperlink{_e_c_g_8cpp_a9d9a749ad99ec3d4a6886d5277b9ba87}{xHigherPriorityTaskWoken}});}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00194}00194\ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00196}00196\ \textcolor{keywordtype}{void}\ ServerCallbacks::onDisconnect(BLEServer*\ \mbox{\hyperlink{_ble_uart_8cpp_ac871c365764e0411a3c3806439b2b19d}{pServer}})\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00202}00202\ \ \ \ \ \mbox{\hyperlink{_ble_uart_8h_a82ce0016b020197f9b0356800edae57a}{deviceConnected}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00203}00203\ \ \ \ \ BaseType\_t\ \mbox{\hyperlink{_e_c_g_8cpp_a9d9a749ad99ec3d4a6886d5277b9ba87}{xHigherPriorityTaskWoken}}\ =\ pdFALSE;}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00204}00204\ \ \ \ \ xSemaphoreGiveFromISR(\mbox{\hyperlink{_ble_uart_8cpp_add9bb898097daa91407b73bd23696a73}{SemBLE}},\ \&\mbox{\hyperlink{_e_c_g_8cpp_a9d9a749ad99ec3d4a6886d5277b9ba87}{xHigherPriorityTaskWoken}});}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00205}00205\ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00207}\mbox{\hyperlink{_ble_uart_8cpp_afed996e4f863c46353dbea812f01c988}{00207}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{_ble_uart_8cpp_afed996e4f863c46353dbea812f01c988}{bleSetDataReady}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00212}00212\ \ \ \ \ \mbox{\hyperlink{_ble_uart_8cpp_abf8d6ce03a53174265630ac15ddeb939}{bleDataReady}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00213}00213\ \ \ \ \ xSemaphoreGive(\mbox{\hyperlink{_ble_uart_8cpp_add9bb898097daa91407b73bd23696a73}{SemBLE}});}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00214}00214\ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00216}00216\ \textcolor{keywordtype}{void}\ CharacteristicCallbacks::onWrite(BLECharacteristic*\ pCharacteristic)\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00222}00222\ \ \ \ \ String\ rxValue\ =\ pCharacteristic-\/>getValue();}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00223}00223\ }
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00224}00224\ \ \ \ \ \textcolor{keywordflow}{if}\ (rxValue.length()\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Serial.println("{}*********"{});}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Serial.print("{}Received\ Value:\ "{});}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ rxValue.length();\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Serial.print(rxValue[i]);}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_r_t_c_8cpp_a95c5467448710f436c1962d28c4f3a81}{inputBuffer}}[i]\ =\ rxValue[i];}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Serial.println();}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Serial.println("{}*********"{});}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_ble_uart_8h_adaf8c0f3cd4270e214bc3491eb5aa7c1}{bleDataReaded}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00234}00234\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_ble_uart_8cpp_source_l00235}00235\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,229 @@
+\doxysection{Ble\+Uart.\+cpp File Reference}
+\hypertarget{_ble_uart_8cpp}{}\label{_ble_uart_8cpp}\index{BleUart.cpp@{BleUart.cpp}}
+{\ttfamily \#include "{}Ble\+Uart.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_ble_uart_8cpp_a445125ee8c34695376c85f10b38844d6}{SERVICE\+\_\+\+UUID}}~"{}6E400001-\/B5\+A3-\/F393-\/E0\+A9-\/E50\+E24\+DCCA9\+E"{}
+\item 
+\#define \mbox{\hyperlink{_ble_uart_8cpp_a9f4f730f861639550d7d03224aa0abff}{CHARACTERISTIC\+\_\+\+UUID\+\_\+\+RX}}~"{}6E400002-\/B5\+A3-\/F393-\/E0\+A9-\/E50\+E24\+DCCA9\+E"{}
+\item 
+\#define \mbox{\hyperlink{_ble_uart_8cpp_ad4181a351a9048aaca17ef09f91f15d7}{CHARACTERISTIC\+\_\+\+UUID\+\_\+\+TX}}~"{}6E400003-\/B5\+A3-\/F393-\/E0\+A9-\/E50\+E24\+DCCA9\+E"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_ble_uart_8cpp_aeb2ce0b4fb342832d35fc94027b659c1}{Ble\+Uart\+Tasks\+Begin}} (void)
+\item 
+void \mbox{\hyperlink{_ble_uart_8cpp_ad750ebb53345e6d44b73da20489a2fad}{Ble\+Uart\+Tasks}} (void \texorpdfstring{$\ast$}{*}parameters)
+\item 
+void \mbox{\hyperlink{_ble_uart_8cpp_afed996e4f863c46353dbea812f01c988}{ble\+Set\+Data\+Ready}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+BLEServer \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{_ble_uart_8cpp_ac871c365764e0411a3c3806439b2b19d}{p\+Server}} = NULL
+\item 
+BLECharacteristic \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8}{p\+Tx\+Characteristic}}
+\item 
+bool \mbox{\hyperlink{_ble_uart_8cpp_a82ce0016b020197f9b0356800edae57a}{device\+Connected}} = false
+\item 
+bool \mbox{\hyperlink{_ble_uart_8cpp_a75192623c088d57de02f8803296eaa96}{old\+Device\+Connected}} = false
+\item 
+bool \mbox{\hyperlink{_ble_uart_8cpp_adaf8c0f3cd4270e214bc3491eb5aa7c1}{ble\+Data\+Readed}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}{tx\+Array0}} \mbox{[}9 \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}\mbox{]} = \{ 0 \}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}{tx\+Array1}} \mbox{[}9 \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}\mbox{]} = \{ 0 \}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}{chip\+Id}}
+\item 
+bool \mbox{\hyperlink{_ble_uart_8cpp_abf8d6ce03a53174265630ac15ddeb939}{ble\+Data\+Ready}} = false
+\item 
+Semaphore\+Handle\+\_\+t \mbox{\hyperlink{_ble_uart_8cpp_add9bb898097daa91407b73bd23696a73}{Sem\+BLE}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_ble_uart_8cpp_a9f4f730f861639550d7d03224aa0abff}\label{_ble_uart_8cpp_a9f4f730f861639550d7d03224aa0abff} 
+\index{BleUart.cpp@{BleUart.cpp}!CHARACTERISTIC\_UUID\_RX@{CHARACTERISTIC\_UUID\_RX}}
+\index{CHARACTERISTIC\_UUID\_RX@{CHARACTERISTIC\_UUID\_RX}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{CHARACTERISTIC\_UUID\_RX}{CHARACTERISTIC\_UUID\_RX}}
+{\footnotesize\ttfamily \#define CHARACTERISTIC\+\_\+\+UUID\+\_\+\+RX~"{}6E400002-\/B5\+A3-\/F393-\/E0\+A9-\/E50\+E24\+DCCA9\+E"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_ad4181a351a9048aaca17ef09f91f15d7}\label{_ble_uart_8cpp_ad4181a351a9048aaca17ef09f91f15d7} 
+\index{BleUart.cpp@{BleUart.cpp}!CHARACTERISTIC\_UUID\_TX@{CHARACTERISTIC\_UUID\_TX}}
+\index{CHARACTERISTIC\_UUID\_TX@{CHARACTERISTIC\_UUID\_TX}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{CHARACTERISTIC\_UUID\_TX}{CHARACTERISTIC\_UUID\_TX}}
+{\footnotesize\ttfamily \#define CHARACTERISTIC\+\_\+\+UUID\+\_\+\+TX~"{}6E400003-\/B5\+A3-\/F393-\/E0\+A9-\/E50\+E24\+DCCA9\+E"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00022}{22}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_a445125ee8c34695376c85f10b38844d6}\label{_ble_uart_8cpp_a445125ee8c34695376c85f10b38844d6} 
+\index{BleUart.cpp@{BleUart.cpp}!SERVICE\_UUID@{SERVICE\_UUID}}
+\index{SERVICE\_UUID@{SERVICE\_UUID}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{SERVICE\_UUID}{SERVICE\_UUID}}
+{\footnotesize\ttfamily \#define SERVICE\+\_\+\+UUID~"{}6E400001-\/B5\+A3-\/F393-\/E0\+A9-\/E50\+E24\+DCCA9\+E"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{_ble_uart_8cpp_afed996e4f863c46353dbea812f01c988}\label{_ble_uart_8cpp_afed996e4f863c46353dbea812f01c988} 
+\index{BleUart.cpp@{BleUart.cpp}!bleSetDataReady@{bleSetDataReady}}
+\index{bleSetDataReady@{bleSetDataReady}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{bleSetDataReady()}{bleSetDataReady()}}
+{\footnotesize\ttfamily void ble\+Set\+Data\+Ready (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\doxylink{_ble_uart_8cpp_afed996e4f863c46353dbea812f01c988}{ble\+Set\+Data\+Ready()} fonksiyonu BLE\textquotesingle{}den gönderilmeye hazır EKG verisi olduğunda tetiklenen fonksiyon. \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00207}{207}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_ad750ebb53345e6d44b73da20489a2fad}\label{_ble_uart_8cpp_ad750ebb53345e6d44b73da20489a2fad} 
+\index{BleUart.cpp@{BleUart.cpp}!BleUartTasks@{BleUartTasks}}
+\index{BleUartTasks@{BleUartTasks}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{BleUartTasks()}{BleUartTasks()}}
+{\footnotesize\ttfamily void Ble\+Uart\+Tasks (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{parameters }\end{DoxyParamCaption})}
+
+\doxylink{_ble_uart_8cpp_ad750ebb53345e6d44b73da20489a2fad}{Ble\+Uart\+Tasks()} fonksiyonu BLE işlemleri için oluşturulan thread
+
+Cihaz ID\textquotesingle{}sinin oluşturulması, BLE haberleşmesinin kurulmasını, BLE üzerinden gelen bağlantı taleplerinin kabul edilmesini, kopan bağlantının sonlandırılmasını, EKG kaydı aktif değilse cihaz durumunun BLE üzerinden gönderilmesini, EKG kaydı aktif ise cihaz durumunun ve EKG verisinin BLE üzerinden gönderilmesini sağlar 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em parameters} & thread kurulumunda aktarılan parametreler \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00040}{40}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_aeb2ce0b4fb342832d35fc94027b659c1}\label{_ble_uart_8cpp_aeb2ce0b4fb342832d35fc94027b659c1} 
+\index{BleUart.cpp@{BleUart.cpp}!BleUartTasksBegin@{BleUartTasksBegin}}
+\index{BleUartTasksBegin@{BleUartTasksBegin}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{BleUartTasksBegin()}{BleUartTasksBegin()}}
+{\footnotesize\ttfamily void Ble\+Uart\+Tasks\+Begin (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+ADS1293\+Tasks\+Begin() fonksiyonu BLE haberleşme işlemleri için thread ve semafor kurulumunu içerir \begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{_ble_uart_8cpp_adaf8c0f3cd4270e214bc3491eb5aa7c1}\label{_ble_uart_8cpp_adaf8c0f3cd4270e214bc3491eb5aa7c1} 
+\index{BleUart.cpp@{BleUart.cpp}!bleDataReaded@{bleDataReaded}}
+\index{bleDataReaded@{bleDataReaded}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{bleDataReaded}{bleDataReaded}}
+{\footnotesize\ttfamily bool ble\+Data\+Readed}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_abf8d6ce03a53174265630ac15ddeb939}\label{_ble_uart_8cpp_abf8d6ce03a53174265630ac15ddeb939} 
+\index{BleUart.cpp@{BleUart.cpp}!bleDataReady@{bleDataReady}}
+\index{bleDataReady@{bleDataReady}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{bleDataReady}{bleDataReady}}
+{\footnotesize\ttfamily bool ble\+Data\+Ready = false}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604}\label{_ble_uart_8cpp_a56369bb9b7d7f0a59da02a8aa982a604} 
+\index{BleUart.cpp@{BleUart.cpp}!chipId@{chipId}}
+\index{chipId@{chipId}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{chipId}{chipId}}
+{\footnotesize\ttfamily uint32\+\_\+t chip\+Id}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_a82ce0016b020197f9b0356800edae57a}\label{_ble_uart_8cpp_a82ce0016b020197f9b0356800edae57a} 
+\index{BleUart.cpp@{BleUart.cpp}!deviceConnected@{deviceConnected}}
+\index{deviceConnected@{deviceConnected}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{deviceConnected}{deviceConnected}}
+{\footnotesize\ttfamily bool device\+Connected = false}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_a75192623c088d57de02f8803296eaa96}\label{_ble_uart_8cpp_a75192623c088d57de02f8803296eaa96} 
+\index{BleUart.cpp@{BleUart.cpp}!oldDeviceConnected@{oldDeviceConnected}}
+\index{oldDeviceConnected@{oldDeviceConnected}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{oldDeviceConnected}{oldDeviceConnected}}
+{\footnotesize\ttfamily bool old\+Device\+Connected = false}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_ac871c365764e0411a3c3806439b2b19d}\label{_ble_uart_8cpp_ac871c365764e0411a3c3806439b2b19d} 
+\index{BleUart.cpp@{BleUart.cpp}!pServer@{pServer}}
+\index{pServer@{pServer}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{pServer}{pServer}}
+{\footnotesize\ttfamily BLEServer\texorpdfstring{$\ast$}{*} p\+Server = NULL}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8}\label{_ble_uart_8cpp_a4fbfdd05e24ad337c4e0718031d2f4f8} 
+\index{BleUart.cpp@{BleUart.cpp}!pTxCharacteristic@{pTxCharacteristic}}
+\index{pTxCharacteristic@{pTxCharacteristic}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{pTxCharacteristic}{pTxCharacteristic}}
+{\footnotesize\ttfamily BLECharacteristic\texorpdfstring{$\ast$}{*} p\+Tx\+Characteristic}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_add9bb898097daa91407b73bd23696a73}\label{_ble_uart_8cpp_add9bb898097daa91407b73bd23696a73} 
+\index{BleUart.cpp@{BleUart.cpp}!SemBLE@{SemBLE}}
+\index{SemBLE@{SemBLE}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{SemBLE}{SemBLE}}
+{\footnotesize\ttfamily Semaphore\+Handle\+\_\+t Sem\+BLE}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0}\label{_ble_uart_8cpp_a1257cae609751ea55dd6436cb28e34a0} 
+\index{BleUart.cpp@{BleUart.cpp}!txArray0@{txArray0}}
+\index{txArray0@{txArray0}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{txArray0}{txArray0}}
+{\footnotesize\ttfamily uint8\+\_\+t tx\+Array0\mbox{[}9 \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}\mbox{]} = \{ 0 \}}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00009}{9}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
+\Hypertarget{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe}\label{_ble_uart_8cpp_a1d84d218632dd6f6f03c83194c1873fe} 
+\index{BleUart.cpp@{BleUart.cpp}!txArray1@{txArray1}}
+\index{txArray1@{txArray1}!BleUart.cpp@{BleUart.cpp}}
+\doxysubsubsection{\texorpdfstring{txArray1}{txArray1}}
+{\footnotesize\ttfamily uint8\+\_\+t tx\+Array1\mbox{[}9 \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{_e_c_g_8h_a9fe2fa8446637e4264bb2e08a361c503}{buffer\+Size}}\mbox{]} = \{ 0 \}}
+
+
+
+Definition at line \mbox{\hyperlink{_ble_uart_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{_ble_uart_8cpp_source}{Ble\+Uart.\+cpp}}.
+
