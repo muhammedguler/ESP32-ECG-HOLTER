@@ -1,6 +1,11 @@
 #ifndef defines
 #define defines
 
+/*
+ESP32'nin pin bağlantılarının tanımlamaları
+*/
+
+
 #define Buzzer 3
 #define VTemp 4
 #define VBat 5
@@ -32,8 +37,3 @@
 #define RtcSDA 48
 
 #endif
-/*
-#if CONFIG_IDF_TARGET_ESP32S2 || CONFIG_IDF_TARGET_ESP32S3
-#define VSPI FSPI
-#endif
-*/

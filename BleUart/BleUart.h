@@ -10,7 +10,6 @@
 #include "esp32-hal-gpio.h"
 #include "ECG.h"
 #include "CardControl.h"
-#include "esp_random.h"
 
 
 

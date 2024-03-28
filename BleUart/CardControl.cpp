@@ -1,20 +1,13 @@
 #include "CardControl.h"
 
-// notes in the melody:
-int melody[] = {
-    NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4
-};
-// note durations: 4 = quarter note, 8 = eighth note, etc.:
-int noteDurations[] = {
-    4, 8, 8, 4, 4, 4, 4, 4
-};
+// kart sıcaklığının ve Batarya gerilimlerinin okunacağı analog pinlerinin tanımlanması
 uint8_t ADC_Pins[] = { VTemp, VBat };
 // Flag which will be set in ISR when conversion is done
 uint8_t ADC_ConversionDone = false;
 // Result structure for ADC Continuous reading
 adc_continuos_data_t* ADC_Result = NULL;
 
-
+// Sıcaklık okuma işlemi için kullanılan değişkenlerin tanımlanmısı
 float Vout = 0.0;  // Vout in A0
 float Rout = 0.0;  // Rout in A0
 // use the datasheet to get this data.
@@ -22,17 +15,49 @@ float Rinf = 0.0;   // initial parameters [ohm]
 float TempK = 0.0;  // variable output
 float TempC = 0.0;  // variable output
 float CardTemperatureFloat = 0.0;
+uint8_t CardTemperature = 25;
+// batarya voltajını ve yüzdesini tutan değişkenlerin tanımlanması
 uint32_t BatteryVoltage;
-uint8_t CardTemperature = 25, BatteryPercentage = 50;
+uint8_t BatteryPercentage = 50;
+// buton basılma durumlarını tutan değişkenlerin tanımlanması
 bool Button1Pressed = false, Button2Pressed = false;
+// buton basılma ve bırakılma zamanlarını tutan değişkenlerin tanımlanması
 uint32_t buttonPressTime[2];
 uint32_t buttonRelaseTime[2];
+// şarj aletinin bağlı olup olmadığını ve şarjın devam edip etmediğini göstern bayrakların tanımlanması
 uint8_t ChgStatRead, ChgInokRead;
+// kayıt başlatma gecikmesi için kullanılan değişkenlerin tanımlanması
 uint32_t recordTime[2];
+// kayıt durumunu tutan değişkenin tanımlanması
 bool recordStatus = false;
+// cihazın kapanma durumuna girip girmediğini gösterir bayrağın tanımlanması
 bool deviceClosing = false;
+// bildirim ledinin yumuşak yanıp sönmesi için bayrak tanımlamarı
+bool fade_ended = false;  // status of LED fade
+bool fade_on = true;
+uint8_t blefadeStatus = false;
 
 void CardControlTaskBegin(void) {
+    /*!
+    * @brief     CardControlTaskBegin() fonksiyonu cihaz kontrol işlemleri için thread kurulumunu içerir 
+    * @return    none
+    */
+    // Start ADC Continuous conversions
+    analogContinuousStart();
+    xTaskCreatePinnedToCore(
+        CardControlTask, "CardControlTask",
+        1024 * 4,
+        NULL, 1,
+        NULL, ARDUINO_RUNNING_CORE);
+}
+void CardControlTask(void* Parameters) {
+    /*!
+    * @brief        CardControlTask() fonksiyonu Cihaz kontrol işlemleri için oluşturulan thread
+    * @details      kart üzerinde bulunan buton, led, buzzer, Pil, şarj entegresi , sıcaklık sensörü ve 
+    akıllı açma kapama entegresinin yönetilmesini sağlar.
+    * @param[in]    parameters thread kurulumunda aktarılan parametreler
+    * @return       none
+    */
     //init Digital IO's
     pinMode(SwShdn, OUTPUT);
     digitalWrite(SwShdn, LOW);
@@ -63,18 +88,11 @@ void CardControlTaskBegin(void) {
     // Setup ADC Continuous with following input:
     // array of pins, count of the pins, how many conversions per pin in one cycle will happen, sampling frequency, callback function
     analogContinuous(ADC_Pins, 2, CONVERSIONS_PER_PIN, 2000, &adcComplete);
-
-    // Start ADC Continuous conversions
-    analogContinuousStart();
-    xTaskCreatePinnedToCore(
-        CardControlTask, "CardControlTask",
-        1024 * 4,
-        NULL, 1,
-        NULL, ARDUINO_RUNNING_CORE);
-}
-void CardControlTask(void* Parameters) {
+    // NTC parametresinin hesplanması
     Rinf = R0 * exp(-beta / T0);
+    // açılış müziğinin çalınması
     HarryStart();
+
     while (true) {
         delay(5);
         AdcOperation();
@@ -103,18 +121,34 @@ void CardControlTask(void* Parameters) {
 }
 
 void ARDUINO_ISR_ATTR isrButon1() {
+    /*!
+    * @brief        isrButon1() fonksiyonu açma kapama / kayıt butonuna basılınca tetiklenen fonksiyon.
+    * @return       none
+    */
     Button1Pressed = true;
     buttonPressTime[0] = millis();
 }
 void ARDUINO_ISR_ATTR isrButon2() {
+    /*!
+    * @brief        isrButon1() fonksiyonu aritmi kayıt basılınca tetiklenen fonksiyon.
+    * @return       none
+    */
     Button2Pressed = true;
     buttonPressTime[1] = millis();
 }
 void ARDUINO_ISR_ATTR adcComplete() {
+    /*!
+    * @brief        isrButon1() fonksiyonu ADC çevrim işlemi bitince tetiklenen fonksiyon.
+    * @return       none
+    */
     ADC_ConversionDone = true;
 }
 
 void AdcOperation(void) {
+    /*!
+    * @brief        AdcOperation() fonksiyonu ADC okumasına göre kart sıcaklığının, batarya geriliminin ve batarya yüzdesinin hesplandığı fonksiyon
+    * @return       none
+    */
     if (ADC_ConversionDone) {
         ADC_ConversionDone = false;
         if (analogContinuousRead(&ADC_Result, 0)) {
@@ -131,12 +165,19 @@ void AdcOperation(void) {
         }
     }
 }
-bool fade_ended = false;  // status of LED fade
-bool fade_on = true;
-uint8_t blefadeStatus = false;
+
 
 
 void ledOperation() {
+    /*!
+    * @brief        ledOperation() fonksiyonu bildirim LED'inin cihaz durumuna bağlı olarak uygun şekilde yanıp sönmesini kontrol eder
+    * @details      bildirim LED'inin şarj işlemi esnasında batarya doluluğuna göre kırmızıdan yeşile değişimini sağlar. 
+    normal çalışma esnasında  bluetooth bağlı ise bildirim ledinin mavi yanıp sönmesini sağlar.
+    kayıt aktif ise bildirim LED'inin yeşil yanıp sönmesini sağlar.
+    kayıt duraklatılmış ise bildirim LED'inin sarı yanıp sönmesini sağlar.
+    cihaz kapanmak üzere ise bildirim LED'inin kırmızı yanmasını ve kapanış sesinin çalımasını sağlar.
+    * @return       none
+    */
     if (deviceClosing) {
         ledcWrite(RedLED, 255);
         ledcWrite(GreenLED, 0);

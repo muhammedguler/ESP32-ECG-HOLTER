@@ -4,19 +4,24 @@
 #include "RTC.h"
 #include "ECG.h"
 
-extern int64_t startTime, diffTime;
 void setup() {
+    /*!
+    * @brief        setup() fonksiyonu ilk açılışta tetiklenen ana fonksiyon
+    * @details      Cihaz açıldığında BleUart, CardControl, SdCard, RTC, ADS1293 threadlerinin başlatıldığı yer.
+    * @return       none
+    */
     Serial.begin(115200);
     BleUartTasksBegin();
     CardControlTaskBegin();
     SdCardTasksBegin();
     RTCTaskBegin();
-    ADS1293TasksBegin();
+    ADS1293TaskBegin();
 }
 void loop() {
-    //sprintf(txArray, "deneme %d deneme ", random(300));
-    //DataReady = true;
-/*    delay(100);
-    if (recordStatus)
-        Serial.println(1000000.0 / diffTime);*/
+    /*!
+    * @brief        loop() fonksiyonu multi thread programlama mantığında kullanılmıyor 
+    * @details      tüm işlemler kendilerine ait threadler içerisinde yapıldığı için Loop fonksiyonu kullanılmıyor.
+    * @return       none
+    */
+    delay(1000);
 }

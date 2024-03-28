@@ -1,19 +1,20 @@
 #include "BleUart.h"
-
+//BLE server tanımlaması
 BLEServer* pServer = NULL;
+// BLE veri gönderme karakterstiğinin tanımlaması.
 BLECharacteristic* pTxCharacteristic;
+// bağlantı durumu bayraklarının tanımlanması
 bool deviceConnected = false, oldDeviceConnected = false, bleDataReaded;
+//BLE Veri gönderme bufferlerinin tanımlanması
 uint8_t txArray0[9 * bufferSize] = { 0 };
 uint8_t txArray1[9 * bufferSize] = { 0 };
-
-uint32_t chipId, random1;
-
-union {
-    uint32_t intArray[2];
-    uint8_t ByteArray[8];  //3F9D70A4; dataArray[0] = A4; dataArray[1] = 70; dataArray[2] =9D, ... ,
-} myUnion;
-
+// cihaz ID'si değişkeninin tanımlanması
+uint32_t chipId;
+// BLE'den gönderilmeye hazır veri olduğunu gösterir bayrak
+bool bleDataReady = false;
+// BLE operasyonlarını yöneten semaforun tanımlanması
 SemaphoreHandle_t SemBLE;
+// BLE karakteristiklerinin ID'lerinin tanımlanması
 // See the following for generating UUIDs:
 // https://www.uuidgenerator.net/
 #define SERVICE_UUID "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"  // UART service UUID
@@ -21,6 +22,32 @@ SemaphoreHandle_t SemBLE;
 #define CHARACTERISTIC_UUID_TX "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
 
 void BleUartTasksBegin(void) {
+    /*!
+    * @brief     ADS1293TasksBegin() fonksiyonu BLE haberleşme işlemleri için thread ve semafor kurulumunu içerir 
+    * @return    none
+    */
+
+    SemBLE = xSemaphoreCreateBinary();
+
+    xTaskCreatePinnedToCore(
+        BleUartTasks, "BleUartTasks",
+        4096 * 4,
+        NULL, 5,
+        NULL, ARDUINO_RUNNING_CORE);
+    //Serial.println("Waiting a client connection to notify...");
+}
+
+void BleUartTasks(void* parameters) {
+    /*!
+    * @brief        BleUartTasks() fonksiyonu BLE işlemleri için oluşturulan thread
+    * @details      Cihaz ID'sinin oluşturulması, BLE haberleşmesinin kurulmasını, 
+    BLE üzerinden gelen bağlantı taleplerinin kabul edilmesini,
+    kopan bağlantının sonlandırılmasını,
+    EKG kaydı aktif değilse cihaz durumunun BLE üzerinden gönderilmesini,
+    EKG kaydı aktif ise cihaz durumunun ve EKG verisinin BLE üzerinden gönderilmesini sağlar
+    * @param[in]    parameters thread kurulumunda aktarılan parametreler
+    * @return       none
+    */
     for (int i = 0; i < 17; i = i + 8) {
         chipId |= ((ESP.getEfuseMac() >> (40 - i)) & 0xff) << i;
     }
@@ -55,20 +82,9 @@ void BleUartTasksBegin(void) {
     // Start advertising
     pServer->getAdvertising()->start();
 
-    SemBLE = xSemaphoreCreateBinary();
-
-    xTaskCreatePinnedToCore(
-        BleUartTasks, "BleUartTasks",
-        4096 * 4,
-        NULL, 5,
-        NULL, ARDUINO_RUNNING_CORE);
-    //Serial.println("Waiting a client connection to notify...");
-}
-
-void BleUartTasks(void* parameters) {
     while (true) {
         //taskYIELD();
-        if ((deviceConnected)) {
+        if (deviceConnected) {
             if (recordStatus) {
                 if (bleDataReady) {
                     bleDataReady = false;
@@ -118,7 +134,6 @@ void BleUartTasks(void* parameters) {
                         //else
                         //    pTxCharacteristic->setValue(txArray2);
                         pTxCharacteristic->notify();
-                        
                     }
                     if ((millis() - buttonPressTime[1]) > 2000)
                         Button2Pressed = false;
@@ -162,28 +177,48 @@ void BleUartTasks(void* parameters) {
             // do stuff here on connecting
             oldDeviceConnected = deviceConnected;
         }
+        // BLE'yi ilgilendiren işlem yoksa thread'in uyumasını sağlar
         xSemaphoreTake(SemBLE, portMAX_DELAY);
     }
 }
 
 void ServerCallbacks::onConnect(BLEServer* pServer) {
+/*!
+    * @brief        onConnect() fonksiyonu BLE'den bağlantı talebi olduğunda tetiklenen fonksiyon
+    * @param[in]    pServer bağlantı talebinin geldiği BLEServer'i
+    * @return       none
+    */
     deviceConnected = true;
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     xSemaphoreGiveFromISR(SemBLE, &xHigherPriorityTaskWoken);
 }
 
 void ServerCallbacks::onDisconnect(BLEServer* pServer) {
+/*!
+    * @brief        onDisconnect() fonksiyonu BLE bağlantısı kesildiğinde tetiklenen fonksiyon
+    * @param[in]    pServer bağlantının kesildiği BLEServer'i
+    * @return       none
+    */
     deviceConnected = false;
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     xSemaphoreGiveFromISR(SemBLE, &xHigherPriorityTaskWoken);
 }
 
 void bleSetDataReady() {
+/*!
+    * @brief        bleSetDataReady() fonksiyonu BLE'den gönderilmeye hazır EKG verisi olduğunda tetiklenen fonksiyon.
+    * @return       none
+    */
     bleDataReady = true;
     xSemaphoreGive(SemBLE);
 }
 
 void CharacteristicCallbacks::onWrite(BLECharacteristic* pCharacteristic) {
+/*!
+    * @brief        onWrite() fonksiyonu BLE bağlantısı üzerinden veri yazılmaya çalışıldığında tetiklenen fonksiyon
+    * @param[in]    pCharacteristic verinin yazılmaya çalışındığı BLE karakteristiği
+    * @return       none
+    */
     String rxValue = pCharacteristic->getValue();
 
     if (rxValue.length() > 0) {

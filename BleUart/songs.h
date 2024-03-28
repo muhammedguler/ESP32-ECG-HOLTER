@@ -7,6 +7,11 @@
 #include "HardwareSerial.h"
 #include "esp32-hal-gpio.h"
 
+/*
+arduino müzik kütüphanesi cihaz açılış ve kapanış sesleri için kullanılır. 
+
+*/
+
 // Les notes de musique 
 #define NOTE_B0  31
 #define NOTE_C1  33

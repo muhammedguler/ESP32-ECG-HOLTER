@@ -1,14 +1,21 @@
 #include "RTC.h"
 
-
 MCP7940_Class MCP7940;                    // Create an instance of the MCP7940
 const uint8_t SPRINTF_BUFFER_SIZE{ 32 };  // Buffer size for sprintf()
-
+// zaman bilgisini depolamak için değişken 
 DateTime now;
-char TxBuffer[64];
+// RTC işlemlerinin kullanacağı veri gönderme bufferi
+//char TxBuffer[64];
+//RTC ayarlama işlemleri için kullanılacak buffer
 char inputBuffer[64];  // Buffer for sprintf()/sscanf()
+// ouknan bayt sayısı
 static uint8_t inputBytes = 0;
+
 void RTCTaskBegin(void) {
+    /*!
+    * @brief     RTCTaskBegin() fonksiyonu RTC işlemleri için thread kurulumunu içerir 
+    * @return    none
+    */
     xTaskCreatePinnedToCore(
         RTCTask, "RTCTask",
         2048 * 4,
@@ -18,6 +25,12 @@ void RTCTaskBegin(void) {
 
 
 void RTCTask(void* Parameters) {
+/*!
+    * @brief        RTCTask() fonksiyonu RTC işlemleri için oluşturulan thread
+    * @details      MCP7940 entegresinin kurulumunu, seri porttan ve BLE'den gelecek saat ayarlama komutlarının işlenmesini sağlar
+    * @param[in]    parameters thread kurulumunda aktarılan parametreler 
+    * @return       none
+    */
     delay(3000);
     while (!MCP7940.begin(RtcSDA, RtcSCL)) {  // Initialize RTC communications
         //Serial.println(F("Unable to find MCP7940N. Checking again in 3s."));  // Show error text
@@ -73,6 +86,10 @@ void RTCTask(void* Parameters) {
 ** and acted upon                                                                                 **
 ***************************************************************************************************/
 void readCommand() {                                                              // Variable for buffer position
+/*!
+    * @brief        readCommand() fonksiyonu saat tarih ayarlama komutlarını okumak için kullanılır
+    * @return       none
+    */
     while (Serial.available()) {                                                  // Loop while incoming serial data
         inputBuffer[inputBytes] = Serial.read();                                  // Get the next byte of data
         if (inputBuffer[inputBytes] != '\n' && inputBytes < SPRINTF_BUFFER_SIZE)  // keep on reading until a newline
@@ -103,6 +120,12 @@ void readCommand() {                                                            
 
 
 void handleRtcCommand(void) {
+    /*!
+    * @brief        handleRtcCommand() fonksiyonu saat tarih ayarlama komutlarının işlenmesi için kullanılır.
+    * @details      "SETDATE yyyy-mm-dd hh:mm:ss" ve "CALDATE yyyy-mm-dd hh:mm:ss" 
+    formatında gelen ayarları RTC entegresine yazar
+    * @return       none
+    */
     enum commands { SetDate,
                     CalDate,
                     Unknown_Command };          // of commands enumerated type

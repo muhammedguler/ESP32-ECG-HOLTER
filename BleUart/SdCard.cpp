@@ -10,42 +10,43 @@
  *    VSS      GND
  *    D0       MISO
  *    D1       -
-#define SdCmd 37
-#define SdCLK 38
-#define SdDat0 39
-#define SdDat1 40
-#define SdDat2 35
-#define SdDat3 36
-#define SdDet 45
 */
-
-//SPIClass *hspi = NULL;
-
-
-//Uncomment and set up if you want to use custom pins for the SPI communication
-/*int sck = SdCLK;
-int miso = SdDat0;
-int mosi = SdCmd;
-int cs = SdDat3;*/
+// SD kart pin tanımlamaları
 int clk = SdCLK;
 int cmd = SdCmd;
 int d0 = SdDat0;
 int d1 = SdDat1;
 int d2 = SdDat2;
-int d3 = SdDat3;  // GPIO 34 is not broken-out on ESP32-S3-DevKitC-1 v1.1
+int d3 = SdDat3;  
+// SD kart içine yazılacak veriler için bufferler
 char contex[200] = { 0 }, FileName[50] = { 0 }, FolderName[50] = { 0 };
+// SD kart'a veri yazma operasyonlarını yöneten semafor
 SemaphoreHandle_t SemSDCard;
+// SD karta yazılacak verin base64 formatında depolanacağı bufferler
 char output0[(9 * bufferSize + 2 - ((9 * bufferSize + 2) % 3)) / 3 * 4 + 1];
 char output1[(9 * bufferSize + 2 - ((9 * bufferSize + 2) % 3)) / 3 * 4 + 1];
-
+// RTC entegresi sınıfı
 extern MCP7940_Class MCP7940;  // Create an instance of the MCP7940
+// SD kart kurulu değilse SdCardSetDataReady fonksiyonunu işlevsizleştiren bayrak
 bool isSdInit = false;
+// SD kart 
 void SdCardSetDataReady(void) {
+    /*!
+   * @brief     SdCardSetDataReady() fonksiyonu SD karta yazılmaya hazır veri olduğunda semaforu aktifleştirmek için kullanılır 
+   * @return    none
+   */
     if (isSdInit)
         xSemaphoreGive(SemSDCard);
 }
 
 void listDir(fs::FS &fs, const char *dirname, uint8_t levels) {
+    /*!
+    * @brief     listDir() fonksiyonu SD kart içerisindeki dosya ve klasörlerin seri porta listelenmesini sağlar
+    * @param[in] fs dosya sistemi pointeri 
+    * @param[in] dirname listelenecek dizinin adı
+    * @param[in] levels dizin içerisinde kaç klasör içinin listeleneceğinin seçimi
+    * @return    none
+    */
     Serial.printf("Listing directory: %s\n", dirname);
 
     File root = fs.open(dirname);
@@ -88,6 +89,12 @@ void listDir(fs::FS &fs, const char *dirname, uint8_t levels) {
 
 
 void createDir(fs::FS &fs, const char *path) {
+    /*!
+    * @brief     createDir() fonksiyonu SD kart içerisindeki klasör oluşturmak için kullanılır
+    * @param[in] fs dosya sistemi pointeri 
+    * @param[in] path oluşturulacak klasör yolu
+    * @return    none
+    */
     Serial.printf("Creating Dir: %s\n", path);
     if (fs.mkdir(path)) {
         Serial.println("Dir created");
@@ -97,6 +104,12 @@ void createDir(fs::FS &fs, const char *path) {
 }
 
 void removeDir(fs::FS &fs, const char *path) {
+    /*!
+    * @brief     removeDir() fonksiyonu SD kart içerisinden klasör silmek için kullanılır
+    * @param[in] fs dosya sistemi pointeri 
+    * @param[in] path silinecek klasör yolu
+    * @return    none
+    */
     Serial.printf("Removing Dir: %s\n", path);
     if (fs.rmdir(path)) {
         Serial.println("Dir removed");
@@ -106,6 +119,12 @@ void removeDir(fs::FS &fs, const char *path) {
 }
 
 void readFile(fs::FS &fs, const char *path) {
+/*!
+    * @brief     readFile() fonksiyonu SD kart içerisindeki dosyanın içeriğini seri porta yazılmasını sağlar
+    * @param[in] fs dosya sistemi pointeri 
+    * @param[in] path okunacak dosya yolu
+    * @return    none
+    */
     Serial.printf("Reading file: %s\n", path);
 
     File file = fs.open(path);
@@ -122,6 +141,13 @@ void readFile(fs::FS &fs, const char *path) {
 }
 
 void writeFile(fs::FS &fs, const char *path, const char *message) {
+/*!
+    * @brief     writeFile() fonksiyonu SD kart içerisine dosya yazılmasını sağlar 
+    * @param[in] fs dosya sistemi pointeri 
+    * @param[in] path yazılacak dosyanın yolu
+    * @param[in] message dosyaya yazılacak mesajın içeriği
+    * @return    none
+    */
     Serial.printf("Writing file: %s\n", path);
 
     File file = fs.open(path, FILE_WRITE);
@@ -138,6 +164,14 @@ void writeFile(fs::FS &fs, const char *path, const char *message) {
 }
 
 void appendFile(fs::FS &fs, const char *path, const char *message1, const char *message2) {
+/*!
+    * @brief     appendFile() fonksiyonu SD kart içerisindekie dosyaya veri eklenmesini sağlar 
+    * @param[in] fs dosya sistemi pointeri 
+    * @param[in] path yazılacak dosyanın yolu
+    * @param[in] message1 dosyaya yazılacak mesajın içeriği
+    * @param[in] message2 dosyaya yazılacak mesajın içeriği
+    * @return    none
+    */
     Serial.printf("Appending to file: %s\n", path);
 
     File file = fs.open(path, FILE_APPEND);
@@ -159,6 +193,13 @@ void appendFile(fs::FS &fs, const char *path, const char *message1, const char *
 }
 
 void renameFile(fs::FS &fs, const char *path1, const char *path2) {
+/*!
+    * @brief     renameFile() fonksiyonu SD kart içerisindekie dosyanın adının değiştirilmesini sağlar 
+    * @param[in] fs dosya sistemi pointeri 
+    * @param[in] path1 ismi değiştirilecek dosyanın yolu
+    * @param[in] path2 isim değiştirildikten sonra dosyanın yolu
+    * @return    none
+    */
     Serial.printf("Renaming file %s to %s\n", path1, path2);
     if (fs.rename(path1, path2)) {
         Serial.println("File renamed");
@@ -168,6 +209,12 @@ void renameFile(fs::FS &fs, const char *path1, const char *path2) {
 }
 
 void deleteFile(fs::FS &fs, const char *path) {
+/*!
+    * @brief     deleteFile() fonksiyonu SD kart içerisindekie dosyanın silinmesini sağlar 
+    * @param[in] fs dosya sistemi pointeri 
+    * @param[in] path silinecek dosyanın yolu
+    * @return    none
+    */
     Serial.printf("Deleting file: %s\n", path);
     if (fs.remove(path)) {
         Serial.println("File deleted");
@@ -176,50 +223,11 @@ void deleteFile(fs::FS &fs, const char *path) {
     }
 }
 
-void testFileIO(fs::FS &fs, const char *path) {
-    File file = fs.open(path);
-    static uint8_t buf[512];
-    size_t len = 0;
-    uint32_t start = millis();
-    uint32_t end = start;
-    if (file) {
-        len = file.size();
-        size_t flen = len;
-        start = millis();
-        while (len) {
-            size_t toRead = len;
-            if (toRead > 512) {
-                toRead = 512;
-            }
-            file.read(buf, toRead);
-            len -= toRead;
-        }
-        end = millis() - start;
-        Serial.printf("%u bytes read for %lu ms\n", flen, end);
-        file.close();
-    } else {
-        Serial.println("Failed to open file for reading");
-    }
-
-
-    file = fs.open(path, FILE_WRITE);
-    if (!file) {
-        Serial.println("Failed to open file for writing");
-        return;
-    }
-
-    size_t i;
-    start = millis();
-    for (i = 0; i < 2048; i++) {
-        file.write(buf, 512);
-    }
-    end = millis() - start;
-    Serial.printf("%u bytes written for %lu ms\n", 2048 * 512, end);
-    file.close();
-}
-
 void SdCardTasksBegin(void) {
-
+/*!
+    * @brief     SdCardTasksBegin() fonksiyonu SD işlemleri için thread ve semafor kurulumunu içerir 
+    * @return    none
+    */
     SemSDCard = xSemaphoreCreateBinary();
 
     xTaskCreatePinnedToCore(
@@ -231,8 +239,15 @@ void SdCardTasksBegin(void) {
 
 
 void SdCardTasks(void *parameters) {
-
-delay(500);
+/*!
+    * @brief        SdCardTasks() fonksiyonu SD işlemleri için oluşturulan thread
+    * @details      SD kartın 4 bit modda kurulmasını, cihazın açıldığı günün adı ile kayıt klasörünün oluşturulmasını, 
+    cihazın açıldığı saat adi ile kayıt dosyasının oluşturulmasını ve
+    kayıt aktif olduğu sürece BLE üzerinden telefona gönerilen verilerin base64 formatında depolanmasını sağlar
+    * @param[in]    parameters thread kurulumunda aktarılan parametreler 
+    * @return       none
+    */
+    delay(500);
     if (!SD_MMC.setPins(clk, cmd, d0, d1, d2, d3)) {
         Serial.println("Pin change failed!");
         while (true) {
@@ -265,9 +280,8 @@ delay(500);
         Serial.println("UNKNOWN");
     }
 
-
     isSdInit = true;
-    uint64_t cardSize = SD_MMC.cardSize() / (1024 * 1024*1024);
+    uint64_t cardSize = SD_MMC.cardSize() / (1024 * 1024 * 1024);
     Serial.printf("SD_MMC Card Size: %lluGB\n", cardSize);
     delay(2000);
     listDir(SD_MMC, "/", 1);
@@ -288,6 +302,5 @@ delay(500);
             base64::encode(txArray1, 9 * bufferSize, output1);
             appendFile(SD_MMC, FileName, output0, output1);
         }
-        //readFile(SD, FileName);
     }
 }

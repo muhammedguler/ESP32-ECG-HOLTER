@@ -1,51 +1,77 @@
 #include "ECG.h"
 #include "fdacoefs.h"
+// ham EKG verisi değişkenleri
 int32_t ecgCh1 = 0;
 int32_t ecgCh2 = 0;
 int32_t ecgCh3 = 0;
-
+// filtrelenmiş EKG verisi değişkenleri
 int32_t ecgFilteredCh1 = 0;
 int32_t ecgFilteredCh2 = 0;
 int32_t ecgFilteredCh3 = 0;
-
-
+// filtreleme için kullanılan halka buffer'de son yazılan verinini indesi
 uint32_t ch1CircleIndex = 0, ch2CircleIndex = 0, ch3CircleIndex = 0;
+// filtreleme için kullanılan halka buffer
 uint32_t ch1ReadsBuffer[BL], ch2ReadsBuffer[BL], ch3ReadsBuffer[BL];
+//hassas zamanlama için timer kesmesi kurulumu
 hw_timer_t* My_timer = NULL;
-
+// ADS1293 sınıfı örneğinin oluşturulması
 ads1293 ADS1293(AdsDrdy, AdsCS);
+//EKG okuma işlemleri için kullanılacak semafor tanımlaması
 SemaphoreHandle_t SemADS1293;
-int64_t startTime, diffTime = 10;
-//uint8_t CircularBuffer[9 * bufferSize];
-
+// BLE giden veri bufferinde son yazılan verinin indesi
 uint16_t point = 0;
-bool bufferFilled = false;
+// kesme içerisinden semafor etkinleştirmek için kullanılan değişken
 BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+// alarm durum göstergesi
 bool AdsAlarmOccured = false;
+// gönerme ve depolama buffer seçimi için bayraklar
 uint8_t sendBuffer = 1, writeBuffer = 0;
-bool bleDataReady = false, SdCardDataReady = false;
 
 void ARDUINO_ISR_ATTR isrAdsALARM() {
+    /*!
+    * @brief     isrAdsALARM() fonksiyonu ADS1293 entegresinde alarm oluştuğunda tetiklenen fonksiyon.
+    * @return    none
+    */
     AdsAlarmOccured = true;
 }
 void ARDUINO_ISR_ATTR isrADS1293Complete() {
+    /*!
+    * @brief     isrADS1293Complete() fonksiyonu ADS1293 entegresinde çevrim tamamlandığında tetiklenen fonksiyon.
+    * @details   (kart tasarım hatası sebebiyle stabil çalışmıyor bu yüzden kullanılmıyor.)
+    * @return    none
+    */
     xHigherPriorityTaskWoken = pdFALSE;
     //xSemaphoreGiveFromISR(SemADS1293, &xHigherPriorityTaskWoken);
 }
 void IRAM_ATTR onTimer() {
+    /*!
+    * @brief     onTimer() fonksiyonu ADS1293'ten 400hz örnekleme frekansı ile okuma yapılması için kurulan timer'in kesmesi
+    * @return    none
+    */
     xHigherPriorityTaskWoken = pdFALSE;
     xSemaphoreGiveFromISR(SemADS1293, &xHigherPriorityTaskWoken);
 }
-void ADS1293TasksBegin(void) {
+void ADS1293TaskBegin(void) {
+    /*!
+    * @brief     ADS1293TasksBegin() fonksiyonu EKG okuma işlemleri için thread ve semafor kurulumunu içerir 
+    * @return    none
+    */
     SemADS1293 = xSemaphoreCreateBinary();
     //xSemaphoreGive(SemADS1293);
     xTaskCreatePinnedToCore(
-        ADS1293Tasks, "ADS1293Tasks",
+        ADS1293Task, "ADS1293Tasks",
         4096 * 4,
         NULL, 7,
         NULL, ARDUINO_RUNNING_CORE);
 }
-void ADS1293Tasks(void* Parameters) {
+void ADS1293Task(void* Parameters) {
+    /*!
+    * @brief        ADS1293Tasks() fonksiyonu EKG okuma işlemleri için oluşturulan thread
+    * @details      ADS1293'ün pin kurulumlarını, 400sps ve 5 prob modunda okuma ayarlarını içerir.
+    Ayrıca EKG verisinin okunmasını, filtrelenmesini ve gönderme bufferlarına yazılmasını sağlar. 
+    * @param[in]    parameters thread kurulumunda aktarılan parametreler 
+    * @return       none
+    */
     ADS1293.setAds1293Pins();
 
     pinMode(AdsALARM, INPUT_PULLUP);
@@ -134,6 +160,15 @@ void ADS1293Tasks(void* Parameters) {
 
 
 int32_t FIR_Filter(uint32_t input, int8_t channel) {
+    /*!
+    * @brief        FIR_Filter() fonksiyonu okunan ham EKG verisinin filtrelenmesini sağlar
+    * @details      Ham EKG verisinden DC ofseti ve 50Hz, 100Hz, 150Hz ve 200Hz de bulunan 
+    şebeke gürültüsü harmoniklerinin etkilerini elimine etmek için kullanılan filtre fonksiyonu.
+    4000. dereceden least-squares metodu kullanılarakoluşturulan FIR filtre kodu 
+    * @param[in] input filtrelenecek ham ADS1293 verisi 
+    * @param[in] channel filtrelenecek ADS1293 kanalı
+    * @return       filtrelenmiş EKG verisi
+    */
     float output = 0;
     if (channel == 1) {
         ch1ReadsBuffer[ch1CircleIndex] = input;

@@ -4,6 +4,10 @@
 #include "Arduino.h"
 #include "defines.h"
 #include <SPI.h>
+/*
+ADS1293 EKG AFE'nin register tanımları kullanılan fonksiyonların prototipleri
+*/
+
 
 #define WREG 0x7f
 #define RREG 0x80
@@ -90,6 +94,13 @@
 #define NEGATIVE_TST_SIG 0x02
 #define ZERO_TST_SIG 0x03
 #define ERROR -1
+/*
+ADS1293 örnekleme frekansı registerlerinin sadeleştirilmiş katsayıları 
+0,1,2 bitler R3 katsayısı 
+3,4 bitler R2 katsayıları
+5. bit R1 katsayısı(pasif)
+6. bit AFE clock ayarı(pasif)
+*/
 enum SampleFreq {
     Hz_25 = 127,
     Hz_33 = 119,
@@ -130,19 +141,16 @@ class ads1293 {
     uint8_t drdyPin;
     uint8_t csPin;
 
-    void ads1293Begin3LeadECG();
+    void ads1293Begin3LeadECG(enum SampleFreq Freq);
     void ads1293Begin5LeadECG(enum SampleFreq Freq);
     int32_t getECGdata(uint8_t channel);
-    bool readSensorID();
     void setAds1293Pins();
-    void disableCh1();
+    void disableCh(uint8_t channel);
     uint8_t ads1293ReadRegister(uint8_t rdAddress);
     uint8_t readErrorStatus(uint8_t rdAddress);
     uint8_t readLeadErrorStatus();
     bool attachTestSignal(uint8_t channel, uint8_t pol);
     void setSamplingRate(enum SampleFreq);
-    void disableFilterAllChannels();
-    void disableFilter(uint8_t channel);
     uint8_t readErrorStatus();
 
     void ads1293WriteRegister(uint8_t wrAddress, uint8_t data);

@@ -4,7 +4,11 @@
 SPIClass* vspi = NULL;
 
 int32_t ads1293::getECGdata(uint8_t channel) {
-
+    /*!
+   * @brief     getECGdata() fonksiyonu istenilen ADC'nin verisini okumak için kullanılır 
+   * @param[in] channel kanal seçim değişkeni  1. in 1-2 2. in 3 3. in 5
+   * @return    24 bit EKG verisi
+   */
     uint8_t rawData[3];
     int32_t ecgData;
 
@@ -29,6 +33,10 @@ int32_t ads1293::getECGdata(uint8_t channel) {
 }
 
 void ads1293::setAds1293Pins() {
+    /*!
+   * @brief     setAds1293Pins() fonksiyonu ADS1293 entegresinin SPI ve kesme pinlerinin kurulumu için kullanılır.
+   * @return    none
+   */
     vspi = new SPIClass(FSPI);
     vspi->begin(AdsSCLK, AdsSDO, AdsSDI);
     vspi->setFrequency(10 * 1000 * 1000);
@@ -36,7 +44,12 @@ void ads1293::setAds1293Pins() {
     pinMode(csPin, OUTPUT);
 }
 
-void ads1293::ads1293Begin3LeadECG() {
+void ads1293::ads1293Begin3LeadECG(enum SampleFreq Freq) {
+    /*!
+   * @brief     ads1293Begin3LeadECG() fonksiyonu ADS1293 entegresini 3 problu modda kurmak için kullanılır. 
+   * @param[in] Freq ADS1293 entegresinin örnekleme hızını ayarlamak için kullanılır.
+   * @return    none
+   */
     ads1293WriteRegister(CONFIG, 0x00);
     delay(1);
     ads1293WriteRegister(FLEX_CH1_CN, 0x11);
@@ -51,11 +64,14 @@ void ads1293::ads1293Begin3LeadECG() {
     delay(1);
     ads1293WriteRegister(AFE_SHDN_CN, 0x24);
     delay(1);
-    ads1293WriteRegister(R2_RATE, 0x02);
+    /*ads1293WriteRegister(R2_RATE, 0x02);
     delay(1);
     ads1293WriteRegister(R3_RATE_CH1, 0x02);
     delay(1);
     ads1293WriteRegister(R3_RATE_CH2, 0x02);
+    delay(1);
+    ads1293WriteRegister(R3_RATE_CH3, 0x02);*/
+    setSamplingRate(Freq);
     delay(1);
     ads1293WriteRegister(DRDYB_SRC, 0x08);
     delay(1);
@@ -70,6 +86,11 @@ void ads1293::ads1293Begin3LeadECG() {
 }
 
 void ads1293::ads1293Begin5LeadECG(enum SampleFreq Freq) {
+    /*!
+   * @brief     ads1293Begin5LeadECG() fonksiyonu ADS1293 entegresini 5 problu modda kurmak için kullanılır. 
+   * @param[in] Freq ADS1293 entegresinin örnekleme hızını ayarlamak için kullanılır.
+   * @return    none
+   */
     ads1293WriteRegister(CONFIG, 0x00);
     delay(1);
     ads1293WriteRegister(FLEX_CH1_CN, 0x11);
@@ -113,6 +134,12 @@ void ads1293::ads1293Begin5LeadECG(enum SampleFreq Freq) {
     delay(1);
 }
 void ads1293::ads1293WriteRegister(uint8_t wrAddress, uint8_t data) {
+    /*!
+    * @brief     ads1293WriteRegister() fonksiyonu ADS1293 entegresinin seçilen bellek adaresine istenilen verinin yazılmasını sağlar 
+    * @param[in] wrAddress ADS1293 entegresinin bellek adresi
+    * @param[in] data ilgili bellek adresine yazılacak veri
+    * @return    none
+    */
     uint8_t dataToSend = (wrAddress & WREG);
     digitalWrite(csPin, LOW);
     vspi->transfer(dataToSend);
@@ -121,7 +148,11 @@ void ads1293::ads1293WriteRegister(uint8_t wrAddress, uint8_t data) {
 }
 
 uint8_t ads1293::ads1293ReadRegister(uint8_t rdAddress) {
-
+    /*!
+    * @brief     ads1293ReadRegister() fonksiyonu ADS1293 entegresinin seçilen bellek adresindeki verinin okunmasını sağlar 
+    * @param[in] wrAddress ADS1293 entegresinin bellek adresi
+    * @return    bellek adresindeki 8 bit veri
+    */
     uint8_t rdData;
     uint8_t dataToSend = (rdAddress | RREG);
     digitalWrite(csPin, LOW);
@@ -132,17 +163,13 @@ uint8_t ads1293::ads1293ReadRegister(uint8_t rdAddress) {
     return (rdData);
 }
 
-bool ads1293::readSensorID() {
-    uint8_t ID = 0xff;
-    ID = ads1293ReadRegister(REVID);
-    Serial.println(ID);
-    if (ID != 0xff) {
-        return true;
-    } else
-        return false;
-}
-
 void ads1293::configDCleadoffDetect(uint8_t level, bool active) {
+    /*!
+    * @brief     configDCleadoffDetect() fonksiyonu ADS1293 entegresinin DC prob çıkma kontrol(Lead Off Detection) fonksiyonunu kontrol etmek için kullanılır. 
+    * @param[in] level ADS1293 entegresinin Lead off detection fonksiyonunun tetiklenme seviyesi
+    * @param[in] active ADS1293 entegresinin Lead off detection fonksiyonunun durumu
+    * @return    none
+    */
     uint8_t regLOD_CN = 0x08;
     uint8_t regLOD_EN = 0x00;
     uint8_t regLOD_CURRENT = 0x00;
@@ -160,6 +187,12 @@ void ads1293::configDCleadoffDetect(uint8_t level, bool active) {
 }
 
 void ads1293::configACleadoffDetect(uint8_t level, bool active) {
+    /*!
+    * @brief     configACleadoffDetect() fonksiyonu ADS1293 entegresinin AC prob çıkma kontrol(Lead Off Detection) fonksiyonunu kontrol etmek için kullanılır. 
+    * @param[in] level ADS1293 entegresinin Lead off detection fonksiyonunun tetiklenme seviyesi
+    * @param[in] active ADS1293 entegresinin Lead off detection fonksiyonunun durumu
+    * @return    none
+    */
     uint8_t regLOD_CN = 0x08;
     uint8_t regLOD_EN = 0x00;
     uint8_t regLOD_CURRENT = 0x00;
@@ -180,6 +213,11 @@ void ads1293::configACleadoffDetect(uint8_t level, bool active) {
 }
 
 void ads1293::setSamplingRate(enum SampleFreq Freq) {
+    /*!
+    * @brief     setSamplingRate() fonksiyonu ADS1293 entegresinin örnekleme frekansını ayarlamak için kullanılır.  
+    * @param[in] Freq ADS1293 entegresinin örnekleme frekansı ayarıdır. enum SampleFreq içinde tanımlı olan değerleri alabilir. 
+    * @return    none
+    */
     uint8_t /*AFE_Val = 0,*/ R1 = 0, R2 = 1, R3 = 1;
 
     R3 = 1 << (Freq & 7);         // 1=>1/4, 2=>1/6, 4=>1/8...128=>1/128
@@ -204,40 +242,28 @@ void ads1293::setSamplingRate(enum SampleFreq Freq) {
     delay(1);
 }
 
-void ads1293::disableCh1() {
-
-    ads1293WriteRegister(FLEX_CH1_CN, 0x00);
-    delay(1);
-}
-
-void ads1293::disableFilterAllChannels() {
-
-    ads1293WriteRegister(DIS_EFILTER, 0x07);
-    delay(1);
-}
-
-void ads1293::disableFilter(uint8_t channel) {
-
-    if (channel > 3 || channel < 0) {
-        Serial.println("Wrong channel error!");
-        return;
-    }
-
-    uint8_t channelBitMask = 0x01;
-    channelBitMask = channelBitMask << (channel - 1);
-    ads1293WriteRegister(DIS_EFILTER, channelBitMask);
-    delay(1);
-}
-
 uint8_t ads1293::readErrorStatus() {
+    /*!
+    * @brief     readErrorStatus() fonksiyonu ADS1293 entegresinin hata durumlarını görüntülemek için kullanılır. 
+    * @return    8 bit hata bayrakları
+    */
     return (ads1293ReadRegister(ERROR_STATUS));
 }
 uint8_t ads1293::readLeadErrorStatus() {
+    /*!
+    * @brief     readLeadErrorStatus() fonksiyonu hangi elektrodun takılı olmadığını gösterir.  
+    * @return    8 bit çıkık elektrod bayrakları
+    */
     return (ads1293ReadRegister(ERROR_LOD));
 }
 
 bool ads1293::attachTestSignal(uint8_t channel, uint8_t pol) {
-
+    /*!
+    * @brief     attachTestSignal() fonksiyonu ADS1293 entegresinin istenilen kanalına test sinyali uygulamak için kullanılır. 
+    * @param[in] channel kanal seçim değişkeni 1. in 1 - 2 2. in 3 3. in 5
+    * @param[in] pol seçilen kanalı maksimum, minimum veya sıfır seviyesine setlemek için kullanılır.
+    * @return    hata veya başarı durumu döner
+    */
     if ((channel > 3) || (channel < 1)) {
         Serial.println("Wrong channel error!");
         return ERROR;

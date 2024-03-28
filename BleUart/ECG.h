@@ -22,8 +22,8 @@ extern SemaphoreHandle_t SemADS1293;
 void ARDUINO_ISR_ATTR isrAdsALARM();
 void ARDUINO_ISR_ATTR isrADS1293Complete();
 
-void ADS1293TasksBegin(void);
-void ADS1293Tasks(void* Parameters);
+void ADS1293TaskBegin(void);
+void ADS1293Task(void* Parameters);
 int32_t FIR_Filter(uint32_t input, int8_t channel);
 
 #endif
