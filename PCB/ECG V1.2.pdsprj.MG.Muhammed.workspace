@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<WORKSPACE>
+ <FRAME activewindow="1">
+  <PLACEMENT>2c00000002000000030000000083ffff0083ffffffffffffffffffff25f7ffff1b000000e8fdffff74040000</PLACEMENT>
+  <WINDOW type="default" module="ISIS">
+   <editor metric="0" gridmajor="2540000" mode="00000000" zoom="-1" scale="212" flipped="0" gridminor="127000" gridmode="32" snapidx="1" snap="127000" xcursor="16" orgmode="0" snaprange="63500">
+    <world y1="-8890000" x1="-12700000" y2="8890000" x2="12700000"/>
+    <centre x="-2301078" y="-2819933"/>
+    <origin x="0" y="0"/>
+   </editor>
+  </WINDOW>
+  <WINDOW type="default" module="ARES">
+   <editor metric="0" gridmajor="254000" mode="00000003" zoom="-1" scale="2973" flipped="1" gridminor="12700" gridmode="32" snapidx="1" snap="12700" xcursor="0" orgmode="0" snaprange="6350">
+    <world y1="-12700000" x1="-15240000" y2="12700000" x2="15240000"/>
+    <centre x="-76268" y="-1620866"/>
+    <origin x="0" y="0"/>
+   </editor>
+  </WINDOW>
+  <WINDOW type="VIEW3D" module="VIEW3D">
+   <camera>
+    <position x="27767" y="-566122" z="-6445312"/>
+    <focus x="-83531" y="-788419" z="-76643"/>
+    <up x="609" y="999390" z="34894"/>
+   </camera>
+  </WINDOW>
+  <WINDOW type="default" module="BOM"/>
+ </FRAME>
+ <MODULE name="ARES">
+  <editor metric="0" gridmajor="254000" mode="00000003" zoom="-1" scale="2973" flipped="1" gridminor="12700" gridmode="32" snapidx="1" snap="12700" xcursor="0" orgmode="0" snaprange="6350">
+   <world y1="-12700000" x1="-15240000" y2="12700000" x2="15240000"/>
+   <centre x="-76268" y="-1620866"/>
+   <origin x="0" y="0"/>
+  </editor>
+ </MODULE>
+ <MODULE name="ISIS">
+  <editor metric="0" gridmajor="2540000" mode="00000000" zoom="-1" scale="212" flipped="0" gridminor="127000" gridmode="32" snapidx="1" snap="127000" xcursor="16" orgmode="0" snaprange="63500">
+   <world y1="-8890000" x1="-12700000" y2="8890000" x2="12700000"/>
+   <centre x="-2301078" y="-2819933"/>
+   <origin x="0" y="0"/>
+  </editor>
+ </MODULE>
+ <MODULE name="VSMDEBUG">
+  <PWI/>
+ </MODULE>
+</WORKSPACE>

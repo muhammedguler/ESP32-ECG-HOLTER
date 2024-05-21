@@ -5,7 +5,7 @@ uint8_t ADC_Pins[] = { VTemp, VBat };
 // Flag which will be set in ISR when conversion is done
 uint8_t ADC_ConversionDone = false;
 // Result structure for ADC Continuous reading
-adc_continuos_data_t* ADC_Result = NULL;
+adc_continuous_data_t* ADC_Result = NULL;
 
 // Sıcaklık okuma işlemi için kullanılan değişkenlerin tanımlanmısı
 float Vout = 0.0;  // Vout in A0
